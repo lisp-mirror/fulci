@@ -25,6 +25,7 @@ po/en@quot.gmo
 po/en@quot.insert-header
 po/en@quot.po
 po/remove-potcdate.sed
+po/stamp-po
 po/it/
 
 quick_quicklisp.sh
