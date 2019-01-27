@@ -1,0 +1,285 @@
+* Code
+
+- src/db-utils.lisp
+  src/validation.lisp
+  src/db.lisp
+  src/text-utils.lisp
+  src/ps-utils.lisp
+
+  derived from:
+  niccolo': a chemicals inventory
+  Copyright (C) 2016, 2017,2018  Universita' degli Studi di Palermo
+
+  This  program is  free  software: you  can  redistribute it  and/or
+  modify it  under the  terms of  the GNU  General Public  License as
+  published  by  the  Free  Software Foundation,  version  3  of  the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+- src/misc.lisp uses code from
+
+  local-time Copyright (c) 2005-2012 by Daniel Lowe
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+- src/net-utils uses code from
+
+  Copyright (c) 2006-2012, Dr. Edmund Weitz.  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+     * Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+
+     * Redistributions in binary form must reproduce the above
+       copyright notice, this list of conditions and the following
+       disclaimer in the documentation and/or other materials
+       provided with the distribution.
+
+  THIS SOFTWARE IS PROVIDED BY THE AUTHOR 'AS IS' AND ANY EXPRESSED
+  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* Data
+  - data/countries.csv
+
+    derived from:
+
+    © Stefan Gabos
+
+    according to:
+    https://github.com/stefangabos/world_countries
+
+    lincensed under:
+
+    GNU Lesser General Public License v3.0
+
+  - data/font.afm
+
+    Copyright (URW)++,Copyright 1999 by (URW)++ Design & Development
+    Released under (GNU General Public License)
+
+  - data/icons/search.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_magnifier.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+     via Wikimedia Commons
+  - data/icons/movie.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_film.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/delete-movie.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_film_delete.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/add-movie.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_film_add.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/lookup-internet-movie.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_online_video_insert.png
+    FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)], via Wikimedia Commons
+  - data/icons/edit-movie.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_film_edit.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/dvd.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_cd.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/delete-dvd.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_cd_delete.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/add-dvd.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_cd_add.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/edit-dvd.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_cd_edit.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icon/persons.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_users_3.png
+    FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)],
+    via Wikimedia Commons
+  - data/icons/genre.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_movies.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/add.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_add.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/delete.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_delete.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/add-small.png
+    derived from
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_add.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/delete-small.png
+    derived from
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_delete.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+  - data/icons/edit.png
+    data/icons/edit-small.png
+    derived from
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_edit_button.png
+    FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)],
+    via Wikimedia Commons
+  - data/icons/fulci-icon.png
+    derived from
+    https://commons.wikimedia.org/wiki/File:Mplayer.svg
+    David Vignoni / ICON KING [LGPL (http://www.gnu.org/licenses/lgpl.html)],
+    via Wikimedia Commons
+  - data/icons/goto-wiki.png
+
+    derived from:
+
+    https://commons.wikimedia.org/wiki/File:Wikipedia_logo_silver.png
+
+    User:Nohat [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_bullet_go.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    licensed under:
+
+    [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]
+
+  - data/icons/wiki-fetch-data.png
+
+    derived from:
+
+    https://commons.wikimedia.org/wiki/File:Wikipedia_logo_silver.png
+
+    User:Nohat [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_bullet_go.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_text_align_left.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    licensed under:
+
+    [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]
+
+  - data/icons/wiki-fetch-image.png
+
+    derived from:
+
+    https://commons.wikimedia.org/wiki/File:Wikipedia_logo_silver.png
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_bullet_go.png
+
+    User:Nohat [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_bullet_go.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_picture.png
+
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    licensed under:
+
+    [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]
+
+  - data/icons/dvd-in-case.png
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_cd_case.png
+
+    FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)],
+    via Wikimedia Commons
+
+  - data/icons/barcode.png
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_barcode.png
+
+    FatCow Web Hosting [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+  - data/icons/details.png
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_application_view_detail.png
+
+    FatCow Web Hosting [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+  - data/icons/go-to-copy.png
+    FatCow Web Hosting [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons

@@ -1,0 +1,13 @@
+# List of source files which contain translatable strings.
+src/main.lisp
+src/search-frame.lisp
+src/main-frame.lisp
+src/main-toolbar.lisp
+src/menu-commands.lisp
+src/nodgui-utils.lisp
+src/manage-movie.lisp
+src/manage-copies.lisp
+src/search-copies-frame.lisp
+src/preferences.lisp
+src/import-tsv.lisp
+src/db.lisp

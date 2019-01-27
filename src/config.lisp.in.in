@@ -1,0 +1,40 @@
+;; fulci: a program to organize your movies collection
+;; Copyright (C) 2019  cage
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+(define-constant +sqlite-bin+ "@SQLITE@"  :test #'string=)
+
+(define-constant +gimp-bin+   "@GIMP@"  :test #'string=)
+
+(define-constant +gv-bin+     "@GV@"  :test #'string=)
+
+(define-constant +home-data-dir+ (concatenate 'string
+                                              "." +program-name+ "/")
+  :test #'string=)
+
+(defun _ (a)
+  (handler-bind ((i18n-conditions:no-translation-table-error
+		  #'(lambda(e)
+		      (declare (ignore e))
+		      (invoke-restart 'cl-i18n:return-untranslated))))
+    (cl-i18n:translate a)))
+
+(defun n_ (a b n)
+  (declare (ignore b))
+  (handler-bind ((i18n-conditions:no-translation-table-error
+		  #'(lambda(e)
+		      (declare (ignore e))
+		      (invoke-restart 'cl-i18n:return-untranslated))))
+      (cl-i18n:ntranslate a a n)))
