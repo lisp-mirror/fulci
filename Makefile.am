@@ -31,7 +31,7 @@ CLEANFILES = $(bin_SCRIPTS) $(CONF_PATH_FILE)
 SUBDIRS = po
 
 EXTRA_DIST = config.rpath m4/ChangeLog  config.rpath m4/ChangeLog ChangeLog \
-fulci.asd NOTES README.org src LICENSES.org COPYING src
+fulci.asd README.org src LICENSES.org COPYING src
 
 nobase_dist_pkgdata_DATA = data/icons/search.png \
 data/icons/movie.png                             \
