@@ -14,9 +14,9 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-(in-package :test-search-expr)
+(in-package :test-search-title-expr)
 
-(defsuite search-expr-suite (all-suite))
+(defsuite search-title-expr-suite (all-suite))
 
 (defun tokenize (input)
   (let* ((tokenizer-fn (lexer input)))
@@ -36,7 +36,7 @@
                 (funcall ,tokenizer-fn)))
          ,@body))))
 
-(deftest test-single (search-expr-suite)
+(deftest test-single (search-title-expr-suite)
   (assert-true
       (with-tokenizer "and"
         (token-list-eq (list (tok))
@@ -58,7 +58,7 @@
         (token-list-eq (list (tok))
                        +or+))))
 
-(deftest test-multiple (search-expr-suite)
+(deftest test-multiple (search-title-expr-suite)
   (assert-true
       (with-tokenizer "foo and bar"
         (token-list-eq (list (tok)   (tok) (tok)
@@ -76,13 +76,13 @@
           (token-list-eq (list (tok)  (tok) (tok)
                                +value+ +and+ +value+)))))
 
-(deftest test-term (search-expr-suite)
+(deftest test-term (search-title-expr-suite)
   (assert-true
       (with-tokenizer "director = foo and note = bar"
         (token-list-eq (list (tok)          (tok)   (tok)   (tok) (tok)      (tok)   (tok)
                              +key-director+ +equal+ +value+ +and+ +key-note+ +equal+ +value+)))))
 
-(deftest test-subexpr (search-expr-suite)
+(deftest test-subexpr (search-title-expr-suite)
   (assert-true
       (with-tokenizer "(director = foo and note = bar) or (tags=class and genres=drama)"
         (token-list-eq (list (tok)  ; (
@@ -123,7 +123,7 @@
          (let ((sql (parse ,input)))
            (string= sql ,output-sql)))))
 
-(deftest test-parse-subexpr (search-expr-suite)
+(deftest test-parse-subexpr (search-title-expr-suite)
   (compare-code "director = 1 and (title=4 or note = 5)"
                 `("and" ("like" "director" "\"%1%\"")
                         ("or" ("or" ("like" "pt" "\"%4%\"") ("like" "ot" "\"%4%\""))

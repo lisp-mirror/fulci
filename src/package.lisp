@@ -563,7 +563,7 @@
    :set-gimp-bin
    :make-preferences-window))
 
-(defpackage :search-expr
+(defpackage :search-title-expr
   (:use
    :cl
    :alexandria

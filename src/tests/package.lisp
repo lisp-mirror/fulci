@@ -21,11 +21,11 @@
    :all-suite
    :run-all-tests))
 
-(defpackage :test-search-expr
+(defpackage :test-search-title-expr
   (:use :cl
         :alexandria
         :clunit
         :constants
-        :search-expr
+        :search-title-expr
         :all-tests)
-  (:export :search-expr-suite))
+  (:export :search-title-expr-suite))

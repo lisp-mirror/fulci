@@ -866,7 +866,7 @@
 
 (defun search-movie-expr (expr order-columns)
   (db-utils:with-ready-database (:connect nil)
-    (let ((where-clause    (search-expr:parse (subseq expr 1)))
+    (let ((where-clause    (search-title-expr:parse (subseq expr 1)))
           (group-clause    (db:sql-group-by  :title-id))
           (order-by-clause (db:sql-order-by order-columns)))
       (if (null where-clause)

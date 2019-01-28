@@ -66,7 +66,7 @@
                 (:file "validation")
                 (:file "db")
                 (:file "preferences")
-                (:file "search-expr")
+                (:file "search-title-expr")
                 (:file "import-tsv")
                 (:file "wikipedia")
                 (:file "nodgui-utils")
