@@ -855,8 +855,8 @@
                   (limit offset))))
       (fetch-all-rows res)))
 
-(defmacro sql-order-by (column)
-  `(yield (order-by ,column)))
+(defun sql-order-by (column direction)
+  (yield (order-by `(,direction ,column))))
 
 (defmacro sql-group-by (&rest columns)
   `(yield (group-by ,@columns)))
@@ -864,11 +864,11 @@
 (defun sql-search-titles ()
   (query->sql (title-general-query nil nil)))
 
-(defun search-movie-expr (expr order-columns)
+(defun search-movie-expr (expr order-columns order-direction)
   (db-utils:with-ready-database (:connect nil)
     (let ((where-clause    (search-title-expr:parse (subseq expr 1)))
           (group-clause    (db:sql-group-by  :title-id))
-          (order-by-clause (db:sql-order-by order-columns)))
+          (order-by-clause (db:sql-order-by order-columns order-direction)))
       (if (null where-clause)
           (values nil t)
           (let* ((select-cmd (sql-search-titles))
@@ -884,6 +884,14 @@
                               :order-dir     order-direction
                               :order-columns order-columns)))
 
+(defun search-movies (key order-columns order-direction)
+  (db-utils:with-ready-database (:connect nil)
+    (cond
+      ((char= +char-start-search-expr+ (first-elt key))
+       (search-movie-expr key order-columns order-direction))
+      (t
+       (search-movie-simple key order-columns order-direction)))))
+
 (defun search-copies (key order-columns order-direction)
   (db-utils:with-ready-database (:connect nil)
     (let* ((res (cond
@@ -894,7 +902,7 @@
                                                                (declare (ignore e))
                                                                0))))
                   ((char= +char-start-search-expr+ (first-elt key))
-                   (search-copies-expr key order-columns))
+                   (search-copies-expr key order-columns order-direction))
                   (t
                    (search-copies-main-frame key
                                              :order-dir     order-direction
@@ -922,11 +930,11 @@
 (defun sql-search-copies ()
   (query->sql (copies-general-query nil nil)))
 
-(defun search-copies-expr (expr order-columns)
+(defun search-copies-expr (expr order-columns order-direction)
   (db-utils:with-ready-database (:connect nil)
     (let ((where-clause    (search-copy-expr:parse (subseq expr 1)))
           (group-clause    (db:sql-group-by  :copy-id))
-          (order-by-clause (db:sql-order-by order-columns)))
+          (order-by-clause (db:sql-order-by order-columns order-direction)))
       (if (null where-clause)
           (values nil t)
           (let* ((select-cmd (sql-search-copies))

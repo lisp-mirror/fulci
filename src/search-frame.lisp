@@ -117,39 +117,17 @@
                                    :column-values column-values
                                    :id            movie-id))))
 
-(defun search-movie-command-simple (entry search-results-widget order-columns)
-  (with-inner-treeview (results-list search-results-widget)
-    (treeview-delete-all results-list)
-    (let* ((key (text entry))
-           (res (db:search-movie-simple key
-                                        order-columns
-                                        *search-order*)))
-      (insert-item-in-search-results search-results-widget
-                                     res
-                                     :title-id
-                                     #'search-movie-column-values))))
-
-(defun search-movie-command-expr (entry search-results-widget order-columns)
-  (with-inner-treeview (results-list search-results-widget)
-    (treeview-delete-all results-list)
-    (multiple-value-bind (rows errorp)
-        (db:search-movie-expr (text entry) order-columns)
-      (if errorp
-          (error-dialog *tk* (_ "Invalid search expression"))
-          (insert-item-in-search-results search-results-widget
-                                         rows
-                                         :title-id
-                                         #'search-movie-column-values)))))
-
 (defun search-movie-command (entry search-results-widget &optional (order-columns :title-id))
   (lambda ()
-    (cond
-      ((string-empty-p (text entry))
-       (nodgui-utils:error-dialog *tk* (_ "Empty search criteria")))
-      ((char= +char-start-search-expr+ (first-elt (text entry)))
-       (search-movie-command-expr entry search-results-widget order-columns))
-      (t
-       (search-movie-command-simple entry search-results-widget order-columns)))))
+    (with-busy* (*tk*)
+      (with-inner-treeview (results-list search-results-widget)
+        (treeview-delete-all results-list)
+        (let* ((key (text entry))
+               (res (db:search-movies key order-columns *search-order*)))
+          (insert-item-in-search-results search-results-widget
+                                         res
+                                         :title-id
+                                         #'search-movie-column-values))))))
 
 (defun search-results-order-movie-clsr (search-text-entry search-res-widget order-column)
   (lambda ()
@@ -233,9 +211,8 @@
         (manage-copies:make-add-copy-window selected)))))
 
 (defun search-movie-cb (search-text-entry search-results)
-  (with-busy* (*tk*)
-    (funcall (search-movie-command search-text-entry
-                                   search-results))))
+  (funcall (search-movie-command search-text-entry
+                                 search-results)))
 
 (defun dump-search-history (entry)
   (let ((all-lines (fs:file->list-lines (history-path)))

@@ -394,14 +394,8 @@
         (cond
           ((string-empty-p key)
            (nodgui-utils:error-dialog *tk* (_ "Empty search criteria")))
-          ((char= +char-start-search-expr+ (first-elt key))
-           (multiple-value-bind (rows errorp)
-               (db:search-movie-expr (subseq key 1) :title-id)
-             (if errorp
-                 (error-dialog *tk* (_ "Invalid search expression"))
-                 (fs:dump-sequence-to-file (rows->tsv rows) file))))
           (t
-           (let ((rows (db:search-movie-simple key :title-id :desc)))
+           (let ((rows (db:search-movies key :title-id :asc)))
              (fs:dump-sequence-to-file (rows->tsv rows) file))))
         (info-operation-completed *tk*)))))
 

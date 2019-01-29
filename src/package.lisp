@@ -526,6 +526,7 @@
    :last-n-copies-id
    :search-movie-expr
    :search-movie-simple
+   :search-movies
    :search-copies
    :search-copies-expr
    :sql-order-by

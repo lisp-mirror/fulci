@@ -100,7 +100,7 @@
 (defun manage-persons-table (title to-alist-fn)
   (lambda ()
     (with-ready-database (:connect nil)
-      (let ((all-data       (funcall to-alist-fn db:+table-person+))
+      (let ((all-data       (with-busy* (*tk*) (funcall to-alist-fn db:+table-person+)))
             (listbox        nil)
             (birthday-entry nil))
         (with-modal-toplevel (toplevel :title title)
