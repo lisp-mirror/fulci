@@ -9,8 +9,8 @@
 
 ** Features
 
-- Adding/query tile (movies or series) with an
-  [[Searching titles][expression language]];
+- Adding titles or copies and perform search with an
+  [[Searching][expression language]];
 - generating barcode to identify a copy of a movie;
 - optionally import data from wikipedia
 
@@ -112,15 +112,45 @@
 
 *** Search movie copies
 
-Type a search  criteria to start a searching matching  the key in any
-field of a  title.  You can start  a search with an ~<~  followed by a
-number to search the latest ~n~ titles inserted.
+Type a search  criteria to start a searching matching the string you typed in any
+field of a  movie copy object.  You can start  a query with an ~<~  followed by a
+number to lookup the latest ~n~ copies inserted into the database.
+
+Finally you can use a simple  expression language if your query starts
+with a: ~!~ ([[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][BNF]]
+following):
+
+#+BEGIN_SRC text
+
+EXPRESSION    := EXPRESSION AND EXPRESSION |
+                 EXPRESSION OR  EXPRESSION |
+                 '(' EXPRESSION ')'          |
+                 TERM
+TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
+KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country' |
+                 'building' | 'room' | 'storage' | 'shelf'
+VALUE         := [a-z,A-Z,0-9,%]
+AND           := 'and'
+OR            := 'or'
+=             := '='
+
+#+END_SRC
+
+Example:
+
+All the horror movie stored in room ~237~ or ~1408~:
+
+#+BEGIN_SRC text
+
+! room = 237 or room = 1408
+
+#+END_SRC
 
 *** Searching titles
 
-For searching a title you can type  a key to search in any field or
-you can use a simple expression language
-([[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][BNF]] following):
+For searching a title you can type a string to search in any field or you
+can  use a  simple  expression language  similar as  can  be done  for
+copies.
 
 #+BEGIN_SRC text
 

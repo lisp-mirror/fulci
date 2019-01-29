@@ -42,12 +42,13 @@ Table of Contents
 1.1 Features
 ────────────
 
-  • Adding/query tile (movies or series) with an [expression language];
+  • Adding titles or copies and perform search with an [expression
+    language];
   • generating barcode to identify a copy of a movie;
   • optionally import data from wikipedia
 
 
-[expression language] See section 4.1.2
+[expression language] See section 4.1
 
 
 2 Dependency
@@ -167,16 +168,50 @@ Table of Contents
 4.1.1 Search movie copies
 ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
-  Type a search criteria to start a searching matching the key in any
-  field of a title.  You can start a search with an `<' followed by a
-  number to search the latest `n' titles inserted.
+  Type a search criteria to start a searching matching the string you
+  typed in any field of a movie copy object.  You can start a query with
+  an `<' followed by a number to lookup the latest `n' copies inserted
+  into the database.
+
+  Finally you can use a simple expression language if your query starts
+  with a: `!' ([BNF] following):
+
+  ┌────
+  │
+  │ EXPRESSION    := EXPRESSION AND EXPRESSION |
+  │                  EXPRESSION OR  EXPRESSION |
+  │                  '(' EXPRESSION ')'          |
+  │                  TERM
+  │ TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
+  │ KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country' |
+  │                  'building' | 'room' | 'storage' | 'shelf'
+  │ VALUE         := [a-z,A-Z,0-9,%]
+  │ AND           := 'and'
+  │ OR            := 'or'
+  │ =             := '='
+  │
+  └────
+
+  Example:
+
+  All the horror movie stored in room `237' or `1408':
+
+  ┌────
+  │
+  │ ! room = 237 or room = 1408
+  │
+  └────
+
+
+[BNF] https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
 
 
 4.1.2 Searching titles
 ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
-  For searching a title you can type a key to search in any field or you
-  can use a simple expression language ([BNF] following):
+  For searching a title you can type a string to search in any field or
+  you can use a simple expression language similar as can be done for
+  copies.
 
   ┌────
   │
@@ -205,8 +240,6 @@ Table of Contents
 
   where `%' means: "a variable number of any character".
 
-
-[BNF] https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
 
 [Lucio Fulci] https://en.wikipedia.org/wiki/Lucio_Fulci
 
