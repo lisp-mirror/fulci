@@ -527,6 +527,7 @@
    :search-movie-expr
    :search-movie-simple
    :search-copies
+   :search-copies-expr
    :sql-order-by
    :sql-group-by
    :delete-by-id))
@@ -575,24 +576,21 @@
    :db-utils
    :db)
   (:export
-   :+and+
-   :+or+
-   :+equal+
-   :+value+
-   :+key-director+
-   :+key-genre+
-   :+key-title+
-   :+key-note+
-   :+key-tags+
-   :+key-genres+
-   :+key-country+
-   :+open-expr+
-   :+close-expr+
-   :+key-director-re+
-   :+key-genre-re+
-   :+key-title-re+
-   :+key-note-re+
-   :+key-tags-re+
+   :lexer
+   :parse))
+
+(defpackage :search-copy-expr
+  (:use
+   :cl
+   :alexandria
+   :cl-ppcre
+   :cl-lex
+   :yacc
+   :misc
+   :text-utils
+   :db-utils
+   :db)
+  (:export
    :lexer
    :parse))
 

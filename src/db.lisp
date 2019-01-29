@@ -886,16 +886,55 @@
 
 (defun search-copies (key order-columns order-direction)
   (db-utils:with-ready-database (:connect nil)
-    (let* ((res (if (cl-ppcre:scan +search-latest-id-re+ key)
-                    (last-n-copies-id (misc:safe-parse-number (subseq key 1)
-                                                              :fix-fn
-                                                              (lambda (e)
-                                                                (declare (ignore e))
-                                                                0)))
-                    (search-copies-main-frame key
-                                              :order-dir     order-direction
-                                              :order-columns order-columns))))
+    (let* ((res (cond
+                  ((cl-ppcre:scan +search-latest-id-re+ key)
+                   (last-n-copies-id (misc:safe-parse-number (subseq key 1)
+                                                             :fix-fn
+                                                             (lambda (e)
+                                                               (declare (ignore e))
+                                                               0))))
+                  ((char= +char-start-search-expr+ (first-elt key))
+                   (search-copies-expr key order-columns))
+                  (t
+                   (search-copies-main-frame key
+                                             :order-dir     order-direction
+                                             :order-columns order-columns)))))
       res)))
+
+(defmacro copies-general-query (&optional (where-clause nil) (add-group-by t))
+  (let ((query `(select (:*
+                        (:as (:group_concat :description)
+                             ,+search-expr-country-col+))
+                 (from ,+view-copies-genres-directors+)
+                 (left-join :title-country :on (:= :title-id :title-country.title))
+                 (left-join :country       :on (:= :country.id :title-country.country)))))
+    (if where-clause
+        (append query
+                (list where-clause)
+                (if add-group-by
+                    `((group-by :title-id))
+                    nil))
+        (append query
+                (if add-group-by
+                    `((group-by :title-id))
+                    nil)))))
+
+(defun sql-search-copies ()
+  (query->sql (copies-general-query nil nil)))
+
+(defun search-copies-expr (expr order-columns)
+  (db-utils:with-ready-database (:connect nil)
+    (let ((where-clause    (search-copy-expr:parse (subseq expr 1)))
+          (group-clause    (db:sql-group-by  :copy-id))
+          (order-by-clause (db:sql-order-by order-columns)))
+      (if (null where-clause)
+          (values nil t)
+          (let* ((select-cmd (sql-search-copies))
+                 (res        (join-with-strings* " "
+                                                 select-cmd where-clause
+                                                 group-clause
+                                                 order-by-clause)))
+            (values (fetch-all-rows res) nil))))))
 
 (defun title-details (title-id)
   (let ((query (title-general-query

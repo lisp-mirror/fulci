@@ -67,6 +67,7 @@
                 (:file "db")
                 (:file "preferences")
                 (:file "search-title-expr")
+                (:file "search-copy-expr")
                 (:file "import-tsv")
                 (:file "wikipedia")
                 (:file "nodgui-utils")
