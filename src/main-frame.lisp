@@ -16,6 +16,9 @@
 
 (in-package :main-frame)
 
+(defun temporary-disabled ()
+  (nodgui-utils:info-dialog *tk* "Functionality temporarly disabled"))
+
 (defun initialize-menu (parent)
   (with-accessors ((main-window main-window)) parent
     (let* ((bar        (make-menubar))
@@ -29,7 +32,7 @@
            (edit       (make-menu bar    (_ "Edit")))
            (help       (make-menu bar    (_ "Help"))))
       (declare (ignore sep1 sep2 sep3))
-      (make-menubutton db-import (_ "From TSV")    #'menu:import-tsv-window :underline 0)
+      (make-menubutton db-import (_ "From TSV")    #'temporary-disabled :underline 0)
       (make-menubutton export    (_ "Copy")        (menu:copy-db-fn main-window)
                        :underline 0)
       (make-menubutton export     (_ "Dump SQL")    (menu:dump-db-fn main-window)
