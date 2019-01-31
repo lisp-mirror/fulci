@@ -121,18 +121,19 @@ with a: ~!~ ([[https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form][BNF]]
 following):
 
 #+BEGIN_SRC text
-
-EXPRESSION    := EXPRESSION AND EXPRESSION |
-                 EXPRESSION OR  EXPRESSION |
-                 '(' EXPRESSION ')'          |
-                 TERM
-TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
-KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country' |
-                 'building' | 'room' | 'storage' | 'shelf'
-VALUE         := [a-z,A-Z,0-9,%]
-AND           := 'and'
-OR            := 'or'
-=             := '='
+ EXPRESSION    := EXPRESSION AND EXPRESSION |
+                  EXPRESSION OR  EXPRESSION |
+                  '(' EXPRESSION ')'          |
+                  TERM
+ TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
+ KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country' |
+                  'building' | 'room' | 'storage' | 'shelf'
+ VALUE         := [a-z,A-Z,0-9,%]
+ AND           := 'and'
+ OR            := 'or'
+ =             := '='
+ <             := '<'
+ >             := '>'
 
 #+END_SRC
 
@@ -156,14 +157,16 @@ copies.
 
  EXPRESSION    := EXPRESSION AND EXPRESSION |
                   EXPRESSION OR  EXPRESSION |
-                  '(' EXPRESSION ')'        |
+                  '(' EXPRESSION ')'          |
                   TERM
  TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
  KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country'
- VALUE         := [a-z, A-Z, 0-9, %]
+ VALUE         := [a-z,A-Z,0-9,%]
  AND           := 'and'
  OR            := 'or'
  =             := '='
+ <             := '<'
+ >             := '>'
 
 #+END_SRC
 

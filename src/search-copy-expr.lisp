@@ -150,6 +150,8 @@
 ;; AND           := 'and'
 ;; OR            := 'or'
 ;; =             := '='
+;; <             := '<'
+;; >             := '>'
 
 (defmacro gen-parser ()
   `(yacc:define-parser *parser*
