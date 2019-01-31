@@ -119,7 +119,7 @@
 
 ;; EXPRESSION    := EXPRESSION AND EXPRESSION |
 ;;                  EXPRESSION OR  EXPRESSION |
-;;                  '(' EXPRESSION ')'          |
+;;                  '(' EXPRESSION ')'        |
 ;;                  TERM
 ;; TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
 ;; KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country'
