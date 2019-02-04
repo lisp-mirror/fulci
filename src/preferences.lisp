@@ -19,7 +19,7 @@
 (define-constant +preferences-file+ (strcat +home-data-dir+ "preference.sexp") :test #'string=)
 
 (defun preferences-file-path ()
-  (uiop:unix-namestring (strcat (fs:home-dir) "/" +preferences-file+)))
+  (uiop:unix-namestring (strcat (fs:user-config-dir) "/" +preferences-file+)))
 
 (defclass preferences ()
   ((copy-format
@@ -77,6 +77,7 @@
 
 (defun dump (&optional (object-preferences *preferences*))
   (let* ((preferences-file (preferences-file-path)))
+    (fs:create-file-if-not-exists preferences-file)
     (fs:dump-sequence-to-file (serialize object-preferences) preferences-file)))
 
 (defun init ()

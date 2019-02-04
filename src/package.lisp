@@ -187,6 +187,7 @@
    :slurp-file
    :dump-sequence-to-file
    :create-file
+   :create-file-if-not-exists
    :cat-parent-dir
    :has-extension
    :do-directory
@@ -206,6 +207,9 @@
    :file-length-if-exists
    :delete-file-if-exists
    :home-dir
+   :user-data-dir
+   :user-config-dir
+   :user-cache-dir
    :temporary-filename
    :with-anaphoric-temp-file
    :temp-file

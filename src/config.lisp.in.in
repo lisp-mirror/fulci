@@ -20,8 +20,7 @@
 
 (define-constant +gv-bin+     "@GV@"  :test #'string=)
 
-(define-constant +home-data-dir+ (concatenate 'string
-                                              "." +program-name+ "/")
+(define-constant +home-data-dir+ (concatenate 'string +program-name+ "/")
   :test #'string=)
 
 (defun _ (a)

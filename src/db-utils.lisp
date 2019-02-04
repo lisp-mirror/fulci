@@ -167,7 +167,10 @@
         :ct))
 
 (defun db-path ()
-  (uiop:unix-namestring (concatenate 'string (fs:home-dir) "/" +db-file+)))
+  (uiop:unix-namestring (concatenate 'string
+                                     (fs:user-data-dir)
+                                     "/"
+                                     +db-file+)))
 
 (defun init-connection ()
   (when (not (fs:file-exists-p (db-path)))

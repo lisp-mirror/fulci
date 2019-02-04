@@ -115,6 +115,10 @@
                               :if-does-not-exist :create))
       file)))
 
+(defun create-file-if-not-exists (path)
+  (and (not (file-exists-p path))
+       (create-file path)))
+
 (defun has-extension (path ext)
   (let ((re (concatenate 'string ext "$")))
     (cl-ppcre:scan re path)))
@@ -248,11 +252,21 @@
     (with-open-file (stream f :element-type '(unsigned-byte 8))
       (file-length stream))))
 
-(defun home-dir (&key (add-separator-ends nil))
-  (let ((home (nix:getenv "HOME")))
-    (if add-separator-ends
-        (text-utils:strcat home *directory-sep*)
-        home)))
+(defmacro gen-home-dirs (name fn)
+  (with-gensyms (dir)
+    `(defun ,(misc:format-fn-symbol t "~a-dir" name) (&key (add-separator-ends nil))
+       (let ((,dir (pathname->namestring (funcall ,fn))))
+         (if add-separator-ends
+             (text-utils:strcat ,dir *directory-sep*)
+             ,dir)))))
+
+(gen-home-dirs home (lambda () (nix:getenv "HOME")))
+
+(gen-home-dirs user-data #'uiop:xdg-data-home)
+
+(gen-home-dirs user-config #'uiop:xdg-config-home)
+
+(gen-home-dirs user-cache  #'uiop:xdg-cache-home)
 
 (defun temporary-filename (&optional (temp-directory nil))
   (let ((tmpdir (or temp-directory (nix:getenv "TMPDIR"))))

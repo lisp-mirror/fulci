@@ -25,7 +25,9 @@
 (define-constant +gimp-img-tempfilename+   "i.jpg" :test #'string=)
 
 (defun img-tmp-path (filename)
-  (uiop:unix-namestring (text-utils:strcat (home-dir) "/" +tmp-dir+ filename)))
+  (uiop:unix-namestring (text-utils:strcat (user-cache-dir) "/"
+                                           +tmp-dir+
+                                           filename)))
 
 (defun gimp-batch-cmd (script)
   (let ((gimp-bin (pref:preferences-gimp-bin)))

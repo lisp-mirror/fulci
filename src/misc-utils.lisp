@@ -752,4 +752,6 @@ Name from Emacs Lisp."
         (parse-number:parse-number number))))
 
 (defun history-path ()
-  (uiop:unix-namestring (text-utils:strcat (fs:home-dir) "/" +search-history-file+)))
+  (uiop:unix-namestring (text-utils:strcat (fs:user-data-dir)
+                                           "/"
+                                           +search-history-file+)))
