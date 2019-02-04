@@ -21,6 +21,7 @@ Table of Contents
 .. 4.2 Import data from imdb
 .. 4.3 Import data from wikipedia
 5 Notes
+.. 5.1 Important note
 6 BUGS
 7 Translations
 8 License
@@ -100,7 +101,6 @@ Table of Contents
   • cl-json;
   • osicat;
   • babel;
-  • nodgui;
   • marshal;
   • cl-pslib;
   • cl-pslib-barcode;
@@ -177,10 +177,9 @@ Table of Contents
   with a: `!' ([BNF] following):
 
   ┌────
-  │
   │ EXPRESSION    := EXPRESSION AND EXPRESSION |
   │                  EXPRESSION OR  EXPRESSION |
-  │                  '(' EXPRESSION ')'          |
+  │                  '(' EXPRESSION ')'        |
   │                  TERM
   │ TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
   │ KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country' |
@@ -189,6 +188,8 @@ Table of Contents
   │ AND           := 'and'
   │ OR            := 'or'
   │ =             := '='
+  │ <             := '<'
+  │ >             := '>'
   │
   └────
 
@@ -221,10 +222,12 @@ Table of Contents
   │                  TERM
   │ TERM          := KEY = VALUE | KEY < VALUE | KEY > VALUE
   │ KEY           := 'director' | 'year' | 'title' | 'note' | 'tags' | 'genres' | 'country'
-  │ VALUE         := [a-z, A-Z, 0-9, %]
+  │ VALUE         := [a-z,A-Z,0-9,%]
   │ AND           := 'and'
   │ OR            := 'or'
   │ =             := '='
+  │ <             := '<'
+  │ >             := '>'
   │
   └────
 
@@ -305,6 +308,14 @@ https://datasets.imdbws.com/
 
 
 [SBCL] http://sbcl.org/
+
+5.1 Important note
+──────────────────
+
+  Older version of the software stored database in: `$HOME/.fulci', but
+  starting from version `0.9.1' it is stored under:
+  `$XDG_DATA_HOME/fulci/', if `$XDG_DATA_HOME' is not set on your system
+  `$HOME/.local/share' is used.
 
 
 6 BUGS

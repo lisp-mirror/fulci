@@ -56,7 +56,6 @@
     - cl-json;
     - osicat;
     - babel;
-    - nodgui;
     - marshal;
     - cl-pslib;
     - cl-pslib-barcode;
@@ -228,6 +227,13 @@ think.
   software to support users profiling/tracking;
 
 - I am not a lawyer.
+
+** Important note
+
+Older version of the software  stored database in: ~$HOME/.fulci~, but
+starting    from    version    ~0.9.1~    it    is    stored    under:
+~$XDG_DATA_HOME/fulci/~, if ~$XDG_DATA_HOME~ is not set on your system
+~$HOME/.local/share~ is used.
 
 * BUGS
 
