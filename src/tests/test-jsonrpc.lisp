@@ -155,7 +155,7 @@
                          "{\"code\":-32600,\"message\":\"Invalid Request\"},\"id\":null}"
                          "]")))))
 
-(deftest test-batch-invalid (jsonrpc-suite)
+(deftest test-batch-invalid-2 (jsonrpc-suite)
   (let* ((json-req "[1, 2, 3]")
          (json-resp (jsonify (elaborate-request json-req))))
     (assert-true

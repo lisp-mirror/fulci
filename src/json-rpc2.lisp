@@ -97,7 +97,7 @@
   (incf *request-id*)
   *request-id*)
 
-(define-condition json-rpc-error ()
+(define-condition json-rpc-error (error)
   ((transaction-id
     :initform nil
     :initarg :transaction-id
@@ -327,66 +327,83 @@
                  (call-fun fun params-list))
                (call-fun fun params))))))))
 
-(defun elaborate-single-request (request)
+(defun displace-single-request (request)
   (flet ((lookup (k)
            (and (consp request)
                 (every #'consp request)
                 (cdr (assoc k request :test #'string-equal)))))
-    (handler-case
-        (let ((protocol-version (lookup +key-name+))
-              (method           (lookup +key-method+))
-              (params           (lookup +key-params+))
-              (id               (lookup +key-id+)))
-          (cond
-            ((null protocol-version)
-             (error 'json-rpc-error
-                    :code (response-error-code    +error-invalid-request+)
-                    :text (response-error-message +error-invalid-request+)))
-            ((not (supported-version-p protocol-version))
-             (error 'json-rpc-error
-                    :code (response-error-code    +error-unsupported-protocol+)
-                    :text (response-error-message +error-unsupported-protocol+)))
-            ((not (listp params))
-             (error 'json-rpc-error
-                    :code (response-error-code    +error-invalid-request+)
-                    :text (response-error-message +error-invalid-request+)))
-            (t
-             (let* ((request      (apply #'make-request method id params))
-                    (elaborated   (call-function request)))
-               (when id
-                 ;; if id is null is  a notification (i.e. the client
-                 ;; does not care about an answer)
-                 (make-response elaborated id :error-object nil))))))
-      (json-rpc-error (e)
-        (make-response nil
-                       (transaction-id e)
-                       :error-object
-                       (make-response-error (or (code e)
-                                                (response-error-code +error-invalid-request+))
-                                            (text e))))
-      (json-syntax-error ()
-        (make-response nil nil :error-object +error-parse+))
-      (error ()
-        (make-response nil nil :error-object +error-internal-error+)))))
+    (let ((protocol-version (lookup +key-name+))
+          (method           (lookup +key-method+))
+          (params           (lookup +key-params+))
+          (id               (lookup +key-id+)))
+      (cond
+        ((null protocol-version)
+         (error 'json-rpc-error
+                :code (response-error-code    +error-invalid-request+)
+                :text (response-error-message +error-invalid-request+)))
+        ((not (supported-version-p protocol-version))
+         (error 'json-rpc-error
+                :code (response-error-code    +error-unsupported-protocol+)
+                :text (response-error-message +error-unsupported-protocol+)))
+        ((not (listp params))
+         (error 'json-rpc-error
+                :code (response-error-code    +error-invalid-request+)
+                :text (response-error-message +error-invalid-request+)))
+        (t
+         (values method id params))))))
+
+(defun elaborate-single-request (request)
+  (handler-case
+      (multiple-value-bind (method id params)
+          (displace-single-request request)
+        (let* ((request      (apply #'make-request method id params))
+               (elaborated   (call-function request)))
+          (when id
+            ;; if id is null is  a notification (i.e. the client
+            ;; does not care about an answer)
+            (make-response elaborated id :error-object nil))))
+    (json-rpc-error (e)
+      (make-response nil
+                     (transaction-id e)
+                     :error-object
+                     (make-response-error (or (code e)
+                                              (response-error-code +error-invalid-request+))
+                                          (text e))))
+    (json-syntax-error ()
+      (make-response nil nil :error-object +error-parse+))
+    (error ()
+      (make-response nil nil :error-object +error-internal-error+))))
+
+(defun likely-not-batch-p (request)
+  (and (every (lambda (a) (and (consp a)
+                               (car   a)
+                               (cdr   a)))
+              request)
+       (assoc +key-name+   request :test #'string-equal)
+       (assoc +key-method+ request :test #'string-equal)
+       (assoc +key-params+ request :test #'string-equal)))
 
 (defun request-batch-p (request)
-  (if (and (listp request)
-           (car request))
-      (cond
-        ((not (consp (car request)))
-         t)
-      ((consp (caar request))
-       (caaar request))
-      (t
-       nil))))
+  (handler-case
+      (progn
+        (displace-single-request request)
+        nil)
+    (json-rpc-error    ()
+      (if (likely-not-batch-p request)
+          nil
+          t))
+    (json-syntax-error () nil)
+    (error             () t)))
 
 (defun elaborate-request (raw-request)
   (handler-case
       (with-input-from-string (stream raw-request)
         (let ((decoded (decode-json stream)))
           (if (request-batch-p decoded)
-              (remove-if #'null
-                         (mapcar #'elaborate-single-request decoded))
+              (if (null decoded)
+                  (elaborate-single-request decoded) ;; will build an error response
+                  (remove-if #'null
+                             (mapcar #'elaborate-single-request decoded)))
               (elaborate-single-request decoded))))
     (json-syntax-error ()
       (make-response nil nil :error-object +error-parse+))))
