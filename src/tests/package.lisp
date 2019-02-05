@@ -29,3 +29,13 @@
         :search-title-expr
         :all-tests)
   (:export :search-title-expr-suite))
+
+(defpackage :test-jsonrpc
+  (:use :cl
+        :alexandria
+        :clunit
+        :constants
+        :text-utils
+        :json-rpc2
+        :all-tests)
+  (:export :test-jsonrpc))

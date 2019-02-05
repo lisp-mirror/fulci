@@ -395,6 +395,27 @@
    :node->dot
    :reconstruct-parent))
 
+(defpackage :json-rpc2
+  (:use :cl
+        :alexandria
+        :cl-json)
+  (:export
+   :generate-request-id
+   :*function-db*
+   :register-function
+   :unregister-function
+   :make-request
+   :make-request*
+   :make-notification
+   :make-notification*
+   :make-batch
+   :jsonify
+   :json-rpc-error
+   :elaborate-request
+   :transaction-id
+   :code
+   :text))
+
 (defpackage :validation
   (:use
    :cl

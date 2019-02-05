@@ -40,47 +40,61 @@
   (assert-true
       (with-tokenizer "and"
         (token-list-eq (list (tok))
-                       +and+)))
+                       search-title-expr::+and+)))
   (assert-true
       (with-tokenizer " or "
         (token-list-eq (list (tok))
-                       +or+)))
+                       search-title-expr::+or+)))
   (assert-true
       (with-tokenizer " = "
         (token-list-eq (list (tok))
-                       +equal+)))
+                       search-title-expr::+equal+)))
   (assert-false
       (with-tokenizer "andy"
         (token-list-eq (list (tok))
-                       +and+)))
+                       search-title-expr::+and+)))
   (assert-false
       (with-tokenizer "torch"
         (token-list-eq (list (tok))
-                       +or+))))
+                       search-title-expr::+or+))))
 
 (deftest test-multiple (search-title-expr-suite)
   (assert-true
       (with-tokenizer "foo and bar"
         (token-list-eq (list (tok)   (tok) (tok)
-                             +value+ +and+ +value+))))
+                             search-title-expr::+value+
+                             search-title-expr::+and+
+                             search-title-expr::+value+))))
     (assert-true
         (with-tokenizer "foo or bar"
           (token-list-eq (list (tok)  (tok) (tok)
-                               +value+ +or+ +value+))))
+                               search-title-expr::+value+
+                               search-title-expr::+or+
+                               search-title-expr::+value+))))
     (assert-true
         (with-tokenizer "forest and bar"
           (token-list-eq (list (tok)  (tok) (tok)
-                               +value+ +and+ +value+))))
+                               search-title-expr::+value+
+                               search-title-expr::+and+
+                               search-title-expr::+value+))))
     (assert-true
         (with-tokenizer "forest and bar"
           (token-list-eq (list (tok)  (tok) (tok)
-                               +value+ +and+ +value+)))))
+                               search-title-expr::+value+
+                               search-title-expr::+and+
+                               search-title-expr::+value+)))))
 
 (deftest test-term (search-title-expr-suite)
   (assert-true
       (with-tokenizer "director = foo and note = bar"
         (token-list-eq (list (tok)          (tok)   (tok)   (tok) (tok)      (tok)   (tok)
-                             +key-director+ +equal+ +value+ +and+ +key-note+ +equal+ +value+)))))
+                             search-title-expr::+key-director+
+                             search-title-expr::+equal+
+                             search-title-expr::+value+
+                             search-title-expr::+and+
+                             search-title-expr::+key-note+
+                             search-title-expr::+equal+
+                             search-title-expr::+value+)))))
 
 (deftest test-subexpr (search-title-expr-suite)
   (assert-true
@@ -104,11 +118,25 @@
                              (tok)  ; =
                              (tok)  ; drama
                              (tok)) ; )
-                       +open-expr+ +key-director+ +equal+ +value+ +and+ +key-note+ +equal+ +value+
-                       +close-expr+
-                       +or+
-                       +open-expr+ +key-tags+ +equal+ +value+ +and+ +key-genres+ +equal+ +value+
-                       +close-expr+))))
+                       search-title-expr::+open-expr+
+                       search-title-expr::+key-director+
+                       search-title-expr::+equal+
+                       search-title-expr::+value+
+                       search-title-expr::+and+
+                       search-title-expr::+key-note+
+                       search-title-expr::+equal+
+                       search-title-expr::+value+
+                       search-title-expr::+close-expr+
+                       search-title-expr::+or+
+                       search-title-expr::+open-expr+
+                       search-title-expr::+key-tags+
+                       search-title-expr::+equal+
+                       search-title-expr::+value+
+                       search-title-expr::+and+
+                       search-title-expr::+key-genres+
+                       search-title-expr::+equal+
+                       search-title-expr::+value+
+                       search-title-expr::+close-expr+))))
 
 (defmacro compare-code (input output-tree output-sql)
   `(progn

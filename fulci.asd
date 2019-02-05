@@ -63,6 +63,7 @@
                 (:file "db-utils")
                 (:file "bs-tree")
                 (:file "rb-tree")
+                (:file "json-rpc2")
                 (:file "validation")
                 (:file "db")
                 (:file "preferences")
@@ -84,6 +85,7 @@
                 (:module tests
                          :components ((:file "package")
                                       (:file "all-tests")
+                                      (:file "test-jsonrpc")
                                       (:file "test-search-expr")))))
 
 ;(push :debug-tk *features*)
