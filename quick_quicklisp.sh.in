@@ -101,7 +101,6 @@ install_dependency () {
      --eval "(ql:quickload \"yacc\")"             \
      --eval "(ql:quickload \"parse-number\")"     \
      --eval "(ql:quickload \"sqlite\")"           \
-     --eval "(ql:quickload \"dbi\")"              \
      --eval "(ql:quickload \"sxql\")"             \
      --eval "(ql:quickload \"nodgui\")"           \
      --eval "(ql:quickload \"drakma\")"           \

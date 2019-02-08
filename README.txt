@@ -83,7 +83,6 @@ Table of Contents
   • alexandria;
   • cl-ppcre;
   • sqlite;
-  • dbi;
   • sxql;
   • yacc;
   • parse-number;
