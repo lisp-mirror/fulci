@@ -32,14 +32,14 @@
            (edit       (make-menu bar    (_ "Edit")))
            (help       (make-menu bar    (_ "Help"))))
       (declare (ignore sep1 sep2 sep3))
-      (make-menubutton db-import (_ "From TSV")    #'temporary-disabled :underline 0)
+      (make-menubutton db-import (_ "From TSV")    #'menu:import-tsv-window :underline 0)
       (make-menubutton export    (_ "Copy")        (menu:copy-db-fn main-window)
                        :underline 0)
-      (make-menubutton export     (_ "Dump SQL")    (menu:dump-db-fn main-window)
+      (make-menubutton export     (_ "Dump SQL")   (menu:dump-db-fn main-window)
                        :underline 0)
-      (make-menubutton export-tsv (_ "Titles")      #'menu::export-tsv-titles
+      (make-menubutton export-tsv (_ "Titles")     #'menu::export-tsv-titles
                        :underline 0)
-      (make-menubutton export-tsv (_ "Copies")      #'menu::export-tsv-copies
+      (make-menubutton export-tsv (_ "Copies")     #'menu::export-tsv-copies
                        :underline 0)
       (make-menubutton db-import (_ "From SQL")    (menu:import-from-sql-fn main-window)
                        :underline 0)

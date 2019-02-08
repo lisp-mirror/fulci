@@ -282,7 +282,6 @@
      :cl
      :alexandria
      :cl-ppcre
-     :dbi
      :sxql
      :local-time
      :config
@@ -291,6 +290,8 @@
     (:export
      :+characters-trouble-name+
      :*connection*
+     :fetch
+     :fetch-all
      :close-db
      :connectedp
      :with-db-transaction
@@ -302,7 +303,6 @@
      :do-rows
      :fetch-raw-list
      :prepare-for-sql-like
-     :keywordize-query-results
      :object-exists-in-db-p
      :object-count-in-db
      :query-low-level
@@ -452,7 +452,6 @@
    :cl
    :alexandria
    :cl-ppcre
-   :cl-dbi
    :sxql
    :config
    :constants
@@ -625,7 +624,6 @@
    :cl
    :alexandria
    :cl-ppcre
-   :cl-dbi
    :sxql
    :cl-csv
    :config

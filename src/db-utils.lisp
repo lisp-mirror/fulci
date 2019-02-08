@@ -68,7 +68,7 @@
 
 (defun close-db ()
   (when (connectedp)
-    (disconnect *connection*)))
+    (sqlite:disconnect *connection*)))
 
 (defgeneric quote-symbol (s))
 
@@ -88,11 +88,35 @@
 
 (defun prepare-query (sql)
   #+:print-sql (misc:dbg "compiling ~a~%" sql)
-  (dbi:prepare *connection* sql))
+  (sqlite:prepare-statement *connection* sql))
 
 (defun execute-query (prepared-sql &optional (parameters nil))
   #+:print-sql (misc:dbg "parameters: ~a~%" parameters)
-  (apply #'dbi:execute (cons prepared-sql parameters)))
+  (let* ((columns-name   (mapcar (lambda (a) (make-keyword (string-upcase a)))
+                                 (sqlite:statement-column-names prepared-sql)))
+         (escaped-params (mapcar (lambda (a)
+                                   (if (stringp a)
+                                       (regex-replace-all "'" a "''")
+                                       a))
+                                 parameters)))
+    (loop
+         for param in escaped-params
+         for i from 1 do
+         (sqlite:bind-parameter prepared-sql i param))
+    (let ((res (loop while (sqlite:step-statement prepared-sql) collect
+                    (loop
+                       for i from 0
+                       for column-name  in columns-name
+                       append
+                         (list column-name (sqlite:statement-column-value prepared-sql i))))))
+      (sqlite:finalize-statement prepared-sql)
+      res)))
+
+(defun fetch-all (executed-query)
+  executed-query)
+
+(defun fetch (executed-query)
+  (first executed-query))
 
 (defun query-low-level (sql &optional (parameters nil))
   (execute-query (prepare-query sql) parameters))
@@ -106,11 +130,8 @@
   (sxql:yield q))
 
 (defmacro with-db-transaction (&body body)
-  `(unwind-protect
-        (progn
-          (dbi:begin-transaction *connection*)
-          ,@body)
-     (dbi:commit *connection*)))
+  `(sqlite:with-transaction *connection*
+     ,@body))
 
 (defmacro do-rows ((row res) table &body body)
   `(let ((,res ,table))
@@ -121,21 +142,6 @@
   (if (not (text-utils:string-empty-p s))
       (format nil "%~a%" s)
       "%"))
-
-(defun keywordize-query-results (raw)
-  (flet ((%keywordize-row-fn (row)
-           (map 'list
-                #'(lambda (cell)
-                    (if (symbolp cell)
-                        (make-keyword (string-upcase (symbol-name cell)))
-                        cell))
-                row)))
-    (if (consp (car raw)) ; list of lists
-        (map 'list
-             #'(lambda (row)
-                 (%keywordize-row-fn row))
-             raw)
-        (%keywordize-row-fn raw))))
 
 (defmacro object-exists-in-db-p (table clause)
   `(fetch (query (select :*
@@ -162,8 +168,8 @@
       a))
 
 (defun count-all (table)
-  (getf (first (keywordize-query-results (fetch-all (query (select ((:as (:count :*) :ct))
-                                                             (from table))))))
+  (getf (first (fetch-all (query (select ((:as (:count :*) :ct))
+                                   (from table)))))
         :ct))
 
 (defun db-path ()
@@ -175,8 +181,7 @@
 (defun init-connection ()
   (when (not (fs:file-exists-p (db-path)))
     (fs:create-file (db-path)))
-  (setf *connection* (dbi:connect :sqlite3
-                                  :database-name (db-path))))
+  (setf *connection* (sqlite:connect (db-path))))
 
 (defmacro with-ready-database ((&key (connect t)) &body body)
   `(let ((sxql:*sql-symbol-conversion* #'db-utils:quote-symbol))
@@ -245,7 +250,7 @@
      ,@body))
 
 (defun get-max-id (table)
-  (or (second (dbi:fetch (query-low-level (format nil "select max (id) from \"~a\""
+  (or (second (fetch (query-low-level (format nil "select max (id) from \"~a\""
                                                   (symbol-name table)))))
 
       0))

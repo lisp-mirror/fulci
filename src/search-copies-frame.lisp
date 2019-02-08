@@ -100,7 +100,8 @@
   (lambda (e)
     (declare (ignore e))
     (dump-search-history entry)
-    (funcall (search-copies-command entry search-results-widget order-columns))))
+    (let ((*search-order* :asc))
+      (funcall (search-copies-command entry search-results-widget order-columns)))))
 
 (defun search-copies-command (entry search-results-widget &optional (order-columns :copy-id))
   (lambda ()

@@ -28,7 +28,6 @@
   :depends-on  (:alexandria
                 :cl-ppcre
                 :sqlite
-                :dbi
                 :sxql
                 :yacc
                 :parse-number

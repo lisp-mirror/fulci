@@ -40,7 +40,7 @@
                                        ;; id it  ot  dir ye  tag ge  note
   :test #'equalp)
 
-(defparameter *search-order* :desc)
+(defparameter *search-order* :asc)
 
 (defclass search-frame (frame)
   ((main-frame
@@ -234,7 +234,8 @@
     (declare (ignore a))
     (add-history search-text-entry (text search-text-entry))
     (dump-search-history search-text-entry)
-    (search-movie-cb search-text-entry search-results)))
+    (let ((*search-order* :asc))
+      (search-movie-cb search-text-entry search-results))))
 
 (defun search-movie-button-cb (search-text-entry search-results)
   (lambda ()

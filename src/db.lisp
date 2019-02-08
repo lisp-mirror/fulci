@@ -337,19 +337,18 @@
                                 (prepare-for-sql-like description-looking-for))))
 
 (defun table->alist (table col)
-  (let ((all (keywordize-query-results (dbi:fetch-all (query (select (:id col)
-                                                               (from table)
-                                                               (order-by col)))))))
+  (let ((all (fetch-all (query (select (:id col)
+                                 (from table)
+                                 (order-by col))))))
     (loop for i in all collect
          (cons (getf i :id)
                (getf i col)))))
 
 (defun persons->alist (filter)
-  (let ((all (keywordize-query-results
-              (dbi:fetch-all (query (select (:id :primary-name)
-                                            (from +table-person+)
-                                            (where (:like :primary-name filter))
-                                            (order-by :primary-name)))))))
+  (let ((all (fetch-all (query (select (:id :primary-name)
+                                 (from +table-person+)
+                                 (where (:like :primary-name filter))
+                                 (order-by :primary-name))))))
     (loop for i in all collect
          (cons (getf i :id)
                (getf i :primary-name)))))
@@ -381,28 +380,28 @@
            (where (:= :primary-name name)))))
 
 (defun find-person (name)
-  (keywordize-query-results (object-exists-in-db-p +table-person+
-                                                   (:like :primary-name name))))
+  (object-exists-in-db-p +table-person+
+                         (:like :primary-name name)))
 
 (defun all-genres ()
-  (keywordize-query-results (dbi:fetch-all (query (select :*
-                                                    (from db:+table-genre+))))))
+  (fetch-all (query (select :*
+                      (from db:+table-genre+)))))
 
 (defun all-genres-description ()
   (loop for row in (all-genres) collect
        (getf row :description)))
 
 (defun all-countries ()
-  (keywordize-query-results (dbi:fetch-all (query (select :*
-                                                    (from +table-country+))))))
+  (fetch-all (query (select :*
+                      (from +table-country+)))))
 
 (defun all-countries-description ()
   (loop for row in (all-countries) collect
        (getf row :description)))
 
 (defun all-formats ()
-  (keywordize-query-results (dbi:fetch-all (query (select :*
-                                                    (from db:+table-movie-storage-format+))))))
+  (fetch-all (query (select :*
+                      (from db:+table-movie-storage-format+)))))
 
 (defun all-formats-description ()
   (loop for row in (all-formats) collect
@@ -419,9 +418,9 @@
   (unique-description->id +table-movie-storage-format+ description))
 
 (defun id-desc-alist-from-table (table)
-  (let ((all (keywordize-query-results (dbi:fetch-all (query (select (:id :description)
-                                                               (from table)
-                                                               (order-by :description)))))))
+  (let ((all (fetch-all (query (select (:id :description)
+                                 (from table)
+                                 (order-by :description))))))
     (loop for i in all collect
          (cons (getf i :id)
                (getf i :description)))))
@@ -429,24 +428,18 @@
 (defgeneric fetch-single (sql))
 
 (defmethod fetch-single (sql)
-  (fetch-single (query sql)))
+  (fetch (query sql)))
 
 (defmethod fetch-single ((sql string))
-  (keywordize-query-results (dbi:fetch (query-low-level sql nil))))
-
-(defmethod fetch-single ((sql dbi.driver:<dbi-query>))
-  (keywordize-query-results (dbi:fetch sql)))
+  (fetch (query-low-level sql nil)))
 
 (defgeneric fetch-all-rows (query))
 
 (defmethod fetch-all-rows (sql)
-  (fetch-all-rows (query sql)))
+  (fetch-all (query sql)))
 
 (defmethod fetch-all-rows ((sql string))
-  (keywordize-query-results (dbi:fetch-all (query-low-level sql nil))))
-
-(defmethod fetch-all-rows ((sql dbi.driver:<dbi-query>))
-  (keywordize-query-results (dbi:fetch-all sql)))
+  (fetch-all (query-low-level sql nil)))
 
 (defun fetch-from-any-id (table id)
   (fetch-single (select :*
@@ -493,7 +486,7 @@
     (group-by :title-id)))
 
 (defun search-titles-main-frame (key &key
-                                       (order-dir :asc)
+                                       (order-dir :desc)
                                        (order-columns :title-id))
   (with-director-db-id (director-id)
     (let* ((res (select (:*
@@ -511,39 +504,6 @@
                   (order-by `(,order-dir ,order-columns))
                   (group-by :title-id))))
      (fetch-all-rows res))))
-
-(defun search-titles-by-genre (key &key
-                                    (order-dir :asc)
-                                    (order-columns :title-id))
-  (let* ((res (select ((:as :title.id            :title-id)
-                       (:as :title.primary-title :pt)
-                       (:as :original-title      :ot)
-                       :year
-                       (:as :genre.description   :genre-desc))
-                (from :title)
-                (inner-join :title-genre :on (:= :title-genre.title :title.id))
-                (inner-join :genre       :on (:= :genre.id :title-genre.genre))
-                (where (:like :genre-desc (prepare-for-sql-like key)))
-                (order-by `(,order-dir ,order-columns)))))
-     (fetch-all-rows res)))
-
-(defun all-title-genres (title-id)
-  (let* ((res (select ((:as :genre.description :description))
-                (from :title)
-                (inner-join :title-genre :on (:= :title-genre.title :title.id))
-                (inner-join :genre       :on (:= :genre.id :title-genre.genre))
-                (where (:= :title.id title-id))
-                (order-by (:asc :description)))))
-     (remove-if #'(lambda (a) (typep a 'symbol)) (flatten (fetch-all-rows res)))))
-
-(defun all-title-genres-ids (title-id)
-  (let* ((res (select ((:as :genre.id :gid))
-                (from :title)
-                (inner-join :title-genre :on (:= :title-genre.title :title.id))
-                (inner-join :genre       :on (:= :gid               :title-genre.genre))
-                (where (:= :title.id title-id))
-                (order-by (:asc :description)))))
-     (remove-if #'(lambda (a) (typep a 'symbol)) (flatten (fetch-all-rows res)))))
 
 (defun all-genres-by-title (title-id)
   (let* ((res (select ((:as :genre.id          :id)
@@ -635,7 +595,7 @@
                         (from :person)
                         (where (:and (:like :primary-name (prepare-for-sql-like key))))
                         (order-by :primary-name)))))
-  (keywordize-query-results (dbi:fetch-all query))))
+  (fetch-all query)))
 
 (defun link-title-to-countries (title-id countries)
   (loop for country in countries do
@@ -851,7 +811,7 @@
 (defun last-n-copies-id (offset)
     (let* ((res (select :*
                   (from +view-copies-genres-directors+)
-                  (order-by (:desc :copy-id))
+                  (order-by (:asc :copy-id))
                   (limit offset))))
       (fetch-all-rows res)))
 
