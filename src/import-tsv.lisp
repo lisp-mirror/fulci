@@ -154,20 +154,21 @@
                   :key-datum #'homonym-key
                   :key       #'homonym-key))
 
-(defun homonyms-persons (file allowed-professions)
+(defun homonyms-persons (file allowed-professions progress-fn)
   (let ((tree (rb-tree:make-root-rb-node nil rb-tree:+rb-red+)))
-    (import-file file
-                 (lambda (row)
-                   (when (filter-whitelist (person-row-professions row) allowed-professions)
-                     (let* ((name     (person-row-name row))
-                            (birthday (person-row-year row))
-                            (found    (homonym-search tree name birthday)))
-                       (cond
-                         (found
-                          (incf (homonym-count (rb-tree:data found))))
-                         (t
-                          (setf tree (homonym-insert tree name birthday 1))))))))
-    tree))
+    (with-line-count (total-lines file)
+      (import-file file
+                   (lambda-row (total-lines progress-fn (row))
+                     (when (filter-whitelist (person-row-professions row) allowed-professions)
+                       (let* ((name     (person-row-name row))
+                              (birthday (person-row-year row))
+                              (found    (homonym-search tree name birthday)))
+                         (cond
+                           (found
+                            (incf (homonym-count (rb-tree:data found))))
+                           (t
+                            (setf tree (homonym-insert tree name birthday 1))))))))
+      tree)))
 
 (defun checking-other-id (table id)
   (object-exists-in-db-p table
@@ -176,7 +177,7 @@
 (defun import-persons (file &key
                               (allowed-professions '("(?i)director"))
                               (progress-fn          (lambda (a) (declare (ignore a)))))
-  (let ((all-names (homonyms-persons file allowed-professions)))
+  (let ((all-names (homonyms-persons file allowed-professions progress-fn)))
     (with-line-count (total-lines file)
       (with-db-transaction
         (import-file file
