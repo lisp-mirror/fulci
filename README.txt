@@ -61,7 +61,8 @@ Table of Contents
   • sbcl compiler;
   • sqlite3;
   • wish graphical shell (>= 8.6);
-  • GIMP.
+  • GIMP;
+  • gv (postscript viewer).
 
 
 2.2 Libraries
@@ -70,8 +71,11 @@ Table of Contents
 2.2.1 C
 ╌╌╌╌╌╌╌
 
-  • libsqlite3 There is no needs for the header file, just the actual
-    library is needed
+  • libsqlite3
+  • pslib1
+
+  There is no needs for the header file, just the actual library is
+  needed
 
 
 2.2.2 Common Lisp

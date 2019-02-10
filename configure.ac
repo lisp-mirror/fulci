@@ -90,10 +90,12 @@ fi
 AC_PATH_PROG([GV],[gv],[no])
 
 if test "$GV" = "no" ; then
-   AC_MSG_WARN([Can not find gv (PostScript visualizer).])
+   AC_MSG_ERROR([Can not find gv (PostScript visualizer).])
    exit 1;
 fi
 
+AC_CHECK_LIB([ps], [PS_boot], [],
+                   AC_MSG_ERROR([Can not find pslib (PostScript generation library).]))
 
 AC_CONFIG_FILES([Makefile quick_quicklisp.sh po/Makefile.in src/config.lisp.in])
 

@@ -98,6 +98,8 @@ install_dependency () {
      --eval "(ql:quickload \"cl-syntax\")"        \
      --eval "(ql:quickload \"lquery\")"           \
      --eval "(ql:quickload \"osicat\")"           \
+     --eval "(ql:quickload \"local-time\")"       \
+     --eval "(ql:quickload \"cl-csv\")"           \
      --eval "(ql:quickload \"yacc\")"             \
      --eval "(ql:quickload \"parse-number\")"     \
      --eval "(ql:quickload \"sqlite\")"           \

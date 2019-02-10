@@ -21,14 +21,17 @@
    - sbcl compiler;
    - sqlite3;
    - wish graphical shell (>= 8.6);
-   - GIMP.
+   - GIMP;
+   - gv (postscript viewer).
 
 ** Libraries
 
 *** C
 
     - libsqlite3
-      There is no needs for the header file, just the actual library is needed
+    - pslib1
+
+There is no needs for the header file, just the actual library is needed
 
 *** Common Lisp
 
