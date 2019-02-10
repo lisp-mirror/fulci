@@ -1,0 +1,721 @@
+# English translations for fulci package.
+# Copyright (C) 2019 cage
+# This file is distributed under the same license as the fulci package.
+# Automatically generated, 2019.
+#
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fulci 0.1\n"
+"Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
+"POT-Creation-Date: 2019-01-27 12:22+0100\n"
+"PO-Revision-Date: 2019-01-27 12:22+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en@quot\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/search-frame.lisp:93 src/search-copies-frame.lisp:78
+msgid "unknown"
+msgstr "unknown"
+
+#: src/search-frame.lisp:138 src/menu-commands.lisp:401
+msgid "Invalid search expression"
+msgstr "Invalid search expression"
+
+#: src/search-frame.lisp:148 src/menu-commands.lisp:396
+#: src/menu-commands.lisp:420
+msgid "Empty search criteria"
+msgstr "Empty search criteria"
+
+#: src/search-frame.lisp:164 src/search-copies-frame.lisp:127
+msgid "ID"
+msgstr "ID"
+
+#: src/search-frame.lisp:167 src/search-copies-frame.lisp:130
+msgid "International title"
+msgstr "International title"
+
+#: src/search-frame.lisp:173 src/nodgui-utils.lisp:100
+#: src/search-copies-frame.lisp:136
+msgid "Original title"
+msgstr "Original title"
+
+#: src/search-frame.lisp:179 src/search-copies-frame.lisp:142
+msgid "Director"
+msgstr "Director"
+
+#: src/search-frame.lisp:185 src/search-copies-frame.lisp:148
+msgid "Production year"
+msgstr "Production year"
+
+#: src/search-frame.lisp:191 src/search-copies-frame.lisp:154
+msgid "Genre"
+msgstr "Genre"
+
+#: src/search-frame.lisp:197
+msgid "Tags"
+msgstr "Tags"
+
+#: src/search-frame.lisp:203 src/nodgui-utils.lisp:143
+#: src/search-copies-frame.lisp:169
+msgid "Notes"
+msgstr "Notes"
+
+#: src/search-frame.lisp:281
+msgid "Title details"
+msgstr "Title details"
+
+#: src/search-frame.lisp:316 src/search-copies-frame.lisp:212
+msgid "search title, director, year..."
+msgstr "search title, director, year..."
+
+#: src/search-frame.lisp:373 src/search-copies-frame.lisp:263
+msgid "delete selected"
+msgstr "delete selected"
+
+#: src/search-frame.lisp:374
+msgid "add title"
+msgstr "add title"
+
+#: src/search-frame.lisp:375 src/search-copies-frame.lisp:264
+msgid "edit title"
+msgstr "edit title"
+
+#: src/search-frame.lisp:376
+msgid "add a copy"
+msgstr "add a copy"
+
+#: src/search-frame.lisp:377
+msgid "lookup copy"
+msgstr "lookup copy"
+
+#: src/search-frame.lisp:378
+msgid "title details"
+msgstr "title details"
+
+#: src/main-frame.lisp:22
+msgid "Database"
+msgstr "Database"
+
+#: src/main-frame.lisp:24
+msgid "Import"
+msgstr "Import"
+
+#: src/main-frame.lisp:26
+msgid "Export"
+msgstr "Export"
+
+#: src/main-frame.lisp:27
+msgid "As TSV"
+msgstr "As TSV"
+
+#: src/main-frame.lisp:29
+msgid "Edit"
+msgstr "Edit"
+
+#: src/main-frame.lisp:30
+msgid "Help"
+msgstr "Help"
+
+#: src/main-frame.lisp:32
+msgid "From TSV"
+msgstr "From TSV"
+
+#: src/main-frame.lisp:33
+msgid "Copy"
+msgstr "Copy"
+
+#: src/main-frame.lisp:35
+msgid "Dump SQL"
+msgstr "Dump SQL"
+
+#: src/main-frame.lisp:37
+msgid "Titles"
+msgstr "Titles"
+
+#: src/main-frame.lisp:39
+msgid "Copies"
+msgstr "Copies"
+
+#: src/main-frame.lisp:41
+msgid "From SQL"
+msgstr "From SQL"
+
+#: src/main-frame.lisp:43
+msgid "From backup"
+msgstr "From backup"
+
+#: src/main-frame.lisp:45
+msgid "Quit"
+msgstr "Quit"
+
+#: src/main-frame.lisp:46 src/preferences.lisp:165
+msgid "Preferences"
+msgstr "Preferences"
+
+#: src/main-frame.lisp:49 src/menu-commands.lisp:22
+msgid "About"
+msgstr "About"
+
+#: src/main-toolbar.lisp:49 src/main-toolbar.lisp:122
+msgid "This item already exists"
+msgstr "This item already exists"
+
+#: src/main-toolbar.lisp:55 src/main-toolbar.lisp:135
+msgid "No item was selected"
+msgstr "No item was selected"
+
+#: src/main-toolbar.lisp:64 src/main-toolbar.lisp:144 src/main-toolbar.lisp:150
+msgid "Edit item"
+msgstr "Edit item"
+
+#: src/main-toolbar.lisp:65 src/main-toolbar.lisp:145
+msgid "Please insert the new description"
+msgstr "Please insert the new description"
+
+#: src/main-toolbar.lisp:67 src/main-toolbar.lisp:147 src/main-toolbar.lisp:156
+#: src/main-toolbar.lisp:210 src/menu-commands.lisp:388
+#: src/menu-commands.lisp:412 src/preferences.lisp:219
+msgid "OK"
+msgstr "OK"
+
+#: src/main-toolbar.lisp:73 src/main-toolbar.lisp:168 src/manage-movie.lisp:398
+#: src/manage-movie.lisp:412
+msgid "Filter:"
+msgstr "Filter:"
+
+#: src/main-toolbar.lisp:119 src/main-toolbar.lisp:159
+#: src/manage-movie.lisp:292
+msgid "Year must be a positive number"
+msgstr "Year must be a positive number"
+
+#: src/main-toolbar.lisp:151
+msgid "Please insert the new year of birth"
+msgstr "Please insert the new year of birth"
+
+#: src/main-toolbar.lisp:161
+msgid "Description empty"
+msgstr "Description empty"
+
+#: src/main-toolbar.lisp:163
+msgid "This person already exists in the database"
+msgstr "This person already exists in the database"
+
+#: src/main-toolbar.lisp:176
+msgid "Birth year"
+msgstr "Birth year"
+
+#: src/main-toolbar.lisp:208
+msgid "Filter items"
+msgstr "Filter items"
+
+#: src/main-toolbar.lisp:209
+msgid "Please insert a prefix name filter (minimum length 3 characters)"
+msgstr "Please insert a prefix name filter (minimum length 3 characters)"
+
+#: src/main-toolbar.lisp:213
+msgid "Please provide a prefix of three characters minimum"
+msgstr "Please provide a prefix of three characters minimum"
+
+#: src/main-toolbar.lisp:215
+msgid "Manage persons"
+msgstr "Manage persons"
+
+#: src/main-toolbar.lisp:228
+msgid "Manage physical supports"
+msgstr "Manage physical supports"
+
+#: src/main-toolbar.lisp:233
+msgid "Manage genres"
+msgstr "Manage genres"
+
+#: src/main-toolbar.lisp:235
+msgid "manage people"
+msgstr "manage people"
+
+#: src/main-toolbar.lisp:236
+msgid "manage storage format"
+msgstr "manage storage format"
+
+#: src/main-toolbar.lisp:237
+msgid "manage genres"
+msgstr "manage genres"
+
+#: src/menu-commands.lisp:38 src/menu-commands.lisp:49
+#: src/menu-commands.lisp:67 src/menu-commands.lisp:218
+#: src/menu-commands.lisp:227 src/menu-commands.lisp:243
+#: src/menu-commands.lisp:269 src/search-copies-frame.lisp:62
+msgid "Choose file"
+msgstr "Choose file"
+
+#: src/menu-commands.lisp:56
+msgid "The database has been serialized to filesystem"
+msgstr "The database has been serialized to filesystem"
+
+#: src/menu-commands.lisp:57
+msgid "Dump completed"
+msgstr "Dump completed"
+
+#: src/menu-commands.lisp:98
+msgid "Done: import genres"
+msgstr "Done: import genres"
+
+#: src/menu-commands.lisp:108
+msgid "Done: import persons"
+msgstr "Done: import persons"
+
+#: src/menu-commands.lisp:116
+msgid "Done: import titles"
+msgstr "Done: import titles"
+
+#: src/menu-commands.lisp:121
+msgid "Done: link titles to genres"
+msgstr "Done: link titles to genres"
+
+#: src/menu-commands.lisp:126
+msgid "Done: import crew"
+msgstr "Done: import crew"
+
+#: src/menu-commands.lisp:127
+msgid "Import operation succefully!"
+msgstr "Import operation succefully!"
+
+#: src/menu-commands.lisp:127
+msgid "Success"
+msgstr "Success"
+
+#: src/menu-commands.lisp:156
+msgid ""
+"WARNING: this operation could takes a lot of time to complete, with a "
+"magnitude going from HOURS to DAYS in the worst case and could render your "
+"system instable "
+msgstr ""
+"WARNING: this operation could takes a lot of time to complete, with a "
+"magnitude going from HOURS to DAYS in the worst case and could render your "
+"system instable "
+
+#: src/menu-commands.lisp:166
+msgid "A file will be imported to refresh all movie genres"
+msgstr "A file will be imported to refresh all movie genres"
+
+#: src/menu-commands.lisp:170
+msgid "A file will be imported to refresh all persons."
+msgstr "A file will be imported to refresh all persons."
+
+#: src/menu-commands.lisp:174
+msgid "A file will be imported to refresh all movies, "
+msgstr "A file will be imported to refresh all movies, "
+
+#: src/menu-commands.lisp:176
+#, lisp-format
+msgid "from year ~a to year ~a."
+msgstr "from year ~a to year ~a."
+
+#: src/menu-commands.lisp:183
+msgid "A file will be scanned to attribute genres to each movie"
+msgstr "A file will be scanned to attribute genres to each movie"
+
+#: src/menu-commands.lisp:188
+msgid "A file will be scanned to attribute directors to movies"
+msgstr "A file will be scanned to attribute directors to movies"
+
+#: src/menu-commands.lisp:192
+msgid "Really start this operation?"
+msgstr "Really start this operation?"
+
+#: src/menu-commands.lisp:195 src/nodgui-utils.lisp:18
+msgid "Confirm operation"
+msgstr "Confirm operation"
+
+#: src/menu-commands.lisp:211
+msgid "Import Tab Separated Values file"
+msgstr "Import Tab Separated Values file"
+
+#: src/menu-commands.lisp:214
+msgid "Genres file:"
+msgstr "Genres file:"
+
+#: src/menu-commands.lisp:223
+msgid "Persons file:"
+msgstr "Persons file:"
+
+#: src/menu-commands.lisp:230
+msgid "Allowed professions (comma separated values):"
+msgstr "Allowed professions (comma separated values):"
+
+#: src/menu-commands.lisp:239
+msgid "Titles file:"
+msgstr "Titles file:"
+
+#: src/menu-commands.lisp:248
+msgid "Minimum year to import from:"
+msgstr "Minimum year to import from:"
+
+#: src/menu-commands.lisp:256
+msgid "Maximum year to import from:"
+msgstr "Maximum year to import from:"
+
+#: src/menu-commands.lisp:263
+msgid "Crew file:"
+msgstr "Crew file:"
+
+#: src/menu-commands.lisp:274
+msgid "Minimum runtime in minutes:"
+msgstr "Minimum runtime in minutes:"
+
+#: src/menu-commands.lisp:281
+msgid "Associate title with genre"
+msgstr "Associate title with genre"
+
+#: src/menu-commands.lisp:286
+msgid "Progress"
+msgstr "Progress"
+
+#: src/menu-commands.lisp:294
+msgid "Start import"
+msgstr "Start import"
+
+#: src/menu-commands.lisp:297 src/preferences.lisp:235
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/menu-commands.lisp:352
+msgid ""
+"This operation will empty your old database and will replace it with the "
+"imported data. Do you want to continue? Please ensure that the backup comes "
+"from a trusted source because this operation will read and execute any SQL "
+"command in the file."
+msgstr ""
+"This operation will empty your old database and will replace it with the "
+"imported data. Do you want to continue? Please ensure that the backup comes "
+"from a trusted source because this operation will read and execute any SQL "
+"command in the file."
+
+#: src/menu-commands.lisp:353 src/menu-commands.lisp:373
+msgid "Warning"
+msgstr "Warning"
+
+#: src/menu-commands.lisp:356 src/menu-commands.lisp:375
+msgid "Choose a file"
+msgstr "Choose a file"
+
+#: src/menu-commands.lisp:366
+msgid "The database has been restored."
+msgstr "The database has been restored."
+
+#: src/menu-commands.lisp:367 src/menu-commands.lisp:381
+msgid "Load completed"
+msgstr "Load completed"
+
+#: src/menu-commands.lisp:372
+msgid ""
+"This operation will empty your old database and will replace it with the "
+"imported data, after the program will quit. Do you want to continue?"
+msgstr ""
+"This operation will empty your old database and will replace it with the "
+"imported data, after the program will quit. Do you want to continue?"
+
+#: src/menu-commands.lisp:380
+msgid "The database has been restored, restart the program is necessary now."
+msgstr "The database has been restored, restart the program is necessary now."
+
+#: src/menu-commands.lisp:386 src/menu-commands.lisp:410
+msgid "Search"
+msgstr "Search"
+
+#: src/menu-commands.lisp:387 src/menu-commands.lisp:411
+msgid "Please insert the search criteria"
+msgstr "Please insert the search criteria"
+
+#: src/menu-commands.lisp:390 src/menu-commands.lisp:414
+msgid "Save"
+msgstr "Save"
+
+#: src/nodgui-utils.lisp:14
+#, lisp-format
+msgid "~a element will be deleted; continue?"
+msgid_plural "~a elements will be deleted; continue?"
+msgstr[0] "~a element will be deleted; continue?"
+msgstr[1] "~a elements will be deleted; continue?"
+
+#: src/nodgui-utils.lisp:22
+msgid "Operation completed"
+msgstr "Operation completed"
+
+#: src/nodgui-utils.lisp:22
+msgid "information"
+msgstr "information"
+
+#: src/nodgui-utils.lisp:25
+msgid "Information"
+msgstr "Information"
+
+#: src/nodgui-utils.lisp:28
+msgid "Error"
+msgstr "Error"
+
+#: src/nodgui-utils.lisp:113
+msgid "Country"
+msgstr "Country"
+
+#: src/nodgui-utils.lisp:116
+msgid "Directors"
+msgstr "Directors"
+
+#: src/nodgui-utils.lisp:131
+msgid "Year"
+msgstr "Year"
+
+#: src/nodgui-utils.lisp:139
+msgid "Genres"
+msgstr "Genres"
+
+#: src/nodgui-utils.lisp:150
+msgid "Image not available"
+msgstr "Image not available"
+
+#: src/manage-movie.lisp:200
+msgid "Choose item"
+msgstr "Choose item"
+
+#: src/manage-movie.lisp:201
+msgid ""
+"These are the titles returned from wikipedia, select one to accept or close "
+"window to discard."
+msgstr ""
+"These are the titles returned from wikipedia, select one to accept or close "
+"window to discard."
+
+#: src/manage-movie.lisp:290
+msgid "Primary title can not be empty"
+msgstr "Primary title can not be empty"
+
+#: src/manage-movie.lisp:294
+msgid "Runtime must be a positive number"
+msgstr "Runtime must be a positive number"
+
+#: src/manage-movie.lisp:310
+msgid "No director choosen"
+msgstr "No director choosen"
+
+#: src/manage-movie.lisp:351
+msgid "Press to add an image from file"
+msgstr "Press to add an image from file"
+
+#: src/manage-movie.lisp:355
+msgid "Primary title:"
+msgstr "Primary title:"
+
+#: src/manage-movie.lisp:360
+msgid "Original title:"
+msgstr "Original title:"
+
+#: src/manage-movie.lisp:365
+msgid "Added directors:"
+msgstr "Added directors:"
+
+#: src/manage-movie.lisp:371
+msgid "Director:"
+msgstr "Director:"
+
+#: src/manage-movie.lisp:374 src/manage-copies.lisp:207
+msgid "Search:"
+msgstr "Search:"
+
+#: src/manage-movie.lisp:381
+msgid "Year:"
+msgstr "Year:"
+
+#: src/manage-movie.lisp:386
+msgid "Runtime (minutes):"
+msgstr "Runtime (minutes):"
+
+#: src/manage-movie.lisp:391
+msgid "Genres:"
+msgstr "Genres:"
+
+#: src/manage-movie.lisp:405
+msgid "Countries:"
+msgstr "Countries:"
+
+#: src/manage-movie.lisp:419
+msgid "Tags (comma separated values):"
+msgstr "Tags (comma separated values):"
+
+#: src/manage-movie.lisp:424 src/manage-copies.lisp:197
+msgid "Notes:"
+msgstr "Notes:"
+
+#: src/manage-movie.lisp:429 src/manage-copies.lisp:213
+msgid "Apply"
+msgstr "Apply"
+
+#: src/manage-movie.lisp:433 src/manage-copies.lisp:217
+msgid "Close"
+msgstr "Close"
+
+#: src/manage-movie.lisp:452
+msgid "get data from wikipedia"
+msgstr "get data from wikipedia"
+
+#: src/manage-movie.lisp:453
+msgid "get movie's image from wikipedia"
+msgstr "get movie's image from wikipedia"
+
+#: src/manage-movie.lisp:527
+msgid "Add a new movie"
+msgstr "Add a new movie"
+
+#: src/manage-copies.lisp:119
+#, lisp-format
+msgid "Added new copy with id: ~a"
+msgstr "Added new copy with id: ~a"
+
+#: src/manage-copies.lisp:132
+msgid "Barcode can not be empty"
+msgstr "Barcode can not be empty"
+
+#: src/manage-copies.lisp:134
+msgid "Position must be four comma separated fields"
+msgstr "Position must be four comma separated fields"
+
+#: src/manage-copies.lisp:140
+msgid "No format choosen"
+msgstr "No format choosen"
+
+#: src/manage-copies.lisp:158
+msgid "Movie information"
+msgstr "Movie information"
+
+#: src/manage-copies.lisp:162
+msgid "Primary Title"
+msgstr "Primary Title"
+
+#: src/manage-copies.lisp:166
+msgid "Original Title"
+msgstr "Original Title"
+
+#: src/manage-copies.lisp:170
+msgid "Direction"
+msgstr "Direction"
+
+#: src/manage-copies.lisp:174
+msgid "Production Year"
+msgstr "Production Year"
+
+#: src/manage-copies.lisp:185
+msgid "Product barcode:"
+msgstr "Product barcode:"
+
+#: src/manage-copies.lisp:191
+msgid "Position (building,room,storage,shelf):"
+msgstr "Position (building,room,storage,shelf):"
+
+#: src/manage-copies.lisp:204
+msgid "Format:"
+msgstr "Format:"
+
+#: src/manage-copies.lisp:281
+msgid "Add a new movie copy"
+msgstr "Add a new movie copy"
+
+#: src/search-copies-frame.lisp:160
+msgid "Position"
+msgstr "Position"
+
+#: src/search-copies-frame.lisp:163 src/search-copies-frame.lisp:185
+msgid "Format"
+msgstr "Format"
+
+#: src/search-copies-frame.lisp:178
+msgid "Copy details"
+msgstr "Copy details"
+
+#: src/search-copies-frame.lisp:265
+msgid "edit copy"
+msgstr "edit copy"
+
+#: src/search-copies-frame.lisp:266
+msgid "generate copies barcode"
+msgstr "generate copies barcode"
+
+#: src/search-copies-frame.lisp:267
+msgid "movie copy details"
+msgstr "movie copy details"
+
+#: src/preferences.lisp:174
+msgid "Default physical movie copy format"
+msgstr "Default physical movie copy format"
+
+#: src/preferences.lisp:179
+msgid "Default physical position of a movie copy"
+msgstr "Default physical position of a movie copy"
+
+#: src/preferences.lisp:184
+msgid "Page width in millimiters"
+msgstr "Page width in millimiters"
+
+#: src/preferences.lisp:189
+msgid "Page height in millimiters"
+msgstr "Page height in millimiters"
+
+#: src/preferences.lisp:194
+msgid "Barcode height in millimiters"
+msgstr "Barcode height in millimiters"
+
+#: src/preferences.lisp:199
+msgid "Barcode width in millimiters"
+msgstr "Barcode width in millimiters"
+
+#: src/preferences.lisp:204
+msgid "Wikipedia hostname"
+msgstr "Wikipedia hostname"
+
+#: src/preferences.lisp:209 src/preferences.lisp:214
+msgid "PostScript viewer program path"
+msgstr "PostScript viewer program path"
+
+#: src/preferences.lisp:270
+msgid "General preferences"
+msgstr "General preferences"
+
+#: src/preferences.lisp:273
+msgid "Printing"
+msgstr "Printing"
+
+#: src/preferences.lisp:276
+msgid "Networking"
+msgstr "Networking"
+
+#: src/preferences.lisp:279
+msgid "External programs"
+msgstr "External programs"
+
+#: src/db.lisp:365
+msgid "unkn."
+msgstr "unkn."
