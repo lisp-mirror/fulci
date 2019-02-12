@@ -94,8 +94,15 @@ if test "$GV" = "no" ; then
    exit 1;
 fi
 
+AC_CHECK_HEADER("libps/pslib.h", [],[AC_MSG_ERROR([Can not find pslib developement header.])], [])
+
+AC_CHECK_HEADER("openssl/ssl.h", [],[AC_MSG_ERROR([Can not find libssl developement header.])], [])
+
 AC_CHECK_LIB([ps], [PS_boot], [],
                    AC_MSG_ERROR([Can not find pslib (PostScript generation library).]))
+
+AC_CHECK_LIB([ssl], [SSL_new], [],
+                   AC_MSG_ERROR([Can not find openssl library.]))
 
 AC_CONFIG_FILES([Makefile quick_quicklisp.sh po/Makefile.in src/config.lisp.in])
 

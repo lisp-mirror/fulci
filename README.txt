@@ -19,7 +19,7 @@ Table of Contents
 ..... 4.1.1 Search movie copies
 ..... 4.1.2 Searching titles
 .. 4.2 Import data from imdb
-.. 4.3 Import data from wikipedia
+.. 4.3 Import data from Wikipedia
 5 Notes
 .. 5.1 Important note
 6 BUGS
@@ -46,7 +46,7 @@ Table of Contents
   • Adding titles or copies and perform search with an [expression
     language];
   • generating barcode to identify a copy of a movie;
-  • optionally import data from wikipedia
+  • optionally import data from Wikipedia
 
 
 [expression language] See section 4.1
@@ -73,9 +73,10 @@ Table of Contents
 
   • libsqlite3
   • pslib1
+  • libssl
 
-  There is no needs for the header file, just the actual library is
-  needed
+  It is recommended to install both the libraries and their headers file
+  (usually the `*-dev' package).
 
 
 2.2.2 Common Lisp
@@ -274,15 +275,15 @@ https://datasets.imdbws.com/
 [license] https://www.imdb.com/interfaces/
 
 
-4.3 Import data from wikipedia
+4.3 Import data from Wikipedia
 ──────────────────────────────
 
-  Fulci can fetch movie data and movie image from wikipedia when a title
+  Fulci can fetch movie data and movie image from Wikipedia when a title
   is added or updated.
 
-  Please note that even if the movie textual data (director, runtime)
-  are usually released under a perimissive license often the image data
-  are not, it is the user responsability to comply with their local
+  Please note that even if the movie textual data (director, run-time)
+  are usually released under a permissive license often the image data
+  are not, it is the user responsibility to comply with their local
   copyright law when this data are used.
 
   In any case please do *not* distribute this program together with a
