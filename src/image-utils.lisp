@@ -33,7 +33,7 @@
   (let ((gimp-bin (pref:preferences-gimp-bin)))
     (if (text-utils:string-empty-p gimp-bin)
         (error (_ "No gimp program found in preferences"))
-        (format nil "echo \"~a\" | ~a -i -b -" script gimp-bin))))
+        (format nil "echo \"~a\" | ~a -d -f -i -b -" script gimp-bin))))
 
 (defun gimp-image->tga-script (img-file tga-file)
   (let* ((img-path-string (format nil "\\\"~a\\\"" img-file))
