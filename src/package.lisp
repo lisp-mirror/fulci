@@ -583,6 +583,8 @@
    :set-place
    :preferences-wiki-host
    :set-wiki-host
+   :preferences-wiki-important-string
+   :set-wiki-important-string
    :preferences-gv-bin
    :set-gv-bin
    :preferences-gimp-bin

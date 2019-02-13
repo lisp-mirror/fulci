@@ -206,6 +206,20 @@
   (and (string-not-empty-p title)
        (> (length title) 5)))
 
+(defun sort-wiki-page-results (entries)
+  (let ((important-word (pref:preferences-wiki-important-string)))
+    (flet ((sort-predicate (a b)
+             (let ((title-a (cdr a))
+                   (title-b (cdr b)))
+               (cond
+                 ((scan important-word title-a)
+                  t)
+                 ((scan important-word title-b)
+                  nil)
+               (t
+                (string-greaterp title-a title-b))))))
+      (sort entries #'sort-predicate))))
+
 (defun add-data-from-wiki-clsr (frame)
   (lambda ()
     (with-busy* (frame)
@@ -213,7 +227,7 @@
         (let ((pt (text primary-title-text-entry)))
           (when (allowed-to-fetch-from-wiki-p pt)
             (when-let* ((*wikipedia-host* (preferences:preferences-wiki-host))
-                        (matched-titles   (search-wiki-pages pt))
+                        (matched-titles   (sort-wiki-page-results (search-wiki-pages pt)))
                         (selected         (dialog-wiki-choose-title frame matched-titles))
                         (info             (get-movie-info (first-elt selected)))
                         (year             (or (movie-entry-year info)
@@ -235,7 +249,7 @@
         (let ((pt (text primary-title-text-entry)))
           (when (allowed-to-fetch-from-wiki-p pt)
             (when-let* ((*wikipedia-host* (preferences:preferences-wiki-host))
-                        (matched-titles   (search-wiki-pages pt))
+                        (matched-titles   (sort-wiki-page-results (search-wiki-pages pt)))
                         (selected         (dialog-wiki-choose-title frame matched-titles))
                         (page-id          (car (find-if (lambda (a)
                                                           (string= (cdr a) (first selected)))

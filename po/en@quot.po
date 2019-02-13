@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-01-27 12:22+0100\n"
-"PO-Revision-Date: 2019-01-27 12:22+0100\n"
+"POT-Creation-Date: 2019-02-13 20:07+0100\n"
+"PO-Revision-Date: 2019-02-13 20:07+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@quot\n"
@@ -43,142 +43,133 @@ msgstr ""
 msgid "unknown"
 msgstr "unknown"
 
-#: src/search-frame.lisp:138 src/menu-commands.lisp:401
-msgid "Invalid search expression"
-msgstr "Invalid search expression"
-
-#: src/search-frame.lisp:148 src/menu-commands.lisp:396
-#: src/menu-commands.lisp:420
-msgid "Empty search criteria"
-msgstr "Empty search criteria"
-
-#: src/search-frame.lisp:164 src/search-copies-frame.lisp:127
+#: src/search-frame.lisp:142 src/search-copies-frame.lisp:128
 msgid "ID"
 msgstr "ID"
 
-#: src/search-frame.lisp:167 src/search-copies-frame.lisp:130
+#: src/search-frame.lisp:145 src/search-copies-frame.lisp:131
 msgid "International title"
 msgstr "International title"
 
-#: src/search-frame.lisp:173 src/nodgui-utils.lisp:100
-#: src/search-copies-frame.lisp:136
+#: src/search-frame.lisp:151 src/nodgui-utils.lisp:100
+#: src/search-copies-frame.lisp:137
 msgid "Original title"
 msgstr "Original title"
 
-#: src/search-frame.lisp:179 src/search-copies-frame.lisp:142
+#: src/search-frame.lisp:157 src/search-copies-frame.lisp:143
 msgid "Director"
 msgstr "Director"
 
-#: src/search-frame.lisp:185 src/search-copies-frame.lisp:148
+#: src/search-frame.lisp:163 src/search-copies-frame.lisp:149
 msgid "Production year"
 msgstr "Production year"
 
-#: src/search-frame.lisp:191 src/search-copies-frame.lisp:154
+#: src/search-frame.lisp:169 src/search-copies-frame.lisp:155
 msgid "Genre"
 msgstr "Genre"
 
-#: src/search-frame.lisp:197
+#: src/search-frame.lisp:175
 msgid "Tags"
 msgstr "Tags"
 
-#: src/search-frame.lisp:203 src/nodgui-utils.lisp:143
-#: src/search-copies-frame.lisp:169
+#: src/search-frame.lisp:181 src/nodgui-utils.lisp:143
+#: src/search-copies-frame.lisp:170
 msgid "Notes"
 msgstr "Notes"
 
-#: src/search-frame.lisp:281
+#: src/search-frame.lisp:259
 msgid "Title details"
 msgstr "Title details"
 
-#: src/search-frame.lisp:316 src/search-copies-frame.lisp:212
+#: src/search-frame.lisp:294 src/search-copies-frame.lisp:213
 msgid "search title, director, year..."
 msgstr "search title, director, year..."
 
-#: src/search-frame.lisp:373 src/search-copies-frame.lisp:263
+#: src/search-frame.lisp:351 src/search-copies-frame.lisp:264
 msgid "delete selected"
 msgstr "delete selected"
 
-#: src/search-frame.lisp:374
+#: src/search-frame.lisp:352
 msgid "add title"
 msgstr "add title"
 
-#: src/search-frame.lisp:375 src/search-copies-frame.lisp:264
+#: src/search-frame.lisp:353 src/search-copies-frame.lisp:265
 msgid "edit title"
 msgstr "edit title"
 
-#: src/search-frame.lisp:376
+#: src/search-frame.lisp:354
 msgid "add a copy"
 msgstr "add a copy"
 
-#: src/search-frame.lisp:377
+#: src/search-frame.lisp:355
 msgid "lookup copy"
 msgstr "lookup copy"
 
-#: src/search-frame.lisp:378
+#: src/search-frame.lisp:356
 msgid "title details"
 msgstr "title details"
 
-#: src/main-frame.lisp:22
+#: src/main-frame.lisp:25
 msgid "Database"
 msgstr "Database"
 
-#: src/main-frame.lisp:24
+#: src/main-frame.lisp:27
 msgid "Import"
 msgstr "Import"
 
-#: src/main-frame.lisp:26
+#: src/main-frame.lisp:29
 msgid "Export"
 msgstr "Export"
 
-#: src/main-frame.lisp:27
+#: src/main-frame.lisp:30
 msgid "As TSV"
 msgstr "As TSV"
 
-#: src/main-frame.lisp:29
+#: src/main-frame.lisp:32
 msgid "Edit"
 msgstr "Edit"
 
-#: src/main-frame.lisp:30
+#: src/main-frame.lisp:33
 msgid "Help"
 msgstr "Help"
 
-#: src/main-frame.lisp:32
+#: src/main-frame.lisp:35
 msgid "From TSV"
 msgstr "From TSV"
 
-#: src/main-frame.lisp:33
+#: src/main-frame.lisp:36
 msgid "Copy"
 msgstr "Copy"
 
-#: src/main-frame.lisp:35
+#: src/main-frame.lisp:38
 msgid "Dump SQL"
 msgstr "Dump SQL"
 
-#: src/main-frame.lisp:37
+#: src/main-frame.lisp:40
 msgid "Titles"
 msgstr "Titles"
 
-#: src/main-frame.lisp:39
+#: src/main-frame.lisp:42
 msgid "Copies"
 msgstr "Copies"
 
-#: src/main-frame.lisp:41
+#: src/main-frame.lisp:44
 msgid "From SQL"
 msgstr "From SQL"
 
-#: src/main-frame.lisp:43
+#: src/main-frame.lisp:46
 msgid "From backup"
 msgstr "From backup"
 
-#: src/main-frame.lisp:45
+#: src/main-frame.lisp:48
 msgid "Quit"
 msgstr "Quit"
 
-#: src/main-frame.lisp:46 src/preferences.lisp:165
+#: src/main-frame.lisp:49 src/preferences.lisp:178
 msgid "Preferences"
 msgstr "Preferences"
 
-#: src/main-frame.lisp:49 src/menu-commands.lisp:22
+#: src/main-frame.lisp:52 src/menu-commands.lisp:22
 msgid "About"
 msgstr "About"
 
@@ -200,7 +191,7 @@ msgstr "Please insert the new description"
 
 #: src/main-toolbar.lisp:67 src/main-toolbar.lisp:147 src/main-toolbar.lisp:156
 #: src/main-toolbar.lisp:210 src/menu-commands.lisp:388
-#: src/menu-commands.lisp:412 src/preferences.lisp:219
+#: src/menu-commands.lisp:406 src/preferences.lisp:250
 msgid "OK"
 msgstr "OK"
 
@@ -400,7 +391,7 @@ msgstr "Progress"
 msgid "Start import"
 msgstr "Start import"
 
-#: src/menu-commands.lisp:297 src/preferences.lisp:235
+#: src/menu-commands.lisp:297 src/preferences.lisp:254
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -444,17 +435,21 @@ msgstr ""
 msgid "The database has been restored, restart the program is necessary now."
 msgstr "The database has been restored, restart the program is necessary now."
 
-#: src/menu-commands.lisp:386 src/menu-commands.lisp:410
+#: src/menu-commands.lisp:386 src/menu-commands.lisp:404
 msgid "Search"
 msgstr "Search"
 
-#: src/menu-commands.lisp:387 src/menu-commands.lisp:411
+#: src/menu-commands.lisp:387 src/menu-commands.lisp:405
 msgid "Please insert the search criteria"
 msgstr "Please insert the search criteria"
 
-#: src/menu-commands.lisp:390 src/menu-commands.lisp:414
+#: src/menu-commands.lisp:390 src/menu-commands.lisp:408
 msgid "Save"
 msgstr "Save"
+
+#: src/menu-commands.lisp:396 src/menu-commands.lisp:414
+msgid "Empty search criteria"
+msgstr "Empty search criteria"
 
 #: src/nodgui-utils.lisp:14
 #, lisp-format
@@ -644,78 +639,90 @@ msgstr "Format:"
 msgid "Add a new movie copy"
 msgstr "Add a new movie copy"
 
-#: src/search-copies-frame.lisp:160
+#: src/search-copies-frame.lisp:161
 msgid "Position"
 msgstr "Position"
 
-#: src/search-copies-frame.lisp:163 src/search-copies-frame.lisp:185
+#: src/search-copies-frame.lisp:164 src/search-copies-frame.lisp:186
 msgid "Format"
 msgstr "Format"
 
-#: src/search-copies-frame.lisp:178
+#: src/search-copies-frame.lisp:179
 msgid "Copy details"
 msgstr "Copy details"
 
-#: src/search-copies-frame.lisp:265
+#: src/search-copies-frame.lisp:266
 msgid "edit copy"
 msgstr "edit copy"
 
-#: src/search-copies-frame.lisp:266
+#: src/search-copies-frame.lisp:267
 msgid "generate copies barcode"
 msgstr "generate copies barcode"
 
-#: src/search-copies-frame.lisp:267
+#: src/search-copies-frame.lisp:268
 msgid "movie copy details"
 msgstr "movie copy details"
 
-#: src/preferences.lisp:174
+#: src/preferences.lisp:187
 msgid "Default physical movie copy format"
 msgstr "Default physical movie copy format"
 
-#: src/preferences.lisp:179
+#: src/preferences.lisp:192
 msgid "Default physical position of a movie copy"
 msgstr "Default physical position of a movie copy"
 
-#: src/preferences.lisp:184
+#: src/preferences.lisp:197
 msgid "Page width in millimiters"
 msgstr "Page width in millimiters"
 
-#: src/preferences.lisp:189
+#: src/preferences.lisp:202
 msgid "Page height in millimiters"
 msgstr "Page height in millimiters"
 
-#: src/preferences.lisp:194
+#: src/preferences.lisp:207
 msgid "Barcode height in millimiters"
 msgstr "Barcode height in millimiters"
 
-#: src/preferences.lisp:199
+#: src/preferences.lisp:212
 msgid "Barcode width in millimiters"
 msgstr "Barcode width in millimiters"
 
-#: src/preferences.lisp:204
+#: src/preferences.lisp:217
 msgid "Wikipedia hostname"
 msgstr "Wikipedia hostname"
 
-#: src/preferences.lisp:209 src/preferences.lisp:214
+#: src/preferences.lisp:222
+msgid ""
+"When searching in Wikipedia promote on top entries that contains the "
+"following word"
+msgstr ""
+"When searching in Wikipedia promote on top entries that contains the "
+"following word"
+
+#: src/preferences.lisp:227
 msgid "PostScript viewer program path"
 msgstr "PostScript viewer program path"
 
-#: src/preferences.lisp:270
+#: src/preferences.lisp:232
+msgid "GIMP program path"
+msgstr "GIMP program path"
+
+#: src/preferences.lisp:294
 msgid "General preferences"
 msgstr "General preferences"
 
-#: src/preferences.lisp:273
+#: src/preferences.lisp:297
 msgid "Printing"
 msgstr "Printing"
 
-#: src/preferences.lisp:276
+#: src/preferences.lisp:300
 msgid "Networking"
 msgstr "Networking"
 
-#: src/preferences.lisp:279
+#: src/preferences.lisp:303
 msgid "External programs"
 msgstr "External programs"
 
-#: src/db.lisp:365
+#: src/db.lisp:364
 msgid "unkn."
 msgstr "unkn."

@@ -50,6 +50,10 @@
     :initform "en.wikipedia.org"
     :initarg  :wiki-host
     :accessor wiki-host)
+   (wiki-important-string
+    :initform "film"
+    :initarg  :wiki-important-string
+    :accessor wiki-important-string)
    (gv-bin
     :initform +gv-bin+
     :initarg  :gv-bin
@@ -67,6 +71,7 @@
     barcode-height
     place
     wiki-host
+    wiki-important-string
     gv-bin
     gimp-bin))
 
@@ -111,6 +116,8 @@
 
 (gen-acc-fn wiki-host)
 
+(gen-acc-fn wiki-important-string)
+
 (gen-acc-fn gv-bin)
 
 (gen-acc-fn gimp-bin)
@@ -126,17 +133,20 @@
                                 barcode-width-entry
                                 barcode-height-entry
                                 wiki-host-entry
+                                wiki-important-string-entry
                                 gv-bin-entry
                                 gimp-bin-entry)
-  (setf (nodgui:text copy-format-entry)    (preferences-copy-format))
-  (setf (nodgui:text position-entry)       (preferences-place))
-  (setf (nodgui:text page-width-entry)     (to-s (preferences-page-width)))
-  (setf (nodgui:text page-height-entry)    (to-s (preferences-page-height)))
-  (setf (nodgui:text barcode-width-entry)  (to-s (preferences-barcode-width)))
-  (setf (nodgui:text barcode-height-entry) (to-s (preferences-barcode-height)))
-  (setf (nodgui:text wiki-host-entry)      (to-s (preferences-wiki-host)))
-  (setf (nodgui:text gv-bin-entry)         (to-s (preferences-gv-bin)))
-  (setf (nodgui:text gimp-bin-entry)         (to-s (preferences-gimp-bin))))
+  (setf (nodgui:text copy-format-entry)     (preferences-copy-format))
+  (setf (nodgui:text position-entry)        (preferences-place))
+  (setf (nodgui:text page-width-entry)      (to-s (preferences-page-width)))
+  (setf (nodgui:text page-height-entry)     (to-s (preferences-page-height)))
+  (setf (nodgui:text barcode-width-entry)   (to-s (preferences-barcode-width)))
+  (setf (nodgui:text barcode-height-entry)  (to-s (preferences-barcode-height)))
+  (setf (nodgui:text wiki-host-entry)       (to-s (preferences-wiki-host)))
+  (setf (nodgui:text wiki-important-string-entry)
+        (to-s (preferences-wiki-important-string)))
+  (setf (nodgui:text gv-bin-entry)          (to-s (preferences-gv-bin)))
+  (setf (nodgui:text gimp-bin-entry)        (to-s (preferences-gimp-bin))))
 
 (defun sync-gui-to-preferences (copy-format-entry
                                 position-entry
@@ -145,6 +155,7 @@
                                 barcode-width-entry
                                 barcode-height-entry
                                 wiki-host-entry
+                                wiki-important-string-entry
                                 gv-bin-entry
                                 gimp-bin-entry)
   (set-copy-format    (nodgui:text copy-format-entry))
@@ -157,9 +168,10 @@
                                               :fix-fn #'parse-number-default))
   (set-barcode-height (misc:safe-parse-number (nodgui:text barcode-height-entry)
                                               :fix-fn #'parse-number-default))
-  (set-wiki-host      (nodgui:text wiki-host-entry))
-  (set-gv-bin         (nodgui:text gv-bin-entry))
-  (set-gimp-bin       (nodgui:text gimp-bin-entry)))
+  (set-wiki-host                 (nodgui:text wiki-host-entry))
+  (set-wiki-important-string     (nodgui:text wiki-important-string-entry))
+  (set-gv-bin                    (nodgui:text gv-bin-entry))
+  (set-gimp-bin                  (nodgui:text gimp-bin-entry)))
 
 (defun make-preferences-window ()
   (init)
@@ -205,6 +217,11 @@
                                                 :text (_ "Wikipedia hostname")))
            (wiki-host-entry      (make-instance 'nodgui:entry
                                                 :master net))
+           (wiki-important-string-label  (make-instance 'nodgui:label
+                                                        :master net
+                                                        :text (_ "When searching in Wikipedia promote on top entries that contains the following word")))
+           (wiki-important-string-entry  (make-instance 'nodgui:entry
+                                                        :master net))
            (gv-bin-label         (make-instance 'nodgui:label
                                                 :master ext-programs
                                                 :text (_ "PostScript viewer program path")))
@@ -212,25 +229,26 @@
                                                 :master ext-programs))
            (gimp-bin-label       (make-instance 'nodgui:label
                                                 :master ext-programs
-                                                :text (_ "PostScript viewer program path")))
+                                                :text (_ "GIMP program path")))
            (gimp-bin-entry       (make-instance 'nodgui:entry
                                                 :master ext-programs))
+           (ok-button-cb         (lambda ()
+                                   (sync-gui-to-preferences copy-format-entry
+                                                            position-entry
+                                                            page-width-entry
+                                                            page-height-entry
+                                                            barcode-width-entry
+                                                            barcode-height-entry
+                                                            wiki-host-entry
+                                                            wiki-important-string-entry
+                                                            gv-bin-entry
+                                                            gimp-bin-entry)
+                                   (dump)
+                                   (nodgui:break-mainloop)))
            (ok-button            (make-instance 'nodgui:button
-                                                :master bottom-frame
-                                                :text   (_ "OK")
-                                                :command
-                                                (lambda ()
-                                                  (sync-gui-to-preferences copy-format-entry
-                                                                           position-entry
-                                                                           page-width-entry
-                                                                           page-height-entry
-                                                                           barcode-width-entry
-                                                                           barcode-height-entry
-                                                                           wiki-host-entry
-                                                                           gv-bin-entry
-                                                                           gimp-bin-entry)
-                                                  (dump)
-                                                  (nodgui:break-mainloop))))
+                                                :master  bottom-frame
+                                                :text    (_ "OK")
+                                                :command ok-button-cb))
            (cancel-button     (make-instance 'nodgui:button
                                              :master  bottom-frame
                                              :text    (_ "Cancel")
@@ -250,6 +268,10 @@
       (nodgui:grid barcode-height-entry 7 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid wiki-host-label      0 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid wiki-host-entry      1 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (nodgui:grid wiki-important-string-label 2 0
+                   :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (nodgui:grid wiki-important-string-entry 3 0
+                   :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid gv-bin-label         0 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid gv-bin-entry         1 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid gimp-bin-label       2 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
@@ -264,6 +286,7 @@
                                barcode-width-entry
                                barcode-height-entry
                                wiki-host-entry
+                               wiki-important-string-entry
                                gv-bin-entry
                                gimp-bin-entry)
       (nodgui:notebook-add tabs-container
