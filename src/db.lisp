@@ -192,25 +192,26 @@
                            " \"primary-title\"  TEXT   NOT NULL,"
                            " \"original-title\" TEXT   NOT NULL,"
                            " year               TEXT,           " ; timestamp
-                           " runtime            NUMBER,         " ; minutes
+                           " runtime            INTEGER,        " ; minutes
                            " image              TEXT,           "
                            " tags               TEXT,           "
+                           " vote               REAL,           "
                            " notes              TEXT            "
                            +make-close+)))
 
 (defun make-title-country ()
   (query-low-level (strcat (prepare-table +table-title-country+)
-                           "title             NUMBER "
+                           "title             INTEGER "
                            (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
-                           "country           NUMBER "
+                           "country           INTEGER "
                            (make-foreign +table-country+  "id" +restrict+ +cascade+)
                            +make-close+)))
 
 (defun make-movie-copy ()
   (query-low-level (strcat (prepare-table +table-movie-copy+)
-                           "title              NUMBER "
+                           "title              INTEGER "
                            (make-foreign +table-title+ "id" +restrict+ +cascade+) +col-sep+
-                           "format             NUMBER "
+                           "format             INTEGER "
                            (make-foreign +table-movie-storage-format+ "id" +restrict+ +cascade+)
                            +col-sep+
                            "barcode            TEXT, "
@@ -223,19 +224,19 @@
 
 (defun make-crew ()
   (query-low-level (strcat (prepare-table +table-crew+)
-                           "title              NUMBER "
+                           "title              INTEGER "
                            (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
-                           "person             NUMBER "
+                           "person             INTEGER "
                            (make-foreign +table-person+ "id" +restrict+ +cascade+) +col-sep+
-                           "role               NUMBER "
+                           "role               INTEGER "
                            (make-foreign +table-role+   "id" +restrict+ +cascade+)
                            +make-close+)))
 
 (defun make-title-genre ()
   (query-low-level (strcat (prepare-table +table-title-genre+)
-                           "title              NUMBER "
+                           "title              INTEGER "
                            (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
-                           "genre              NUMBER "
+                           "genre              INTEGER "
                            (make-foreign +table-genre+  "id" +restrict+ +cascade+)
                            +make-close+)))
 
@@ -475,6 +476,7 @@
                    (:as :genre.description   :inner-genres)
                    (:as :title.notes         +search-expr-notes-col+)
                    (:as :title.tags          +search-expr-tags-col+)
+                   (:as :title.vote          :vote)
                    (:as :crew.role           :crew-role)
                    :year)
             (from :title)
@@ -640,7 +642,8 @@
                       new-or-title new-directors
                       new-year     new-runtime
                       new-genres   new-tags
-                      new-notes    new-countries)
+                      new-notes    new-countries
+                      new-vote)
   (with-db-transaction
     (query (make-insert :title
                         (:primary-title
@@ -649,14 +652,16 @@
                          :runtime
                          :tags
                          :notes
-                         :image)
+                         :image
+                         :vote)
                         (new-pr-title
                          new-or-title
                          (decode-datetime-string new-year)
                          new-runtime
                          new-tags
                          new-notes
-                         (decode-blob image))))
+                         (decode-blob image)
+                         new-vote)))
     (let ((last-id (get-max-id :title))
           (actual-new-genres (or new-genres (list +value-genre-none+)))
           (actual-new-countries (or new-countries (list +value-countries-none+))))
@@ -670,7 +675,7 @@
                      new-directors new-year
                      new-runtime   new-genres
                      new-tags      new-notes
-                     new-countries)
+                     new-countries new-vote)
   (with-db-transaction
     (query (update :title
              (set= :primary-title  new-pr-title
@@ -679,7 +684,8 @@
                    :runtime        new-runtime
                    :tags           new-tags
                    :notes          new-notes
-                   :image          (decode-blob image))
+                   :image          (decode-blob image)
+                   :vote           new-vote)
              (where (:= :id title-id))))
     (let ((actual-new-genres (or new-genres (list +value-genre-none+))))
       (query (delete-from :title-genre (where (:= :title title-id))))

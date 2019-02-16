@@ -18,6 +18,8 @@
 
 (define-constant +autocomplete-director-min-key-length+ 3 :test #'=)
 
+(define-constant +vote-bar-width+                     120 :test #'=)
+
 (cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
 
 (defclass add-movie-frame (frame)
@@ -26,6 +28,12 @@
     :accessor image-button
     :type     button
     :documentation "displayed image")
+   (vote-bar
+    :initform nil
+    :accessor vote-bar)
+   (vote-scale
+    :initform nil
+    :accessor vote-scale)
    (primary-title-text-label
     :initform nil
     :accessor primary-title-text-label)
@@ -139,6 +147,8 @@
 (defmacro with-all-accessors ((object) &body body)
   "Very anaphoric :)"
   `(with-accessors ((image-button              image-button)
+                    (vote-bar                  vote-bar)
+                    (vote-scale                vote-scale)
                     (fetch-wiki-data-button    fetch-wiki-data-button)
                     (fetch-wiki-image-button   fetch-wiki-image-button)
                     (primary-title-text-label  primary-title-text-label)
@@ -262,14 +272,15 @@
                          new-directors new-year
                          new-runtime   new-genres
                          new-tags      new-notes
-                         new-countries)
+                         new-countries new-vote)
   (with-accessors ((added-director-listbox added-director-listbox)
                    (title-id               title-id))              frame
     (let ((new-title-id (db:add-new-movie image         new-pr-title
                                           new-or-title  new-directors
                                           new-year      new-runtime
                                           new-genres    new-tags
-                                          new-notes     new-countries)))
+                                          new-notes     new-countries
+                                          new-vote)))
       (listbox-delete added-director-listbox)
       (dolist (new-director new-directors)
         (listbox-append added-director-listbox new-director))
@@ -281,7 +292,7 @@
                      new-directors new-year
                      new-runtime   new-genres
                      new-tags      new-notes
-                     new-countries)
+                     new-countries new-vote)
   (with-accessors ((added-director-listbox added-director-listbox)
                    (title-id               title-id))              frame
     (db:update-movie title-id      image
@@ -289,7 +300,7 @@
                      new-directors new-year
                      new-runtime   new-genres
                      new-tags      new-notes
-                     new-countries)
+                     new-countries new-vote)
     (listbox-delete added-director-listbox)
     (dolist (new-director new-directors)
       (listbox-append added-director-listbox new-director))
@@ -317,7 +328,8 @@
               (new-genres    (listbox-get-selection-value genres-searchbox))
               (new-countries (listbox-get-selection-value countries-searchbox))
               (new-tags      (text tags-text-entry))
-              (new-notes     (text notes-text-entry)))
+              (new-notes     (text notes-text-entry))
+              (new-vote      (decode-vote (nodgui.mw:value vote-bar))))
           ;; resync original title
           (setf (text original-title-text-entry) new-or-title)
           (if (null new-directors)
@@ -328,13 +340,13 @@
                                     new-directors new-year
                                     new-runtime   new-genres
                                     new-tags      new-notes
-                                    new-countries)
+                                    new-countries new-vote)
                   (insert-new-title frame         image
                                     new-pr-title  new-or-title
                                     new-directors new-year
                                     new-runtime   new-genres
                                     new-tags      new-notes
-                                    new-countries))))))))
+                                    new-countries new-vote))))))))
 
 (defun autocomplete-directors-fn (key)
   (when (and (not (string-empty-p key))
@@ -359,12 +371,30 @@
                (listbox-delete added-director-listbox index index)
                (db:remove-link-title-director title-id director-name)))))))
 
+(define-constant +max-scale-vote+ 100 :test #'=)
+
 (defmethod initialize-instance :after ((object add-movie-frame) &key &allow-other-keys)
   (with-all-accessors (object)
     (setf image-button              (make-instance 'button
                                                    :text    (_ "Press to add an image from file")
                                                    :command (add-image-clsr object)
                                                    :master  object))
+    (setf vote-bar                  (make-instance 'nodgui.mw:progress-bar-star
+                                                   :star-num   +maximum-vote+
+                                                   :width      +vote-bar-width+
+                                                   :height     (floor (/ +vote-bar-width+ 5))
+                                                   :master     object))
+    (setf vote-scale                (make-instance 'scale
+                                                   :length  +vote-bar-width+
+                                                   :master  object
+                                                   :from      0
+                                                   :to      +max-scale-vote+
+                                                   :command (lambda (a)
+                                                              (declare (ignore a))
+                                                              (let ((v (/ (value vote-scale)
+                                                                          +max-scale-vote+)))
+                                                                (setf (nodgui.mw:value vote-bar)
+                                                                      v)))))
     (setf primary-title-text-label  (make-instance 'label
                                                    :text   (_ "Primary title:")
                                                    :master object))
@@ -467,6 +497,8 @@
                        (fetch-wiki-image-button (_ "get movie's image from wikipedia")))
       (grid image-button              0 0 :sticky :nswe :padx +min-padding+ :pady +min-padding+
             :rowspan 6)
+      (grid vote-bar                  7 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid vote-scale                8 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (grid wiki-frame               12 0 :sticky :news :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-data-button    0 1 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-image-button   0 2 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
@@ -480,7 +512,6 @@
       (grid added-director-text-label 1 3 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid added-director-listbox    1 4 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid delete-director-button    2 4 :sticky :nswe :padx +min-padding+ :pady +min-padding+)
-
       (grid genres-label              4 1 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid genres-searchbox          4 2 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid countries-label           4 3 :sticky :we   :padx +min-padding+ :pady +min-padding+)
@@ -517,7 +548,8 @@
            (country-info   (mapcar (lambda (a) (getf a :desc))
                                    (db:all-countries-by-title title-id)))
            (all-countries  (listbox-all-values countries-searchbox))
-           (directors-info (db:all-directors-by-title title-id)))
+           (directors-info (db:all-directors-by-title title-id))
+           (vote           (encode-vote (getf title-info :vote))))
       (loop for i in directors-info do
            (listbox-append added-director-listbox (getf i :desc)))
       (loop for genre-desc in genre-info do
@@ -533,6 +565,8 @@
       (setf (text runtime-text-entry)        (getf title-info :runtime))
       (setf (text tags-text-entry)           (getf title-info :tags))
       (setf (text notes-text-entry)          (getf title-info :notes))
+      (setf (nodgui.mw:value vote-bar)       vote)
+      (configure vote-scale :value  (nodgui.utils:->f (* +max-scale-vote+ vote)))
       (when (not (db-nil-p (getf title-info :image)))
         (let ((tga-data (load-image-in-button title-id image-button)))
           (setf image tga-data))))))

@@ -302,3 +302,11 @@
       (loop for row in rows do
            (%fmt (%filter-print #'%filter-data row)
                  :stream stream)))))
+
+;; application -> db
+(defun decode-vote (v)
+  (* +maximum-vote+ v))
+
+;; db -> application
+(defun encode-vote (v)
+  (alexandria:clamp (/ v +maximum-vote+) 0.0 1.0))

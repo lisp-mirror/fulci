@@ -1,5 +1,7 @@
 (in-package :nodgui-utils)
 
+(cl-syntax:use-syntax nodgui.utils:nodgui-color-syntax)
+
 (define-constant +font-h1+       "sans 20 bold" :test #'string=)
 
 (define-constant +font-h2+       "sans 15 bold" :test #'string=)
@@ -72,8 +74,15 @@
        (with-hourglass ,(list root-widget)
          ,@body))))
 
+(define-constant +vote-canvas-h+ 30 :test #'=)
+
 (defmacro with-title-details-toplevel ((title-row title-id title-window notes-entry) &body body)
-  (with-gensyms (primary-title-desc
+  (with-gensyms (title-frame
+                 primary-title-desc
+                 vote-canvas
+                 vote-star
+                 vote-value
+                 vote-text
                  original-title-label
                  original-title-desc
                  countries-desc
@@ -88,14 +97,41 @@
                  image-button)
     `(let ((,title-row (db:title-details ,title-id)))
        (labels ((,(format-fn-symbol t "~a" 'max-col) () 1)
-                (,(format-fn-symbol t "~a" 'max-row) () 13))
+                (,(format-fn-symbol t "~a" 'max-row) () 13)
+                (format-vote (title-row)
+                  (format nil
+                          "~,1f"
+                          (safe-parse-integer (getf title-row :vote)
+                                              :fix-fn (lambda (e)
+                                                        (declare (ignore e))
+                                                        "0")))))
          (declare (ignorable #',(format-fn-symbol t "~a" 'max-col)
                              #',(format-fn-symbol t "~a" 'max-row)))
          (with-nodgui (:title ,title-window)
-           (let* ((,primary-title-desc   (make-instance 'label
-                                                        :font   +font-h1+
-                                                        :text   (getf ,title-row :pt)
+           (let* ((,title-frame          (make-instance 'frame
+                                                        :height +vote-canvas-h+
                                                         :master nil))
+                  (,primary-title-desc   (make-instance 'label
+                                                        :justify    :center
+                                                        :wraplength (* 20 +vote-canvas-h+)
+                                                        :font       +font-h1+
+                                                        :text       (getf ,title-row :pt)
+                                                        :master     ,title-frame))
+                  (,vote-canvas          (make-canvas ,title-frame
+                                                      :width  (* 3 +vote-canvas-h+)
+                                                      :height +vote-canvas-h+))
+                  (,vote-star            (make-star   ,vote-canvas
+                                                      (truncate (/ +vote-canvas-h+ 2))
+                                                      0.5
+                                                      #%yellow%
+                                                      #%orange%
+                                                      5
+                                                      :outline-width 1))
+                  (,vote-value           (format-vote ,title-row))
+                  (,vote-text            (create-text ,vote-canvas
+                                                      0 0
+                                                      ,vote-value
+                                                      :font +font-h3+))
                   (,original-title-label (make-instance 'label
                                                         :text   (_ "Original title")
                                                         :font   +font-h2+
@@ -106,7 +142,8 @@
                                                         :master nil))
                   (,countries-desc       (make-instance 'label
                                                         :font   +font-h3+
-                                                        :text   (getf ,title-row :country-description)
+                                                        :text   (getf ,title-row
+                                                                      :country-description)
                                                         :master nil))
                   (,countries-label      (make-instance 'label
                                                         :font   +font-h2+
@@ -149,8 +186,13 @@
                   (,image-button         (make-instance 'button
                                                         :text (_ "Image not available")
                                                         :master nil)))
+             (item-move-to ,vote-canvas ,vote-text +vote-canvas-h+ 0)
              (manage-movie:load-image-in-button ,title-id ,image-button)
              (grid ,primary-title-desc   0 0 :sticky :ns :padx +min-padding+ :pady +min-padding+
+                   :columnspan 3)
+             (grid ,vote-canvas          0 4 :sticky :e  :padx +min-padding+ :pady +min-padding+)
+             (shape-move-to ,vote-star  0 0)
+             (grid ,title-frame          0 0 :sticky :news :padx +min-padding+ :pady +min-padding+
                    :columnspan 2)
              (grid ,image-button         1 0 :sticky :news :padx +min-padding+ :pady +min-padding+
                    :rowspan 12)

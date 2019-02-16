@@ -73,3 +73,5 @@
 (define-constant +image-max-h+                     480 :test #'=)
 
 (define-constant +max-history-items-count+         100 :test #'=)
+
+(define-constant +maximum-vote+                      5 :test #'=)

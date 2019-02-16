@@ -699,7 +699,8 @@ Name from Emacs Lisp."
 (defun safe-parse-integer (number &key (fix-fn #'(lambda (e) (declare (ignore e)) nil)))
   (if (numberp number)
       number
-      (or (parse-integer number :junk-allowed t)
+      (or (and number
+               (parse-integer number :junk-allowed t))
           (funcall fix-fn number))))
 
 (defun year->timestamp (year)

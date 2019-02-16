@@ -49,7 +49,8 @@
    :+search-latest-id-re+
    :+image-max-w+
    :+image-max-h+
-   :+max-history-items-count+))
+   :+max-history-items-count+
+   :+maximum-vote+))
 
 (defpackage :conditions
   (:use :cl)
@@ -325,7 +326,9 @@
      :decode-copy-position
      :encode-copy-position
      :decode-blob
-     :rows->tsv))
+     :rows->tsv
+     :encode-vote
+     :decode-vote))
 
 (defpackage :bs-tree
   (:use
@@ -670,7 +673,8 @@
         :constants
         :misc
         :text-utils
-        :nodgui)
+        :nodgui
+        :nodgui.shapes)
   (:export
    :+font-h1+
    :+font-h2+
