@@ -699,14 +699,13 @@
 (defun remove-link-title-director (title-id director-name)
   (with-db-transaction
     (with-director-db-id (director-id)
-      (let* ((qres (query (select ((:as :c.id :cid))
+      (let* ((rows (query (select ((:as :c.id :cid))
                             (from (:as :person :p))
                             (inner-join (:as :crew  :c) :on (:= :p.id :c.person))
                             (inner-join (:as :title :t) :on (:= :t.id :c.title))
                             (where (:and (:= :c.role              director-id)
                                          (:= :t.id                title-id)
-                                         (:= :p.primary-name      director-name))))))
-             (rows (fetch-all-rows qres)))
+                                         (:= :p.primary-name      director-name)))))))
         (loop for row in rows do
              (when-let ((remove-crew-id (getf row :cid)))
                (delete-by-id :crew remove-crew-id)))))))
