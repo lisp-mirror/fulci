@@ -309,4 +309,7 @@
 
 ;; db -> application
 (defun encode-vote (v)
-  (alexandria:clamp (/ v +maximum-vote+) 0.0 1.0))
+  (if (or (null v)
+          (not (numberp v)))
+      0.0
+      (alexandria:clamp (/ v +maximum-vote+) 0.0 1.0)))
