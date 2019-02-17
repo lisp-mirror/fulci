@@ -202,9 +202,9 @@
 (defun make-title-country ()
   (query-low-level (strcat (prepare-table +table-title-country+)
                            "title             INTEGER "
-                           (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
+                           (make-foreign +table-title+  "id" +cascade+ +cascade+) +col-sep+
                            "country           INTEGER "
-                           (make-foreign +table-country+  "id" +restrict+ +cascade+)
+                           (make-foreign +table-country+  "id" +cascade+ +cascade+)
                            +make-close+)))
 
 (defun make-movie-copy ()
@@ -225,17 +225,17 @@
 (defun make-crew ()
   (query-low-level (strcat (prepare-table +table-crew+)
                            "title              INTEGER "
-                           (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
+                           (make-foreign +table-title+  "id" +cascade+ +cascade+) +col-sep+
                            "person             INTEGER "
                            (make-foreign +table-person+ "id" +restrict+ +cascade+) +col-sep+
                            "role               INTEGER "
-                           (make-foreign +table-role+   "id" +restrict+ +cascade+)
+                           (make-foreign +table-role+   "id" +cascade+ +cascade+)
                            +make-close+)))
 
 (defun make-title-genre ()
   (query-low-level (strcat (prepare-table +table-title-genre+)
                            "title              INTEGER "
-                           (make-foreign +table-title+  "id" +restrict+ +cascade+) +col-sep+
+                           (make-foreign +table-title+  "id" +cascade+ +cascade+) +col-sep+
                            "genre              INTEGER "
                            (make-foreign +table-genre+  "id" +restrict+ +cascade+)
                            +make-close+)))
@@ -547,7 +547,6 @@
                 (where (:= :title.id title-id))
                 (order-by (:asc :description)))))
      (fetch-all-rows res)))
-
 
 (defun delete-by-id (table id)
   (query (delete-from table (where (:= :id id)))))
