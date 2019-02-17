@@ -16,9 +16,9 @@
 
 (in-package :manage-movie)
 
-(define-constant +autocomplete-director-min-key-length+ 3 :test #'=)
+(define-constant +autocomplete-director-min-key-length+   3 :test #'=)
 
-(define-constant +vote-bar-width+                     120 :test #'=)
+(define-constant +vote-bar-width+                       120 :test #'=)
 
 (cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
 

@@ -384,25 +384,27 @@
   (object-exists-in-db-p +table-person+
                          (:like :primary-name name)))
 
-(defun all-genres ()
+(defun all-ordered-by-description (table)
   (fetch-all (query (select :*
-                      (from db:+table-genre+)))))
+                      (from table)
+                      (order-by :description)))))
+
+(defun all-genres ()
+  (all-ordered-by-description +table-genre+))
 
 (defun all-genres-description ()
   (loop for row in (all-genres) collect
        (getf row :description)))
 
 (defun all-countries ()
-  (fetch-all (query (select :*
-                      (from +table-country+)))))
+  (all-ordered-by-description +table-country+))
 
 (defun all-countries-description ()
   (loop for row in (all-countries) collect
        (getf row :description)))
 
 (defun all-formats ()
-  (fetch-all (query (select :*
-                      (from db:+table-movie-storage-format+)))))
+  (all-ordered-by-description +table-movie-storage-format+))
 
 (defun all-formats-description ()
   (loop for row in (all-formats) collect
