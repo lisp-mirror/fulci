@@ -252,8 +252,8 @@
                                        "The following directors have been added to database:~2%~a2~%"
                                        (length new-directors-msg))
                                    (join-with-strings new-directors-msg ", "))
-                           (n_ "You can add them to this movie using the \"Director\" listbox"
-                               "You can add them to this movie using the \"Director\" listbox"
+                           (n_ "You can add them to this movie using the \"Director\" listbox."
+                               "You can add them to this movie using the \"Director\" listbox."
                                (length new-directors-msg)))))))
 
 (defun add-data-from-wiki-clsr (frame)
