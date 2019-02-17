@@ -113,6 +113,8 @@
                                :test #'string-equal
                                :key  #'cdr)
                          (db:find-person name)))
+                   (birthday-not-empty-p (person-row)
+                     (string-not-empty-p (getf person-row :birthday)))
                    (add-item ()
                      (nodgui-utils:with-entry-text-validate
                          (toplevel (birthday-entry validation:+pos-integer-re+
@@ -139,6 +141,7 @@
                    (update-item ()
                      (when-let* ((old-name   (anc-table-selected-element listbox))
                                  (old-person (db:find-person old-name))
+                                 (birthday   (getf old-person :birthday))
                                  (new-name
                                   (text-input-dialog toplevel
                                                      (_ "Edit item")
@@ -149,10 +152,8 @@
                                   (text-input-dialog toplevel
                                                      (_ "Edit item")
                                                      (_ "Please insert the new year of birth")
-                                                     :text
-                                                     (and (getf old-person :birthday)
-                                                          (encoded-datetime-year
-                                                           (getf old-person :birthday)))
+                                                     :text (and (birthday-not-empty-p old-person)
+                                                                (encoded-datetime-year birthday))
                                                      :button-message (_ "OK"))))
                        (cond
                          ((not (scan validation:+pos-integer-re+ new-year))
