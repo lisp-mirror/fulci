@@ -359,6 +359,11 @@
            (set= :primary-name name
                  :birthday     (decode-datetime-string (misc:year->timestamp birthday))))))
 
+(defun add-person-unknown-birthday (table name)
+  (query (insert-into table
+           (set= :primary-name name
+                 :birthday     ""))))
+
 (defun normalize-birthday (a)
   (misc:safe-parse-integer a :fix-fn (lambda (a)
                                        (declare (ignore a))

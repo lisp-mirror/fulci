@@ -230,6 +230,32 @@
                 (string-greaterp title-a title-b))))))
       (sort entries #'sort-predicate))))
 
+(defun director-not-exists-in-db-p (key)
+  (and (string-not-empty-p key)
+       (> (length key) +autocomplete-director-min-key-length+)
+       (not (db:filter-directors key))))
+
+(defun first-director (movie-entry-info)
+  (and (movie-entry-director movie-entry-info)
+       (first (movie-entry-director movie-entry-info))))
+
+(defun try-add-new-directors (frame directors)
+  (let ((new-directors-msg '()))
+    (loop for director in directors when (director-not-exists-in-db-p director) do
+         (push director new-directors-msg)
+         (let ((actual-name (db:normalize-name 0 director nil)))
+           (db:add-person-unknown-birthday db:+table-person+ actual-name)))
+    (when new-directors-msg
+      (info-dialog frame
+                   (strcat (format nil
+                                   (n_ "The following director has been added to database:~2%~a~2%"
+                                       "The following directors have been added to database:~2%~a2~%"
+                                       (length new-directors-msg))
+                                   (join-with-strings new-directors-msg ", "))
+                           (n_ "You can add them to this movie using the \"Director\" listbox"
+                               "You can add them to this movie using the \"Director\" listbox"
+                               (length new-directors-msg)))))))
+
 (defun add-data-from-wiki-clsr (frame)
   (lambda ()
     (with-busy* (frame)
@@ -241,11 +267,13 @@
                         (selected         (dialog-wiki-choose-title frame matched-titles))
                         (info             (get-movie-info (first-elt selected)))
                         (year             (or (movie-entry-year info)
-                                              (local-time-obj-now))))
+                                              (local-time-obj-now)))
+                        (directors       (movie-entry-director info)))
+              (try-add-new-directors frame directors)
               ;; these should be extracted
               (setf (text primary-title-text-entry)      (movie-entry-title           info))
               (setf (text original-title-text-entry)     (movie-entry-title           info))
-              (setf (text (entry director-autocomplete)) (movie-entry-director        info))
+              (setf (text (entry director-autocomplete)) (first-director info))
               (setf (text year-text-entry)               (extract-year-from-timestamp year))
               (setf (text runtime-text-entry)
                     (movie-entry-runtime         info))

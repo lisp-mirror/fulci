@@ -514,6 +514,7 @@
    :normalize-birthday
    :normalize-name
    :add-person
+   :add-person-unknown-birthday
    :update-person
    :delete-person
    :find-person

@@ -23,11 +23,11 @@
 (defun info-operation-completed (parent)
   (message-box (_ "Operation completed") (_ "information") :ok "info" :parent parent))
 
-(defun info-dialog (parent message)
-  (message-box message (_ "Information") :ok "info" :parent parent))
+(defun info-dialog (parent message &key (title (_ "Information")))
+  (message-box message title :ok "info" :parent parent))
 
-(defun error-dialog (parent message)
-  (message-box message (_ "Error") :ok "error" :parent parent))
+(defun error-dialog (parent message &key (title (_ "Error")))
+  (message-box message title :ok "error" :parent parent))
 
 (defun re-validate (parent datum regex error-message)
   "data -> '(datum regexp error-message)"

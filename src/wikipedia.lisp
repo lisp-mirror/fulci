@@ -215,6 +215,9 @@
           (year->timestamp year))
         nil)))
 
+(defun split-directors-names (names)
+  (split "[\\n,\\r]+" names))
+
 (defun get-movie-info (page-title)
   (let* ((uri (strcat +api-scheme+
                       *wikipedia-host*    "/"
@@ -225,23 +228,23 @@
     (multiple-value-bind (html status-code headers)
         (drakma:http-request uri :verify :required)
       (with-success-request (status-code headers)
-        (when-let* ((doc          (lquery:load-page html))
-                    (res          (make-movie-entry))
-                    (title        (valid-lquery-res-p (lquery:$ doc
-                                                         +infobox-selector+
-                                                         +infobox-title-selector+
-                                                         (text))))
-                    (director     (find-director (lquery:$ doc
-                                                       +infobox-selector+
-                                                       "tr")))
-                    (runtime      (find-runtime (lquery:$ doc
-                                                      +infobox-selector+
-                                                      "tr")))
-                    (release-year (find-release-year (lquery:$ doc
-                                                               +infobox-selector+
-                                                               "tr"))))
+        (when-let* ((doc           (lquery:load-page html))
+                    (res           (make-movie-entry))
+                    (title         (valid-lquery-res-p (lquery:$ doc
+                                                                 +infobox-selector+
+                                                                 +infobox-title-selector+
+                                                                 (text))))
+                    (raw-directors (find-director (lquery:$ doc
+                                                            +infobox-selector+
+                                                            "tr")))
+                    (runtime       (find-runtime (lquery:$ doc
+                                                           +infobox-selector+
+                                                           "tr")))
+                    (release-year  (find-release-year (lquery:$ doc
+                                                                +infobox-selector+
+                                                                "tr"))))
           (setf (movie-entry-title    res) title)
-          (setf (movie-entry-director res) director)
+          (setf (movie-entry-director res) (split-directors-names raw-directors))
           (setf (movie-entry-runtime  res) (safe-parse-integer runtime))
           (setf (movie-entry-year     res) release-year)
           res)))))
