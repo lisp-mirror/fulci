@@ -826,6 +826,17 @@
                   (limit offset))))
       (fetch-all-rows res)))
 
+(defun copies-with-problems ()
+  (query (select :*
+           (from +view-copies-genres-directors+)
+           (left-join :title :on (:= :title.id :title-id))
+           (left-join :title-country :on (:= :title-id   :title-country.title))
+           (left-join :country       :on (:= :country.id :title-country.country))
+           (where (:or (:is-null :title.image)
+                       (:is-null :director)
+                       (:is-null :title.runtime)
+                       (:is-null :country.id))))))
+
 (defun sql-order-by (column direction)
   (yield (order-by `(,direction ,column))))
 

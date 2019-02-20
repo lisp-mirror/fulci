@@ -416,3 +416,67 @@
            (let ((rows (db:search-copies key :copy-id :desc)))
              (fs:dump-sequence-to-file (rows->tsv rows) file)))))
       (info-operation-completed *tk*))))
+
+(defstruct copy-problem
+  (id)
+  (title)
+  (problems))
+
+(defun all-copies-with-problems ()
+  (flet ((decode-problem (row key error)
+           (if (null (getf row key))
+               error
+               "")))
+    (let ((rows (db:copies-with-problems)))
+      (loop for row in rows collect
+           (make-copy-problem :id       (getf row :title-id)
+                              :title    (getf row :pt)
+                              :problems
+                              (join-with-strings* (format nil "~%")
+                                                  (decode-problem row
+                                                                  :director
+                                                                  (_ "Missing director"))
+                                                  (decode-problem row
+                                                                  :image
+                                                                  (_ "Missing image"))
+                                                  (decode-problem row
+                                                                  :country
+                                                                  (_ "Missing country"))
+                                                  (decode-problem row
+                                                                  :runtime
+                                                                  (_ "Missing runtime"))))))))
+
+(defun import-find-problem-copies-fn (main-window)
+  (lambda ()
+    (with-modal-toplevel (toplevel :title (_ "Check copies"))
+      (with-busy* (main-window)
+        (let* ((main-frame   (make-instance 'scrolled-frame
+                                            :master toplevel))
+               (actual-frame (canvas main-frame))
+               (all-copies   (all-copies-with-problems)))
+          (grid main-frame 0 0 :sticky :news)
+          (if (null all-copies)
+              (let ((no-problems-msg (make-instance 'label
+                                                    :text
+                                                    (_ "No copies with problems found")
+                                                    :master actual-frame)))
+                (grid no-problems-msg 0 0 :sticky :news))
+              (loop
+                 for row from 0
+                 for copy in all-copies do
+                   (let* ((frame  (make-instance 'labelframe
+                                                 :master actual-frame
+                                                 :text   (copy-problem-title copy)))
+                          (info   (make-instance 'label
+                                                 :text   (copy-problem-problems copy)
+                                                 :master frame))
+                          (button (make-instance 'button
+                                                 :text   (_ "Edit")
+                                                 :master frame
+                                                 :command
+                                                 (lambda ()
+                                                   (let ((id (copy-problem-id copy)))
+                                                     (manage-movie:make-add-movie-window id))))))
+                     (grid frame  row 0 :sticky :news :pady +min-padding+)
+                     (grid info   0   0 :sticky :nw   :padx (* 10 +min-padding+))
+                     (grid button 0   1 :sticky :e)))))))))

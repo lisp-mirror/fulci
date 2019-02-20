@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-17 15:25+0100\n"
-"PO-Revision-Date: 2019-02-17 15:25+0100\n"
+"POT-Creation-Date: 2019-02-20 20:50+0100\n"
+"PO-Revision-Date: 2019-02-20 20:50+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@quot\n"
@@ -125,7 +125,7 @@ msgstr "Export"
 msgid "As TSV"
 msgstr "As TSV"
 
-#: src/main-frame.lisp:32
+#: src/main-frame.lisp:32 src/menu-commands.lisp:474
 msgid "Edit"
 msgstr "Edit"
 
@@ -162,14 +162,18 @@ msgid "From backup"
 msgstr "From backup"
 
 #: src/main-frame.lisp:48
+msgid "Find problems in copies"
+msgstr "Find problems in copies"
+
+#: src/main-frame.lisp:51
 msgid "Quit"
 msgstr "Quit"
 
-#: src/main-frame.lisp:49 src/preferences.lisp:178
+#: src/main-frame.lisp:52 src/preferences.lisp:178
 msgid "Preferences"
 msgstr "Preferences"
 
-#: src/main-frame.lisp:52 src/menu-commands.lisp:22
+#: src/main-frame.lisp:55 src/menu-commands.lisp:22
 msgid "About"
 msgstr "About"
 
@@ -450,6 +454,30 @@ msgstr "Save"
 #: src/menu-commands.lisp:396 src/menu-commands.lisp:414
 msgid "Empty search criteria"
 msgstr "Empty search criteria"
+
+#: src/menu-commands.lisp:438
+msgid "Missing director"
+msgstr "Missing director"
+
+#: src/menu-commands.lisp:441
+msgid "Missing image"
+msgstr "Missing image"
+
+#: src/menu-commands.lisp:444
+msgid "Missing country"
+msgstr "Missing country"
+
+#: src/menu-commands.lisp:447
+msgid "Missing runtime"
+msgstr "Missing runtime"
+
+#: src/menu-commands.lisp:451
+msgid "Check copies"
+msgstr "Check copies"
+
+#: src/menu-commands.lisp:461
+msgid "No copies with problems found"
+msgstr "No copies with problems found"
 
 #: src/nodgui-utils.lisp:16
 #, lisp-format

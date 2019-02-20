@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-17 15:25+0100\n"
-"PO-Revision-Date: 2019-02-17 15:25+0100\n"
+"POT-Creation-Date: 2019-02-20 20:50+0100\n"
+"PO-Revision-Date: 2019-02-20 20:50+0100\n"
 "Last-Translator: cage\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -103,7 +103,7 @@ msgstr "Esporta"
 msgid "As TSV"
 msgstr "Come TSV"
 
-#: src/main-frame.lisp:32
+#: src/main-frame.lisp:32 src/menu-commands.lisp:474
 msgid "Edit"
 msgstr "Modifica"
 
@@ -140,14 +140,18 @@ msgid "From backup"
 msgstr "Da backup"
 
 #: src/main-frame.lisp:48
+msgid "Find problems in copies"
+msgstr "Trova problemi nelle copie"
+
+#: src/main-frame.lisp:51
 msgid "Quit"
 msgstr "Esci"
 
-#: src/main-frame.lisp:49 src/preferences.lisp:178
+#: src/main-frame.lisp:52 src/preferences.lisp:178
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: src/main-frame.lisp:52 src/menu-commands.lisp:22
+#: src/main-frame.lisp:55 src/menu-commands.lisp:22
 msgid "About"
 msgstr "Sul programma"
 
@@ -433,6 +437,30 @@ msgstr "Salva"
 #: src/menu-commands.lisp:396 src/menu-commands.lisp:414
 msgid "Empty search criteria"
 msgstr "Criteri di ricerca vuoti"
+
+#: src/menu-commands.lisp:438
+msgid "Missing director"
+msgstr "Regista mancante"
+
+#: src/menu-commands.lisp:441
+msgid "Missing image"
+msgstr "Immagine mancante"
+
+#: src/menu-commands.lisp:444
+msgid "Missing country"
+msgstr "Paese mancante"
+
+#: src/menu-commands.lisp:447
+msgid "Missing runtime"
+msgstr "Durata mancante"
+
+#: src/menu-commands.lisp:451
+msgid "Check copies"
+msgstr "Controlla le copie"
+
+#: src/menu-commands.lisp:461
+msgid "No copies with problems found"
+msgstr "Nessuna copia con problemi trovata"
 
 #: src/nodgui-utils.lisp:16
 #, lisp-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-17 15:25+0100\n"
+"POT-Creation-Date: 2019-02-20 20:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr ""
 msgid "As TSV"
 msgstr ""
 
-#: src/main-frame.lisp:32
+#: src/main-frame.lisp:32 src/menu-commands.lisp:474
 msgid "Edit"
 msgstr ""
 
@@ -141,14 +141,18 @@ msgid "From backup"
 msgstr ""
 
 #: src/main-frame.lisp:48
+msgid "Find problems in copies"
+msgstr ""
+
+#: src/main-frame.lisp:51
 msgid "Quit"
 msgstr ""
 
-#: src/main-frame.lisp:49 src/preferences.lisp:178
+#: src/main-frame.lisp:52 src/preferences.lisp:178
 msgid "Preferences"
 msgstr ""
 
-#: src/main-frame.lisp:52 src/menu-commands.lisp:22
+#: src/main-frame.lisp:55 src/menu-commands.lisp:22
 msgid "About"
 msgstr ""
 
@@ -419,6 +423,30 @@ msgstr ""
 
 #: src/menu-commands.lisp:396 src/menu-commands.lisp:414
 msgid "Empty search criteria"
+msgstr ""
+
+#: src/menu-commands.lisp:438
+msgid "Missing director"
+msgstr ""
+
+#: src/menu-commands.lisp:441
+msgid "Missing image"
+msgstr ""
+
+#: src/menu-commands.lisp:444
+msgid "Missing country"
+msgstr ""
+
+#: src/menu-commands.lisp:447
+msgid "Missing runtime"
+msgstr ""
+
+#: src/menu-commands.lisp:451
+msgid "Check copies"
+msgstr ""
+
+#: src/menu-commands.lisp:461
+msgid "No copies with problems found"
 msgstr ""
 
 #: src/nodgui-utils.lisp:16

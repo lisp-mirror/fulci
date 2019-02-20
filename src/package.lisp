@@ -552,6 +552,7 @@
    :update-copy
    :copy-id->titles
    :last-n-copies-id
+   :copies-with-problems
    :search-movie-expr
    :search-movie-simple
    :search-movies
@@ -755,7 +756,8 @@
    :import-from-db-fn
    :import-tsv-window
    :export-tsv-titles
-   :export-tsv-copies))
+   :export-tsv-copies
+   :import-find-problem-copies-fn))
 
 (defpackage :manage-movie
   (:use
