@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-20 20:50+0100\n"
+"POT-Creation-Date: 2019-02-21 17:28+0100\n"
 "PO-Revision-Date: 2019-02-20 20:50+0100\n"
 "Last-Translator: cage\n"
 "Language-Team: Italian\n"
@@ -103,7 +103,7 @@ msgstr "Esporta"
 msgid "As TSV"
 msgstr "Come TSV"
 
-#: src/main-frame.lisp:32 src/menu-commands.lisp:474
+#: src/main-frame.lisp:32 src/menu-commands.lisp:470
 msgid "Edit"
 msgstr "Modifica"
 
@@ -454,13 +454,13 @@ msgstr "Paese mancante"
 msgid "Missing runtime"
 msgstr "Durata mancante"
 
-#: src/menu-commands.lisp:451
-msgid "Check copies"
-msgstr "Controlla le copie"
-
-#: src/menu-commands.lisp:461
+#: src/menu-commands.lisp:453
 msgid "No copies with problems found"
 msgstr "Nessuna copia con problemi trovata"
+
+#: src/menu-commands.lisp:454
+msgid "Check copies"
+msgstr "Controlla le copie"
 
 #: src/nodgui-utils.lisp:16
 #, lisp-format

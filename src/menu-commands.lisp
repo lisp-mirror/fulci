@@ -448,35 +448,31 @@
 
 (defun import-find-problem-copies-fn (main-window)
   (lambda ()
-    (with-modal-toplevel (toplevel :title (_ "Check copies"))
-      (with-busy* (main-window)
-        (let* ((main-frame   (make-instance 'scrolled-frame
-                                            :master toplevel))
-               (actual-frame (canvas main-frame))
-               (all-copies   (all-copies-with-problems)))
-          (grid main-frame 0 0 :sticky :news)
-          (if (null all-copies)
-              (let ((no-problems-msg (make-instance 'label
-                                                    :text
-                                                    (_ "No copies with problems found")
-                                                    :master actual-frame)))
-                (grid no-problems-msg 0 0 :sticky :news))
-              (loop
-                 for row from 0
-                 for copy in all-copies do
-                   (let* ((frame  (make-instance 'labelframe
-                                                 :master actual-frame
-                                                 :text   (copy-problem-title copy)))
-                          (info   (make-instance 'label
-                                                 :text   (copy-problem-problems copy)
-                                                 :master frame))
-                          (button (make-instance 'button
-                                                 :text   (_ "Edit")
-                                                 :master frame
-                                                 :command
-                                                 (lambda ()
-                                                   (let ((id (copy-problem-id copy)))
-                                                     (manage-movie:make-add-movie-window id))))))
-                     (grid frame  row 0 :sticky :news :pady +min-padding+)
-                     (grid info   0   0 :sticky :nw   :padx (* 10 +min-padding+))
-                     (grid button 0   1 :sticky :e)))))))))
+    (let ((all-copies (all-copies-with-problems)))
+      (if (null all-copies)
+          (info-dialog main-window (_ "No copies with problems found"))
+          (with-modal-toplevel (toplevel :title (_ "Check copies"))
+            (with-busy* (main-window)
+              (let* ((main-frame   (make-instance 'scrolled-frame
+                                                  :master toplevel))
+                     (actual-frame (canvas main-frame)))
+                (grid main-frame 0 0 :sticky :news)
+                (loop
+                   for row from 0
+                   for copy in all-copies do
+                     (let* ((frame  (make-instance 'labelframe
+                                                   :master actual-frame
+                                                   :text   (copy-problem-title copy)))
+                            (info   (make-instance 'label
+                                                   :text   (copy-problem-problems copy)
+                                                   :master frame))
+                            (button (make-instance 'button
+                                                   :text   (_ "Edit")
+                                                   :master frame
+                                                   :command
+                                                   (lambda ()
+                                                     (let ((id (copy-problem-id copy)))
+                                                       (manage-movie:make-add-movie-window id))))))
+                       (grid frame  row 0 :sticky :news :pady +min-padding+)
+                       (grid info   0   0 :sticky :nw   :padx (* 10 +min-padding+))
+                       (grid button 0   1 :sticky :e))))))))))

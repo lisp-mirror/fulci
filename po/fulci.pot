@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-20 20:50+0100\n"
+"POT-Creation-Date: 2019-02-21 17:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr ""
 msgid "As TSV"
 msgstr ""
 
-#: src/main-frame.lisp:32 src/menu-commands.lisp:474
+#: src/main-frame.lisp:32 src/menu-commands.lisp:470
 msgid "Edit"
 msgstr ""
 
@@ -441,12 +441,12 @@ msgstr ""
 msgid "Missing runtime"
 msgstr ""
 
-#: src/menu-commands.lisp:451
-msgid "Check copies"
+#: src/menu-commands.lisp:453
+msgid "No copies with problems found"
 msgstr ""
 
-#: src/menu-commands.lisp:461
-msgid "No copies with problems found"
+#: src/menu-commands.lisp:454
+msgid "Check copies"
 msgstr ""
 
 #: src/nodgui-utils.lisp:16
