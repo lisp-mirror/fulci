@@ -467,13 +467,13 @@
                             (info   (make-instance 'label
                                                    :text   (copy-problem-problems copy)
                                                    :master frame))
+                            (id     (copy-problem-id copy))
                             (button (make-instance 'button
                                                    :text   (_ "Edit")
                                                    :master frame
                                                    :command
                                                    (lambda ()
-                                                     (let ((id (copy-problem-id copy)))
-                                                       (manage-movie:make-add-movie-window id))))))
+                                                     (manage-movie:make-add-movie-window id)))))
                        (grid frame  row 0 :sticky :news :pady +min-padding+)
                        (grid info   0   0 :sticky :nw   :padx (* 10 +min-padding+))
                        (grid button 0   1 :sticky :e))))))))))
