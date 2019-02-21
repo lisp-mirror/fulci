@@ -455,8 +455,9 @@
             (with-busy* (main-window)
               (let* ((main-frame   (make-instance 'scrolled-frame
                                                   :master toplevel))
-                     (actual-frame (canvas main-frame)))
+                     (actual-frame (interior main-frame)))
                 (grid main-frame 0 0 :sticky :news)
+                (gui-resize-grid-all main-frame)
                 (loop
                    for row from 0
                    for copy in all-copies do
