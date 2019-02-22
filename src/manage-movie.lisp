@@ -334,6 +334,12 @@
       (listbox-append added-director-listbox new-director))
     (info-operation-completed frame)))
 
+(defun get-searchbox-selection (searchbox)
+  (if (= (length (listbox-all-values searchbox))
+         1)
+      (listbox-all-values searchbox)
+      (listbox-get-selection-value searchbox)))
+
 (defun add-movie-clsr (frame)
   (lambda ()
     (with-all-accessors (frame)
@@ -354,8 +360,8 @@
                                     :test #'string-equal))
               (new-year      (year->timestamp             (text year-text-entry)))
               (new-runtime   (parse-integer               (text runtime-text-entry)))
-              (new-genres    (listbox-get-selection-value genres-searchbox))
-              (new-countries (listbox-get-selection-value countries-searchbox))
+              (new-genres    (get-searchbox-selection genres-searchbox))
+              (new-countries (get-searchbox-selection countries-searchbox))
               (new-tags      (text tags-text-entry))
               (new-notes     (text notes-text-entry))
               (new-vote      (decode-vote (nodgui.mw:value vote-bar))))

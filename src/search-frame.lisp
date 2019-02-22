@@ -36,6 +36,8 @@
 
 (define-constant +max-char-column-length+                      10 :test #'=)
 
+(define-constant +max-char-column-notes+                      100 :test #'=)
+
 (define-constant +columns-width+       '(100 400 400 200 150 200 200 200)
                                        ;; id it  ot  dir ye  tag ge  note
   :test #'equalp)

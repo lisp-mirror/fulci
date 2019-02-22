@@ -22,7 +22,7 @@
 
 (define-constant +columns-copies-search-position+ "po" :test #'string=)
 
-(define-constant +columns-copies-width+       '(50  350 350 150 120 100 60  300 200)
+(define-constant +columns-copies-width+       '(50  350 350 150 80 100 60  140 400)
                                               ;; id it  ot  dir ye  ge  ft  pos note
   :test #'equalp)
 
@@ -82,7 +82,7 @@
            (escape-notes (row)
              (ellipsize (escape-tilde (db-nil->lisp (getf row
                                                           db:+search-expr-notes-col+)))
-                        :len +max-char-column-length+)))
+                        :len +max-char-column-notes+)))
       (list (escape row db:+search-expr-primary-title-col+)
             (escape row db:+search-expr-original-title-col+)
             (escape row db:+search-expr-director-col+)
