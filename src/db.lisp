@@ -822,7 +822,7 @@
 (defun last-n-copies-id (offset)
     (let* ((res (select :*
                   (from +view-copies-genres-directors+)
-                  (order-by (:asc :copy-id))
+                  (order-by (:desc :copy-id))
                   (limit offset))))
       (fetch-all-rows res)))
 
