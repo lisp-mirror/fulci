@@ -116,6 +116,10 @@
     :initform nil
     :accessor apply-button
     :type     button)
+   (apply-close-button
+    :initform nil
+    :accessor apply-close-button
+    :type     button)
    (close-button
     :initform nil
     :accessor close-button
@@ -172,6 +176,7 @@
                     (notes-text-label          notes-text-label)
                     (notes-text-entry          notes-text-entry)
                     (apply-button              apply-button)
+                    (apply-close-button        apply-close-button)
                     (close-button              close-button)
                     (image                     image)
                     (container-win             container-win)
@@ -300,7 +305,8 @@
                          new-directors new-year
                          new-runtime   new-genres
                          new-tags      new-notes
-                         new-countries new-vote)
+                         new-countries new-vote
+                         print-dialog-success-p)
   (with-accessors ((added-director-listbox added-director-listbox)
                    (title-id               title-id))              frame
     (let ((new-title-id (db:add-new-movie image         new-pr-title
@@ -313,14 +319,16 @@
       (dolist (new-director new-directors)
         (listbox-append added-director-listbox new-director))
       (setf title-id new-title-id)
-      (info-operation-completed frame))))
+      (when print-dialog-success-p
+        (info-operation-completed frame)))))
 
 (defun update-title (frame         image
                      new-pr-title  new-or-title
                      new-directors new-year
                      new-runtime   new-genres
                      new-tags      new-notes
-                     new-countries new-vote)
+                     new-countries new-vote
+                     print-dialog-success-p)
   (with-accessors ((added-director-listbox added-director-listbox)
                    (title-id               title-id))              frame
     (db:update-movie title-id      image
@@ -332,7 +340,8 @@
     (listbox-delete added-director-listbox)
     (dolist (new-director new-directors)
       (listbox-append added-director-listbox new-director))
-    (info-operation-completed frame)))
+    (when print-dialog-success-p
+      (info-operation-completed frame))))
 
 (defun get-searchbox-selection (searchbox)
   (if (= (length (listbox-all-values searchbox))
@@ -340,10 +349,9 @@
       (listbox-all-values searchbox)
       (listbox-get-selection-value searchbox)))
 
-(defun add-movie-clsr (frame)
+(defun add-movie-clsr (frame &key (print-dialog-success-p t))
   (lambda ()
     (with-all-accessors (frame)
-      (declare (ignore apply-button close-button))
       (with-entry-text-validate
           (frame (primary-title-text-entry  +free-text-re+
                                             (_ "Primary title can not be empty"))
@@ -375,13 +383,15 @@
                                     new-directors new-year
                                     new-runtime   new-genres
                                     new-tags      new-notes
-                                    new-countries new-vote)
+                                    new-countries new-vote
+                                    print-dialog-success-p)
                   (insert-new-title frame         image
                                     new-pr-title  new-or-title
                                     new-directors new-year
                                     new-runtime   new-genres
                                     new-tags      new-notes
-                                    new-countries new-vote))))))))
+                                    new-countries new-vote
+                                    print-dialog-success-p))))))))
 
 (defun autocomplete-directors-fn (key)
   (when (and (not (string-empty-p key))
@@ -508,10 +518,18 @@
                                                    :text    (_ "Apply")
                                                    :command (add-movie-clsr object)
                                                    :master  object))
+    (setf apply-close-button        (make-instance 'button
+                                                   :text    (_ "Apply and close")
+                                                   :command
+                                                   (lambda ()
+                                                     (funcall
+                                                      (add-movie-clsr object
+                                                                      :print-dialog-success-p nil))
+                                                     (break-mainloop))
+                                                   :master  object))
     (setf close-button              (make-instance 'button
                                                    :text    (_ "Close")
-                                                   :command (lambda ()
-                                                              (setf *break-mainloop* t))
+                                                   :command (lambda () (break-mainloop))
                                                    :master  object))
     (let* ((delete-director-button  (make-instance 'button
                                                    :master  object
@@ -560,7 +578,8 @@
       (grid notes-text-label         10 3 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid notes-text-entry         10 4 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid apply-button             12 1 :sticky :s    :padx +min-padding+ :pady +min-padding+)
-      (grid close-button             12 2 :sticky :s    :padx +min-padding+ :pady +min-padding+)
+      (grid apply-close-button       12 2 :sticky :s    :padx +min-padding+ :pady +min-padding+)
+      (grid close-button             12 3 :sticky :s    :padx +min-padding+ :pady +min-padding+)
       (gui-resize-grid-all object)
       (when (update-mode-p object)
         (sync-title-frame object)))))

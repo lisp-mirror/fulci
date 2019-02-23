@@ -62,6 +62,8 @@
 
 (define-constant +icon-genre+                                 "genre" :test #'string=)
 
+(define-constant +icon-country+                               "world" :test #'string=)
+
 (define-constant +icon-add+                                     "add" :test #'string=)
 
 (define-constant +icon-delete+                               "delete" :test #'string=)
@@ -114,6 +116,8 @@
 
 (defparameter *icon-genre*                 nil)
 
+(defparameter *icon-country*               nil)
+
 (defparameter *icon-add*                   nil)
 
 (defparameter *icon-delete*                nil)
@@ -165,6 +169,7 @@
   (setf *icon-edit-dvd*              (load-icon +icon-edit-dvd+))
   (setf *icon-persons*               (load-icon +icon-persons+))
   (setf *icon-genre*                 (load-icon +icon-genre+))
+  (setf *icon-country*               (load-icon +icon-country+))
   (setf *icon-add*                   (load-icon +icon-add+))
   (setf *icon-delete*                (load-icon +icon-delete+))
   (setf *icon-add-small*             (load-icon +icon-add-small+))

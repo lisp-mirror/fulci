@@ -308,3 +308,8 @@
   - data/icons/go-to-copy.png
     FatCow Web Hosting [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
     via Wikimedia Commons
+
+  - data/icons/world.png
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_globe_africa.png
+
+    FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)]

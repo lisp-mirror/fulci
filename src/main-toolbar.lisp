@@ -218,25 +218,31 @@
                                         (declare (ignore table))
                                         (db:persons->alist (strcat filter "%"))))))
                      (funcall fn)))))))
-    (let ((manage-persons (make-instance 'button
-                                         :image   *icon-persons*
-                                         :command (person-button-cb)
-                                         :master  object))
-          (manage-support (make-instance 'button
-                                         :image   *icon-dvd-case*
-                                         :command (manage-ancillary-tables
-                                                   db:+table-movie-storage-format+
-                                                   (_ "Manage physical supports"))
-                                         :master  object))
-          (manage-genres  (make-instance 'button
-                                         :image *icon-genre*
-                                         :command (manage-ancillary-tables db:+table-genre+
-                                                                           (_ "Manage genres"))
-                                         :master object)))
+    (let ((manage-persons   (make-instance 'button
+                                           :image   *icon-persons*
+                                           :command (person-button-cb)
+                                           :master  object))
+          (manage-support   (make-instance 'button
+                                           :image   *icon-dvd-case*
+                                           :command (manage-ancillary-tables
+                                                     db:+table-movie-storage-format+
+                                                     (_ "Manage physical supports"))
+                                           :master  object))
+          (manage-genres    (make-instance 'button
+                                           :image *icon-genre*
+                                           :command (manage-ancillary-tables db:+table-genre+
+                                                                             (_ "Manage genres"))
+                                           :master object))
+          (manage-countries (make-instance 'button
+                                           :image *icon-country*
+                                           :command (manage-ancillary-tables db:+table-country+
+                                                                             (_ "Manage countries"))
+                                           :master object)))
       (attach-tooltips (manage-persons   (_ "manage people"))
                        (manage-support   (_ "manage storage format"))
                        (manage-genres    (_ "manage genres")))
       (configure object :relief :raised)
-      (grid manage-persons 0 0 :pady (* 2 +min-padding+))
-      (grid manage-support 0 1 :pady (* 2 +min-padding+))
-      (grid manage-genres  0 2 :pady (* 2 +min-padding+)))))
+      (grid manage-persons   0 0 :pady (* 2 +min-padding+))
+      (grid manage-support   0 1 :pady (* 2 +min-padding+))
+      (grid manage-genres    0 2 :pady (* 2 +min-padding+))
+      (grid manage-countries 0 3 :pady (* 2 +min-padding+)))))

@@ -59,6 +59,7 @@ data/icons/dvd-in-case.png                       \
 data/icons/barcode.png                           \
 data/icons/details.png                           \
 data/icons/go-to-copy.png                        \
+data/icons/world.png                             \
 data/font.afm                                    \
 data/countries.csv
 

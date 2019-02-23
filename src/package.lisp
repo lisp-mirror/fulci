@@ -717,6 +717,7 @@
    :*icon-edit-dvd*
    :*icon-persons*
    :*icon-genre*
+   :*icon-country*
    :*icon-add*
    :*icon-delete*
    :*icon-add-small*
