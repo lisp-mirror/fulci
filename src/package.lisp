@@ -257,11 +257,15 @@
   (:use
    :cl
    :alexandria
-   :cl-ppcre)
+   :cl-ppcre
+   :config
+   :constants)
   (:export
    :mime-type
    :check-mime-type
-   :percent-encode))
+   :percent-encode
+   :with-success-request
+   :image-from-url))
 
 (defpackage :image-utils
   (:use
@@ -727,6 +731,7 @@
    :*icon-goto-wiki*
    :*icon-wiki-fetch-image*
    :*icon-wiki-fetch-data*
+   :*icon-www-fetch-image*
    :*icon-dvd-case*
    :*icon-barcode*
    :*icon-details*

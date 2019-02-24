@@ -130,17 +130,6 @@
                            (slot-value a 'title)))
            res-search))))
 
-(defmacro with-success-request ((status-code headers) &body body)
-  `(cond
-     ((/= ,status-code +http-code-ok+)
-      (error 'http-error
-             :text (format nil "Invalid status code: ~a" ,status-code)))
-     ((not (check-mime-type ,headers +mime-type-html+))
-      (error 'http-error
-             :text (format nil "Invalid mime type: ~a" (mime-type ,headers))))
-     (t
-      ,@body)))
-
 (defun search-wiki-image (page-id)
   (with-wiki-query (serialized-response +api-search-principal-image+ (to-s page-id))
     (when-let* ((page-id-symbol (alexandria:format-symbol :wikipedia "~a" (to-s page-id)))
@@ -149,16 +138,7 @@
                 (page           (slot-value pages               page-id-symbol))
                 (img-info       (slot-value page                'original))
                 (img-url        (slot-value img-info            'source)))
-      (multiple-value-bind (img-data status-code headers)
-          (drakma:http-request img-url :want-stream nil :verify :required)
-        (with-success-request (status-code headers)
-          (cond
-            ((or (string= (mime-type headers) +mime-type-jpg+)
-                 (string= (mime-type headers) +mime-type-png+))
-             img-data)
-            (t
-              (error 'not-implemented-error
-                     :text "this image format is not supported at the moment."))))))))
+      (image-from-url img-url))))
 
 (defstruct movie-entry
   (title)

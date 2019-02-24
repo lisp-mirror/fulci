@@ -97,7 +97,6 @@
   HEREIN WILL  NOT INFRINGE  ANY RIGHTS OR  ANY IMPLIED  WARRANTIES OF
   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
-
 * Data
   - data/countries.csv
 
@@ -313,3 +312,31 @@
     https://commons.wikimedia.org/wiki/File:Farm-Fresh_globe_africa.png
 
     FatCow [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)]
+
+  - data/icons/www-fetch-image.png
+
+    derived from:
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_www_page.png
+
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)]
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_bullet_go.png
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    and
+
+    https://commons.wikimedia.org/wiki/File:Farm-Fresh_picture.png
+
+    FatCow Web Hosting
+    [CC BY 3.0 us (https://creativecommons.org/licenses/by/3.0/us/deed.en)],
+    via Wikimedia Commons
+
+    licensed under:
+
+    [CC BY 3.0 (https://creativecommons.org/licenses/by/3.0)]

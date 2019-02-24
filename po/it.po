@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-23 14:10+0100\n"
-"PO-Revision-Date: 2019-02-23 14:11+0100\n"
+"POT-Creation-Date: 2019-02-24 16:06+0100\n"
+"PO-Revision-Date: 2019-02-24 16:07+0100\n"
 "Last-Translator: cage\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -177,13 +177,13 @@ msgstr "Inserisci la nuova descrizione"
 msgid "OK"
 msgstr "OK"
 
-#: src/main-toolbar.lisp:73 src/main-toolbar.lisp:169 src/manage-movie.lisp:487
-#: src/manage-movie.lisp:501
+#: src/main-toolbar.lisp:73 src/main-toolbar.lisp:169 src/manage-movie.lisp:504
+#: src/manage-movie.lisp:518
 msgid "Filter:"
 msgstr "Filtra:"
 
 #: src/main-toolbar.lisp:121 src/main-toolbar.lisp:160
-#: src/manage-movie.lisp:359
+#: src/manage-movie.lisp:376
 msgid "Year must be a positive number"
 msgstr "L'anno deve essere un numero positivo"
 
@@ -509,11 +509,11 @@ msgstr "Generi"
 msgid "Image not available"
 msgstr "Immagine non disponibile"
 
-#: src/manage-movie.lisp:215
+#: src/manage-movie.lisp:220
 msgid "Choose item"
 msgstr "Scegli un elemento"
 
-#: src/manage-movie.lisp:216
+#: src/manage-movie.lisp:221
 msgid ""
 "These are the titles returned from wikipedia, select one to accept or close "
 "window to discard."
@@ -521,14 +521,14 @@ msgstr ""
 "Questo sono i risultati restituiti da wikipedia, selezionane uno oppure "
 "chiudi questa finestra per scartarli tutti."
 
-#: src/manage-movie.lisp:256
+#: src/manage-movie.lisp:261
 #, lisp-format
 msgid "The following director has been added to database:~2%~a~2%"
 msgid_plural "The following directors have been added to database:~2%~a2~%"
 msgstr[0] "Il seguente regista e' stato aggiunto al database:~2%~a~2%"
 msgstr[1] "I seguenti registi sono stati aggiunti al database:~2%~a~2%"
 
-#: src/manage-movie.lisp:260
+#: src/manage-movie.lisp:265
 msgid "You can add them to this movie using the \"Director\" listbox."
 msgid_plural "You can add them to this movie using the \"Director\" listbox."
 msgstr[0] ""
@@ -536,87 +536,99 @@ msgstr[0] ""
 msgstr[1] ""
 "E possibile attribuire questi registi al film tramite la listbox \"Regista\"."
 
-#: src/manage-movie.lisp:357
+#: src/manage-movie.lisp:313
+msgid "Get image from an internet address"
+msgstr "Preleva immagine da un indirizzo internet"
+
+#: src/manage-movie.lisp:314
+msgid "Insert the address of the image you want to download"
+msgstr "Inserisci l'indirizzo dell'immagine che vuoi scaricare"
+
+#: src/manage-movie.lisp:318
+msgid "Only \"https\" protocol is allowed"
+msgstr "Solo il protocollo \\\"https\\\" e' accettato"
+
+#: src/manage-movie.lisp:374
 msgid "Primary title can not be empty"
 msgstr "Il titolo internazionale deve essere specificato"
 
-#: src/manage-movie.lisp:361
+#: src/manage-movie.lisp:378
 msgid "Runtime must be a positive number"
 msgstr "La durata deve essere un numero positivo"
 
-#: src/manage-movie.lisp:379
+#: src/manage-movie.lisp:396
 msgid "No director choosen"
 msgstr "Nessun regista specificato"
 
-#: src/manage-movie.lisp:424
+#: src/manage-movie.lisp:441
 msgid "Press to add an image from file"
 msgstr "Premi qui per aggiungere un immagine da file"
 
-#: src/manage-movie.lisp:444
+#: src/manage-movie.lisp:461
 msgid "Primary title:"
 msgstr "Titolo internazionale:"
 
-#: src/manage-movie.lisp:449
+#: src/manage-movie.lisp:466
 msgid "Original title:"
 msgstr "Titolo originale:"
 
-#: src/manage-movie.lisp:454
+#: src/manage-movie.lisp:471
 msgid "Added directors:"
 msgstr "Registi aggiunti:"
 
-#: src/manage-movie.lisp:460
+#: src/manage-movie.lisp:477
 msgid "Director:"
 msgstr "Regista:"
 
-#: src/manage-movie.lisp:463 src/manage-copies.lisp:207
+#: src/manage-movie.lisp:480 src/manage-copies.lisp:207
 msgid "Search:"
 msgstr "Cerca:"
 
-#: src/manage-movie.lisp:470
+#: src/manage-movie.lisp:487
 msgid "Year:"
 msgstr "Anno:"
 
-#: src/manage-movie.lisp:475
+#: src/manage-movie.lisp:492
 msgid "Runtime (minutes):"
 msgstr "Durata in minuti:"
 
-#: src/manage-movie.lisp:480
+#: src/manage-movie.lisp:497
 msgid "Genres:"
 msgstr "Genere:"
 
-#: src/manage-movie.lisp:494
+#: src/manage-movie.lisp:511
 msgid "Countries:"
 msgstr "Paesi:"
 
-#: src/manage-movie.lisp:508
+#: src/manage-movie.lisp:525
 msgid "Tags (comma separated values):"
 msgstr "Etichette (valori separati da virgola):"
 
-#: src/manage-movie.lisp:513 src/manage-copies.lisp:197
+#: src/manage-movie.lisp:530 src/manage-copies.lisp:197
 msgid "Notes:"
 msgstr "Note:"
 
-#: src/manage-movie.lisp:518 src/manage-copies.lisp:213
+#: src/manage-movie.lisp:535 src/manage-copies.lisp:213
 msgid "Apply"
 msgstr "Applica"
 
-#: src/manage-movie.lisp:522
+#: src/manage-movie.lisp:539
 msgid "Apply and close"
 msgstr "Applica e chiudi"
 
-#: src/manage-movie.lisp:531 src/manage-copies.lisp:217
+#: src/manage-movie.lisp:548 src/manage-copies.lisp:217
 msgid "Close"
 msgstr "Chiudi"
 
-#: src/manage-movie.lisp:549
+#: src/manage-movie.lisp:569
 msgid "get data from wikipedia"
 msgstr "preleva i dati da wikipedia"
 
-#: src/manage-movie.lisp:550
+#: src/manage-movie.lisp:570
 msgid "get movie's image from wikipedia"
 msgstr "preleva immagine da wikipedia"
 
-#: src/manage-movie.lisp:629
+#: src/manage-movie.lisp:650
 msgid "Add a new movie"
 msgstr "Aggiungi un nuovo titolo"
 

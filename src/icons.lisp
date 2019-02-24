@@ -84,6 +84,8 @@
 
 (define-constant +icon-wiki-fetch-image+          "wiki-fetch-image"  :test #'string=)
 
+(define-constant +icon-www-fetch-image+            "www-fetch-image"  :test #'string=)
+
 (define-constant +icon-dvd-case+                       "dvd-in-case"  :test #'string=)
 
 (define-constant +icon-barcode+                            "barcode"  :test #'string=)
@@ -136,6 +138,8 @@
 
 (defparameter *icon-wiki-fetch-image*      nil)
 
+(defparameter *icon-www-fetch-image*       nil)
+
 (defparameter *icon-dvd-case*              nil)
 
 (defparameter *icon-barcode*               nil)
@@ -179,6 +183,7 @@
   (setf *icon-goto-wiki*             (load-icon +icon-goto-wiki+))
   (setf *icon-wiki-fetch-data*       (load-icon +icon-wiki-fetch-data+))
   (setf *icon-wiki-fetch-image*      (load-icon +icon-wiki-fetch-image+))
+  (setf *icon-www-fetch-image*       (load-icon +icon-www-fetch-image+))
   (setf *icon-dvd-case*              (load-icon +icon-dvd-case+))
   (setf *icon-barcode*               (load-icon +icon-barcode+))
   (setf *icon-details*               (load-icon +icon-details+))

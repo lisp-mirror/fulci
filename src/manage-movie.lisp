@@ -132,6 +132,10 @@
     :initform nil
     :accessor fetch-wiki-image-button
     :type     button)
+   (fetch-wwww-image-button
+    :initform nil
+    :accessor fetch-www-image-button
+    :type     button)
    (image
     :initform nil
     :accessor image
@@ -155,6 +159,7 @@
                     (vote-scale                vote-scale)
                     (fetch-wiki-data-button    fetch-wiki-data-button)
                     (fetch-wiki-image-button   fetch-wiki-image-button)
+                    (fetch-www-image-button    fetch-www-image-button)
                     (primary-title-text-label  primary-title-text-label)
                     (primary-title-text-entry  primary-title-text-entry)
                     (original-title-text-label original-title-text-label)
@@ -299,6 +304,18 @@
                                                         matched-titles)))
                         (jpg-data         (search-wiki-image page-id)))
               (build-image frame jpg-data))))))))
+
+(defun add-image-from-url-clsr (frame)
+  (lambda ()
+    (with-busy* (frame)
+      (with-all-accessors (frame)
+        (let ((url (text-input-dialog frame
+                                      (_ "Get image from an internet address")
+                                      (_ "Insert the address of the image you want to download"))))
+          (if (scan "^https://" url)
+            (when-let* ((jpg-data (net-utils:image-from-url url)))
+              (build-image frame jpg-data))
+            (error-dialog frame (_ "Only \"https\" protocol is allowed"))))))))
 
 (defun insert-new-title (frame         image
                          new-pr-title  new-or-title
@@ -535,26 +552,30 @@
                                                    :master  object
                                                    :image   *icon-delete-small*
                                                    :command (delete-director-clsr object)))
-           (wiki-frame              (make-instance 'frame
+           (www-fetch-frame         (make-instance 'frame
                                                    :master object)))
-
       (setf fetch-wiki-data-button    (make-instance 'button
                                                      :image   *icon-wiki-fetch-data*
                                                      :command (add-data-from-wiki-clsr object)
-                                                     :master  wiki-frame))
+                                                     :master  www-fetch-frame))
       (setf fetch-wiki-image-button   (make-instance 'button
                                                      :image   *icon-wiki-fetch-image*
                                                      :command (add-image-from-wiki-clsr object)
-                                                     :master  wiki-frame))
+                                                     :master  www-fetch-frame))
+      (setf fetch-www-image-button    (make-instance 'button
+                                                     :image   *icon-www-fetch-image*
+                                                     :command (add-image-from-url-clsr object)
+                                                     :master  www-fetch-frame))
       (attach-tooltips (fetch-wiki-data-button  (_ "get data from wikipedia"))
                        (fetch-wiki-image-button (_ "get movie's image from wikipedia")))
       (grid image-button              0 0 :sticky :nswe :padx +min-padding+ :pady +min-padding+
             :rowspan 6)
       (grid vote-bar                  7 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (grid vote-scale                8 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
-      (grid wiki-frame               12 0 :sticky :news :padx +min-padding+ :pady +min-padding+)
+      (grid www-fetch-frame          12 0 :sticky :news :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-data-button    0 1 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-image-button   0 2 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
+      (grid fetch-www-image-button    0 3 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
       (grid primary-title-text-label  0 1 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid primary-title-text-entry  0 2 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid original-title-text-label 0 3 :sticky :we   :padx +min-padding+ :pady +min-padding+)
