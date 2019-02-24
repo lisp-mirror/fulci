@@ -229,7 +229,7 @@
 
 (defun revive-history (entry)
   (setf (nodgui.mw:history entry)
-        (fs:file->list-lines (history-path))))
+        (reverse (fs:file->list-lines (history-path)))))
 
 (defun search-movie-entry-cb (search-text-entry search-results)
   (lambda (a)
