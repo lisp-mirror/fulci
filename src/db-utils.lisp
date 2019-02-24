@@ -93,14 +93,9 @@
 (defun execute-query (prepared-sql &optional (parameters nil))
   #+:print-sql (misc:dbg "parameters: ~a~%" parameters)
   (let* ((columns-name   (mapcar (lambda (a) (make-keyword (string-upcase a)))
-                                 (sqlite:statement-column-names prepared-sql)))
-         (escaped-params (mapcar (lambda (a)
-                                   (if (stringp a)
-                                       (regex-replace-all "'" a "''")
-                                       a))
-                                 parameters)))
+                                 (sqlite:statement-column-names prepared-sql))))
     (loop
-         for param in escaped-params
+         for param in parameters
          for i from 1 do
          (sqlite:bind-parameter prepared-sql i param))
     (let ((res (loop while (sqlite:step-statement prepared-sql) collect
