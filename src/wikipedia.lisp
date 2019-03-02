@@ -170,14 +170,29 @@
                                         (let ((res (lquery:$ a (text))))
                                           (scan key
                                                 (valid-or-nil res))))
-                                    all-th)))
-    (valid-or-nil (lquery:$ good-child
+                                    all-th))
+         (res        (lquery:$ good-child
                             (parent)
                             "td"
-                            (text)))))
+                            (text))))
+    (valid-or-nil res)))
 
 (defun find-director (node)
-  (filter-infobox node +infobox-director-re+))
+    (let* ((all-th     (lquery:$ node "th"))
+           (good-child (remove-if-not #'(lambda (a)
+                                          (let ((res (lquery:$ a (text))))
+                                            (scan +infobox-director-re+
+                                                  (valid-or-nil res))))
+                                      all-th))
+           (res        (lquery:$ good-child
+                                 (parent)
+                                 "td"))
+           (nobr       (lquery:$ res
+                                 (children)
+                                 (filter (lambda (a) (not (string-equal (plump:tag-name a)
+                                                                        "br"))))))
+           (directors  (map 'list (lambda (a) (plump:text a)) nobr)))
+      directors))
 
 (defun find-runtime (node)
   (filter-infobox node +infobox-runtime-re+))
@@ -194,9 +209,6 @@
                     (year (safe-parse-integer (first-elt maybe-year))))
           (year->timestamp year))
         nil)))
-
-(defun split-directors-names (names)
-  (split "[\\n,\\r]+" names))
 
 (defun get-movie-info (page-title)
   (let* ((uri (strcat +api-scheme+
@@ -224,7 +236,7 @@
                                                                 +infobox-selector+
                                                                 "tr"))))
           (setf (movie-entry-title    res) title)
-          (setf (movie-entry-director res) (split-directors-names raw-directors))
+          (setf (movie-entry-director res) raw-directors)
           (setf (movie-entry-runtime  res) (safe-parse-integer runtime))
           (setf (movie-entry-year     res) release-year)
           res)))))
