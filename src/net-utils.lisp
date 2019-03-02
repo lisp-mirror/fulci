@@ -69,10 +69,10 @@ external format EXTERNAL-FORMAT."
 (defmacro with-success-request ((status-code headers) &body body)
   `(cond
      ((/= ,status-code +http-code-ok+)
-      (error 'http-error
+      (error 'conditions:http-error
              :text (format nil "Invalid status code: ~a" ,status-code)))
      ((not (check-mime-type ,headers +mime-type-html+))
-      (error 'http-error
+      (error 'conditions:http-error
              :text (format nil "Invalid mime type: ~a" (mime-type ,headers))))
      (t
       ,@body)))
@@ -86,5 +86,5 @@ external format EXTERNAL-FORMAT."
              (string= (mime-type headers) +mime-type-png+))
          img-data)
         (t
-         (error 'not-implemented-error
+         (error 'conditions:not-implemented-error
                 :text "this image format is not supported at the moment."))))))

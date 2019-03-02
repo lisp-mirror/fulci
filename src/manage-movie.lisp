@@ -145,7 +145,7 @@
     :initform nil
     :initarg  :container-win
     :accessor container-win
-    :type     widget)
+    :type     toplevel)
    (title-id
     :initform nil
     :initarg  :title-id

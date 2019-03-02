@@ -46,6 +46,10 @@
     :initform ""
     :initarg  :place
     :accessor place)
+   (use-insert-mode
+    :initform nil
+    :initarg  :use-insert-mode
+    :accessor use-insert-mode)
    (wiki-host
     :initform "en.wikipedia.org"
     :initarg  :wiki-host
@@ -70,6 +74,7 @@
     barcode-width
     barcode-height
     place
+    use-insert-mode
     wiki-host
     wiki-important-string
     gv-bin
@@ -114,6 +119,8 @@
 
 (gen-acc-fn place)
 
+(gen-acc-fn use-insert-mode)
+
 (gen-acc-fn wiki-host)
 
 (gen-acc-fn wiki-important-string)
@@ -128,6 +135,7 @@
 
 (defun sync-preferences-to-gui (copy-format-entry
                                 position-entry
+                                insert-mode-checkbox
                                 page-width-entry
                                 page-height-entry
                                 barcode-width-entry
@@ -136,20 +144,22 @@
                                 wiki-important-string-entry
                                 gv-bin-entry
                                 gimp-bin-entry)
-  (setf (nodgui:text copy-format-entry)     (preferences-copy-format))
-  (setf (nodgui:text position-entry)        (preferences-place))
-  (setf (nodgui:text page-width-entry)      (to-s (preferences-page-width)))
-  (setf (nodgui:text page-height-entry)     (to-s (preferences-page-height)))
-  (setf (nodgui:text barcode-width-entry)   (to-s (preferences-barcode-width)))
-  (setf (nodgui:text barcode-height-entry)  (to-s (preferences-barcode-height)))
-  (setf (nodgui:text wiki-host-entry)       (to-s (preferences-wiki-host)))
-  (setf (nodgui:text wiki-important-string-entry)
+  (setf (nodgui:text  copy-format-entry)     (preferences-copy-format))
+  (setf (nodgui:text  position-entry)        (preferences-place))
+  (setf (nodgui:value insert-mode-checkbox)  (preferences-use-insert-mode))
+  (setf (nodgui:text  page-width-entry)      (to-s (preferences-page-width)))
+  (setf (nodgui:text  page-height-entry)     (to-s (preferences-page-height)))
+  (setf (nodgui:text  barcode-width-entry)   (to-s (preferences-barcode-width)))
+  (setf (nodgui:text  barcode-height-entry)  (to-s (preferences-barcode-height)))
+  (setf (nodgui:text  wiki-host-entry)       (to-s (preferences-wiki-host)))
+  (setf (nodgui:text  wiki-important-string-entry)
         (to-s (preferences-wiki-important-string)))
-  (setf (nodgui:text gv-bin-entry)          (to-s (preferences-gv-bin)))
-  (setf (nodgui:text gimp-bin-entry)        (to-s (preferences-gimp-bin))))
+  (setf (nodgui:text  gv-bin-entry)          (to-s (preferences-gv-bin)))
+  (setf (nodgui:text  gimp-bin-entry)        (to-s (preferences-gimp-bin))))
 
 (defun sync-gui-to-preferences (copy-format-entry
                                 position-entry
+                                insert-mode-checkbox
                                 page-width-entry
                                 page-height-entry
                                 barcode-width-entry
@@ -158,15 +168,16 @@
                                 wiki-important-string-entry
                                 gv-bin-entry
                                 gimp-bin-entry)
-  (set-copy-format    (nodgui:text copy-format-entry))
-  (set-place          (nodgui:text position-entry))
-  (set-page-width     (misc:safe-parse-number (nodgui:text page-width-entry)
+  (set-copy-format     (nodgui:text  copy-format-entry))
+  (set-place           (nodgui:text  position-entry))
+  (set-use-insert-mode (nodgui:value insert-mode-checkbox))
+  (set-page-width      (misc:safe-parse-number (nodgui:text page-width-entry)
                                               :fix-fn #'parse-number-default))
-  (set-page-height    (misc:safe-parse-number (nodgui:text page-height-entry)
+  (set-page-height     (misc:safe-parse-number (nodgui:text page-height-entry)
                                               :fix-fn #'parse-number-default))
-  (set-barcode-width  (misc:safe-parse-number (nodgui:text barcode-width-entry)
+  (set-barcode-width   (misc:safe-parse-number (nodgui:text barcode-width-entry)
                                               :fix-fn #'parse-number-default))
-  (set-barcode-height (misc:safe-parse-number (nodgui:text barcode-height-entry)
+  (set-barcode-height  (misc:safe-parse-number (nodgui:text barcode-height-entry)
                                               :fix-fn #'parse-number-default))
   (set-wiki-host                 (nodgui:text wiki-host-entry))
   (set-wiki-important-string     (nodgui:text wiki-important-string-entry))
@@ -192,6 +203,10 @@
                                              :text (_ "Default physical position of a movie copy")))
            (position-entry    (make-instance 'nodgui:entry
                                              :master general))
+           (ins-mode-checkbox (make-instance 'nodgui:check-button
+                                             :value  nil
+                                             :master general
+                                             :text   (_ "Use \"insert mode\"")))
            (page-width-label  (make-instance 'nodgui:label
                                              :master print
                                              :text (_ "Page width in millimiters")))
@@ -235,6 +250,7 @@
            (ok-button-cb         (lambda ()
                                    (sync-gui-to-preferences copy-format-entry
                                                             position-entry
+                                                            ins-mode-checkbox
                                                             page-width-entry
                                                             page-height-entry
                                                             barcode-width-entry
@@ -258,6 +274,7 @@
       (nodgui:grid copy-format-entry    1  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid position-label       2  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid position-entry       3  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (nodgui:grid ins-mode-checkbox    4  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid page-width-label     0  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid page-width-entry     1  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid page-height-label    2  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
@@ -281,6 +298,7 @@
       (nodgui:grid cancel-button        0 1 :sticky :ns :padx +min-padding+ :pady +min-padding+)
       (sync-preferences-to-gui copy-format-entry
                                position-entry
+                               ins-mode-checkbox
                                page-width-entry
                                page-height-entry
                                barcode-width-entry

@@ -590,6 +590,8 @@
    :set-barcode-height
    :preferences-place
    :set-place
+   :preferences-use-insert-mode
+   :set-use-insert-mode
    :preferences-wiki-host
    :set-wiki-host
    :preferences-wiki-important-string

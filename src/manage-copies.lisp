@@ -74,6 +74,11 @@
     :initform nil
     :accessor close-button
     :type     button)
+   (container-win
+    :initform nil
+    :initarg  :container-win
+    :accessor container-win
+    :type     toplevel)
    (title-id
     :initform nil
     :initarg :title-id
@@ -116,7 +121,11 @@
                                         new-notes
                                         new-format)))
       (setf copy-id new-copy-id)
-      (info-dialog frame (format nil (_ "Added new copy with id: ~a") new-copy-id)))))
+      (let ((msg (format nil (_ "Added new copy with id: ~a") new-copy-id)))
+        (if (preferences:preferences-use-insert-mode)
+            (nodgui.mw:message-with-timeout (container-win frame) msg 10 (_ "OK")
+                                            :font +font-h2+)
+            (info-dialog frame msg))))))
 
 (defun update-copy (frame new-barcode new-position new-notes new-format)
   (with-all-accessors (frame)
@@ -241,11 +250,12 @@
       (grid close-button          0 1 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (gui-resize-grid-all object)
       (focus barcode-text-entry)
-      (bind apply-button
-            #$<Return>$
-            (lambda (e)
-              (declare (ignore e))
-              (funcall (add-copy-clsr object))))
+      (when (preferences:preferences-use-insert-mode)
+        (bind barcode-text-entry #$<Return>$
+              (lambda (e)
+                (declare (ignore e))
+                (funcall (add-copy-clsr object))
+                (break-mainloop))))
       (sync-copy-frame object))))
 
 (defun sync-copy-frame (frame)

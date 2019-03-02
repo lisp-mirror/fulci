@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-02-24 16:06+0100\n"
-"PO-Revision-Date: 2019-02-24 16:06+0100\n"
+"POT-Creation-Date: 2019-03-02 11:50+0100\n"
+"PO-Revision-Date: 2019-03-02 11:50+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@boldquot\n"
@@ -172,7 +172,7 @@ msgstr "Find problems in copies"
 msgid "Quit"
 msgstr "Quit"
 
-#: src/main-frame.lisp:52 src/preferences.lisp:178
+#: src/main-frame.lisp:52 src/preferences.lisp:189
 msgid "Preferences"
 msgstr "Preferences"
 
@@ -198,7 +198,8 @@ msgstr "Please insert the new description"
 
 #: src/main-toolbar.lisp:67 src/main-toolbar.lisp:150 src/main-toolbar.lisp:157
 #: src/main-toolbar.lisp:211 src/menu-commands.lisp:388
-#: src/menu-commands.lisp:406 src/preferences.lisp:250
+#: src/menu-commands.lisp:406 src/manage-copies.lisp:126
+#: src/preferences.lisp:266
 msgid "OK"
 msgstr "OK"
 
@@ -402,7 +403,7 @@ msgstr "Progress"
 msgid "Start import"
 msgstr "Start import"
 
-#: src/menu-commands.lisp:297 src/preferences.lisp:254
+#: src/menu-commands.lisp:297 src/preferences.lisp:270
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -598,7 +599,7 @@ msgstr "Added directors:"
 msgid "Director:"
 msgstr "Director:"
 
-#: src/manage-movie.lisp:480 src/manage-copies.lisp:207
+#: src/manage-movie.lisp:480 src/manage-copies.lisp:216
 msgid "Search:"
 msgstr "Search:"
 
@@ -622,11 +623,11 @@ msgstr "Countries:"
 msgid "Tags (comma separated values):"
 msgstr "Tags (comma separated values):"
 
-#: src/manage-movie.lisp:530 src/manage-copies.lisp:197
+#: src/manage-movie.lisp:530 src/manage-copies.lisp:206
 msgid "Notes:"
 msgstr "Notes:"
 
-#: src/manage-movie.lisp:535 src/manage-copies.lisp:213
+#: src/manage-movie.lisp:535 src/manage-copies.lisp:222
 msgid "Apply"
 msgstr "Apply"
 
@@ -634,7 +635,7 @@ msgstr "Apply"
 msgid "Apply and close"
 msgstr "Apply and close"
 
-#: src/manage-movie.lisp:548 src/manage-copies.lisp:217
+#: src/manage-movie.lisp:548 src/manage-copies.lisp:226
 msgid "Close"
 msgstr "Close"
 
@@ -650,56 +651,56 @@ msgstr "get movie's image from wikipedia"
 msgid "Add a new movie"
 msgstr "Add a new movie"
 
-#: src/manage-copies.lisp:119
+#: src/manage-copies.lisp:124
 #, lisp-format
 msgid "Added new copy with id: ~a"
 msgstr "Added new copy with id: ~a"
 
-#: src/manage-copies.lisp:132
+#: src/manage-copies.lisp:141
 msgid "Barcode can not be empty"
 msgstr "Barcode can not be empty"
 
-#: src/manage-copies.lisp:134
+#: src/manage-copies.lisp:143
 msgid "Position must be four comma separated fields"
 msgstr "Position must be four comma separated fields"
 
-#: src/manage-copies.lisp:140
+#: src/manage-copies.lisp:149
 msgid "No format choosen"
 msgstr "No format choosen"
 
-#: src/manage-copies.lisp:158
+#: src/manage-copies.lisp:167
 msgid "Movie information"
 msgstr "Movie information"
 
-#: src/manage-copies.lisp:162
+#: src/manage-copies.lisp:171
 msgid "Primary Title"
 msgstr "Primary Title"
 
-#: src/manage-copies.lisp:166
+#: src/manage-copies.lisp:175
 msgid "Original Title"
 msgstr "Original Title"
 
-#: src/manage-copies.lisp:170
+#: src/manage-copies.lisp:179
 msgid "Direction"
 msgstr "Direction"
 
-#: src/manage-copies.lisp:174
+#: src/manage-copies.lisp:183
 msgid "Production Year"
 msgstr "Production Year"
 
-#: src/manage-copies.lisp:185
+#: src/manage-copies.lisp:194
 msgid "Product barcode:"
 msgstr "Product barcode:"
 
-#: src/manage-copies.lisp:191
+#: src/manage-copies.lisp:200
 msgid "Position (building,room,storage,shelf):"
 msgstr "Position (building,room,storage,shelf):"
 
-#: src/manage-copies.lisp:204
+#: src/manage-copies.lisp:213
 msgid "Format:"
 msgstr "Format:"
 
-#: src/manage-copies.lisp:281
+#: src/manage-copies.lisp:291
 msgid "Add a new movie copy"
 msgstr "Add a new movie copy"
 
@@ -727,35 +728,39 @@ msgstr "generate copies barcode"
 msgid "movie copy details"
 msgstr "movie copy details"
 
-#: src/preferences.lisp:187
+#: src/preferences.lisp:198
 msgid "Default physical movie copy format"
 msgstr "Default physical movie copy format"
 
-#: src/preferences.lisp:192
+#: src/preferences.lisp:203
 msgid "Default physical position of a movie copy"
 msgstr "Default physical position of a movie copy"
 
-#: src/preferences.lisp:197
+#: src/preferences.lisp:209
+msgid "Use \"insert mode\""
+msgstr "Use “[1minsert mode[0m”"
+
+#: src/preferences.lisp:212
 msgid "Page width in millimiters"
 msgstr "Page width in millimiters"
 
-#: src/preferences.lisp:202
+#: src/preferences.lisp:217
 msgid "Page height in millimiters"
 msgstr "Page height in millimiters"
 
-#: src/preferences.lisp:207
+#: src/preferences.lisp:222
 msgid "Barcode height in millimiters"
 msgstr "Barcode height in millimiters"
 
-#: src/preferences.lisp:212
+#: src/preferences.lisp:227
 msgid "Barcode width in millimiters"
 msgstr "Barcode width in millimiters"
 
-#: src/preferences.lisp:217
+#: src/preferences.lisp:232
 msgid "Wikipedia hostname"
 msgstr "Wikipedia hostname"
 
-#: src/preferences.lisp:222
+#: src/preferences.lisp:237
 msgid ""
 "When searching in Wikipedia promote on top entries that contains the "
 "following word"
@@ -763,27 +768,27 @@ msgstr ""
 "When searching in Wikipedia promote on top entries that contains the "
 "following word"
 
-#: src/preferences.lisp:227
+#: src/preferences.lisp:242
 msgid "PostScript viewer program path"
 msgstr "PostScript viewer program path"
 
-#: src/preferences.lisp:232
+#: src/preferences.lisp:247
 msgid "GIMP program path"
 msgstr "GIMP program path"
 
-#: src/preferences.lisp:294
+#: src/preferences.lisp:312
 msgid "General preferences"
 msgstr "General preferences"
 
-#: src/preferences.lisp:297
+#: src/preferences.lisp:315
 msgid "Printing"
 msgstr "Printing"
 
-#: src/preferences.lisp:300
+#: src/preferences.lisp:318
 msgid "Networking"
 msgstr "Networking"
 
-#: src/preferences.lisp:303
+#: src/preferences.lisp:321
 msgid "External programs"
 msgstr "External programs"
 
