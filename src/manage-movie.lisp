@@ -20,8 +20,6 @@
 
 (define-constant +vote-bar-width+                       120 :test #'=)
 
-(cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
-
 (defclass add-movie-frame (frame)
   ((image-button
     :initform nil

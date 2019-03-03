@@ -16,7 +16,7 @@
 
 (in-package :search-frame)
 
-(cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
+(cl-syntax:use-syntax 'nodgui.event-parser:nodgui-event-syntax)
 
 (define-constant +columns-movie-search-id+                   "id" :test #'string=)
 

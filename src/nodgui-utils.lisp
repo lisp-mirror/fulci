@@ -1,6 +1,6 @@
 (in-package :nodgui-utils)
 
-(cl-syntax:use-syntax nodgui.utils:nodgui-color-syntax)
+(cl-syntax:use-syntax 'nodgui.utils:nodgui-color-syntax)
 
 (define-constant +font-h1+       "sans 20 bold" :test #'string=)
 

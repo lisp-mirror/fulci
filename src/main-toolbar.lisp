@@ -16,8 +16,6 @@
 
 (in-package :main-toolbar)
 
-(cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
-
 (define-constant +max-ct-name-homonyms+ 1000 :test #'=)
 
 (defun anc-table-selected-element (listbox)

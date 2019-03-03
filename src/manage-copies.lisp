@@ -16,7 +16,9 @@
 
 (in-package :manage-copies)
 
-(cl-syntax:use-syntax nodgui.event-parser:nodgui-event-syntax)
+(define-constant +timeout-info-copy-added+ 8 :test #'=)
+
+(cl-syntax:use-syntax 'nodgui.event-parser:nodgui-event-syntax)
 
 (defclass add-copy-frame (frame)
   ((primary-title-label
@@ -123,7 +125,10 @@
       (setf copy-id new-copy-id)
       (let ((msg (format nil (_ "Added new copy with id: ~a") new-copy-id)))
         (if (preferences:preferences-use-insert-mode)
-            (nodgui.mw:message-with-timeout (container-win frame) msg 10 (_ "OK")
+            (nodgui.mw:message-with-timeout (container-win frame)
+                                            msg
+                                            +timeout-info-copy-added+
+                                            (_ "OK")
                                             :font +font-h2+)
             (info-dialog frame msg))))))
 
