@@ -36,6 +36,14 @@
     :initform nil
     :accessor year-label
     :type     label)
+   (title-id-label
+    :initform nil
+    :accessor title-id-label
+    :type     label)
+   (title-id-text-entry
+    :initform nil
+    :accessor title-id-text-entry
+    :type     entry)
    (barcode-text-label
     :initform nil
     :accessor barcode-text-label
@@ -101,6 +109,8 @@
                     (original-title-label original-title-label)
                     (directors-label      directors-label)
                     (year-label           year-label)
+                    (title-id-label       title-id-label)
+                    (title-id-text-entry  title-id-text-entry)
                     (barcode-text-label   barcode-text-label)
                     (barcode-text-entry   barcode-text-entry)
                     (position-text-label  position-text-label)
@@ -115,13 +125,25 @@
                     (copy-id              copy-id))             ,object
      ,@body))
 
+(defun actual-title-id (frame)
+  (let* ((text-entry-id  (text (title-id-text-entry frame)))
+         (title-exists-p (db:fetch-from-any-id db:+table-title+ text-entry-id)))
+    (if title-exists-p
+        text-entry-id
+        (progn
+          (error-dialog frame (format nil
+                                      (_ "The title id: ~a does not exists in database")
+                                      text-entry-id))
+          nil))))
+
 (defun insert-copy (frame new-barcode new-position new-notes new-format)
   (with-all-accessors (frame)
-    (let ((new-copy-id (db:add-new-copy title-id
-                                        new-barcode
-                                        new-position
-                                        new-notes
-                                        new-format)))
+    (when-let* ((actual-title-id (actual-title-id frame))
+                (new-copy-id (db:add-new-copy title-id
+                                              new-barcode
+                                              new-position
+                                              new-notes
+                                              new-format)))
       (setf copy-id new-copy-id)
       (let ((msg (format nil (_ "Added new copy with id: ~a") new-copy-id)))
         (if (preferences:preferences-use-insert-mode)
@@ -134,8 +156,20 @@
 
 (defun update-copy (frame new-barcode new-position new-notes new-format)
   (with-all-accessors (frame)
-    (db:update-copy copy-id new-barcode new-position new-notes new-format)
-    (info-operation-completed frame)))
+    (let* ((actual-title-id (actual-title-id frame)))
+      (if actual-title-id
+          (progn
+            (db:update-copy copy-id
+                            actual-title-id
+                            new-barcode
+                            new-position
+                            new-notes
+                            new-format)
+            (info-operation-completed frame))
+          (error-dialog frame (format nil
+                                      (_ "The title id: ~a does not exists in database")
+                                      actual-title-id))))))
+
 
 (defun add-copy-clsr (frame)
   (lambda ()
@@ -145,7 +179,9 @@
           (frame (barcode-text-entry  +free-text-re+
                                       (_ "Barcode can not be empty"))
                  (position-text-entry +copy-position-re+
-                                      (_ "Position must be four comma separated fields")))
+                                      (_ "Position must be four comma separated fields"))
+                 (title-id-text-entry +pos-integer-re+
+                                      (_ "Title ID must be a positive integer")))
         (let ((new-barcode   (text barcode-text-entry))
               (new-position  (text position-text-entry))
               (new-notes     (text notes-text))
@@ -195,6 +231,11 @@
                                                 :master  top-frame))
       (setf year-label           (make-instance 'label
                                                 :master  top-frame))
+      (setf title-id-label       (make-instance 'label
+                                                :text   (_ "Title ID:")
+                                                :master object))
+      (setf title-id-text-entry  (make-instance 'entry
+                                                :master object))
       (setf barcode-text-label   (make-instance 'label
                                                 :text   (_ "Product barcode:")
                                                 :master object))
@@ -242,15 +283,17 @@
       (grid year-label            5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid directors-desc        6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
       (grid directors-label       7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid barcode-text-label    1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid barcode-text-entry    2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid position-text-label   3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid position-text-entry   4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid format-label          5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid formats-listbox       6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid notes-text-label      7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid notes-text      8 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid bottom-frame          9 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid title-id-label        1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid title-id-text-entry   2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid barcode-text-label    3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid barcode-text-entry    4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid position-text-label   5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid position-text-entry   6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid format-label          7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid formats-listbox       8 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid notes-text-label      9 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid notes-text           10 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid bottom-frame         11 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (grid apply-button          0 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (grid close-button          0 1 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
       (gui-resize-grid-all object)
@@ -276,6 +319,7 @@
                                 ""))
            (copy-info       (and copy-id
                                  (db:fetch-from-any-id db:+table-movie-copy+ copy-id))))
+      (setf (text title-id-text-entry)  actual-title-id)
       (setf (text primary-title-label)  (getf title-info :primary-title))
       (setf (text original-title-label) (getf title-info :original-title))
       (setf (text directors-label)      directors-info)

@@ -740,12 +740,13 @@
                            (format-description->id new-format))))
       (get-max-id +table-movie-copy+))))
 
-(defun update-copy (copy-id new-barcode new-position new-notes new-format)
+(defun update-copy (copy-id new-title-id new-barcode new-position new-notes new-format)
   (with-db-transaction
     (multiple-value-bind (building room storage shelf)
         (decode-copy-position new-position)
       (query (update +table-movie-copy+
-               (set= :barcode  new-barcode
+               (set= :title    new-title-id
+                     :barcode  new-barcode
                      :notes    new-notes
                      :building building
                      :room     room

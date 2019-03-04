@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-02 11:50+0100\n"
+"POT-Creation-Date: 2019-03-04 20:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,92 +156,92 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: src/main-toolbar.lisp:49 src/main-toolbar.lisp:124
+#: src/main-toolbar.lisp:47 src/main-toolbar.lisp:122
 msgid "This item already exists"
 msgstr ""
 
-#: src/main-toolbar.lisp:55 src/main-toolbar.lisp:137
+#: src/main-toolbar.lisp:53 src/main-toolbar.lisp:135
 msgid "No item was selected"
 msgstr ""
 
-#: src/main-toolbar.lisp:64 src/main-toolbar.lisp:147 src/main-toolbar.lisp:153
+#: src/main-toolbar.lisp:62 src/main-toolbar.lisp:145 src/main-toolbar.lisp:151
 msgid "Edit item"
 msgstr ""
 
-#: src/main-toolbar.lisp:65 src/main-toolbar.lisp:148
+#: src/main-toolbar.lisp:63 src/main-toolbar.lisp:146
 msgid "Please insert the new description"
 msgstr ""
 
-#: src/main-toolbar.lisp:67 src/main-toolbar.lisp:150 src/main-toolbar.lisp:157
-#: src/main-toolbar.lisp:211 src/menu-commands.lisp:388
-#: src/menu-commands.lisp:406 src/manage-copies.lisp:126
+#: src/main-toolbar.lisp:65 src/main-toolbar.lisp:148 src/main-toolbar.lisp:155
+#: src/main-toolbar.lisp:209 src/menu-commands.lisp:388
+#: src/menu-commands.lisp:406 src/manage-copies.lisp:153
 #: src/preferences.lisp:266
 msgid "OK"
 msgstr ""
 
-#: src/main-toolbar.lisp:73 src/main-toolbar.lisp:169 src/manage-movie.lisp:504
-#: src/manage-movie.lisp:518
+#: src/main-toolbar.lisp:71 src/main-toolbar.lisp:167 src/manage-movie.lisp:502
+#: src/manage-movie.lisp:516
 msgid "Filter:"
 msgstr ""
 
-#: src/main-toolbar.lisp:121 src/main-toolbar.lisp:160
-#: src/manage-movie.lisp:376
+#: src/main-toolbar.lisp:119 src/main-toolbar.lisp:158
+#: src/manage-movie.lisp:374
 msgid "Year must be a positive number"
 msgstr ""
 
-#: src/main-toolbar.lisp:154
+#: src/main-toolbar.lisp:152
 msgid "Please insert the new year of birth"
 msgstr ""
 
-#: src/main-toolbar.lisp:162
+#: src/main-toolbar.lisp:160
 msgid "Description empty"
 msgstr ""
 
-#: src/main-toolbar.lisp:164
+#: src/main-toolbar.lisp:162
 msgid "This person already exists in the database"
 msgstr ""
 
-#: src/main-toolbar.lisp:177
+#: src/main-toolbar.lisp:175
 msgid "Birth year"
 msgstr ""
 
-#: src/main-toolbar.lisp:209
+#: src/main-toolbar.lisp:207
 msgid "Filter items"
 msgstr ""
 
-#: src/main-toolbar.lisp:210
+#: src/main-toolbar.lisp:208
 msgid "Please insert a prefix name filter (minimum length 3 characters)"
 msgstr ""
 
-#: src/main-toolbar.lisp:214
+#: src/main-toolbar.lisp:212
 msgid "Please provide a prefix of three characters minimum"
 msgstr ""
 
-#: src/main-toolbar.lisp:216
+#: src/main-toolbar.lisp:214
 msgid "Manage persons"
 msgstr ""
 
-#: src/main-toolbar.lisp:229
+#: src/main-toolbar.lisp:227
 msgid "Manage physical supports"
 msgstr ""
 
-#: src/main-toolbar.lisp:234
+#: src/main-toolbar.lisp:232
 msgid "Manage genres"
 msgstr ""
 
-#: src/main-toolbar.lisp:239
+#: src/main-toolbar.lisp:237
 msgid "Manage countries"
 msgstr ""
 
-#: src/main-toolbar.lisp:241
+#: src/main-toolbar.lisp:239
 msgid "manage people"
 msgstr ""
 
-#: src/main-toolbar.lisp:242
+#: src/main-toolbar.lisp:240
 msgid "manage storage format"
 msgstr ""
 
-#: src/main-toolbar.lisp:243
+#: src/main-toolbar.lisp:241
 msgid "manage genres"
 msgstr ""
 
@@ -497,175 +497,188 @@ msgstr ""
 msgid "Image not available"
 msgstr ""
 
-#: src/manage-movie.lisp:220
+#: src/manage-movie.lisp:218
 msgid "Choose item"
 msgstr ""
 
-#: src/manage-movie.lisp:221
+#: src/manage-movie.lisp:219
 msgid ""
 "These are the titles returned from wikipedia, select one to accept or close "
 "window to discard."
 msgstr ""
 
-#: src/manage-movie.lisp:261
+#: src/manage-movie.lisp:259
 #, lisp-format
 msgid "The following director has been added to database:~2%~a~2%"
 msgid_plural "The following directors have been added to database:~2%~a2~%"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/manage-movie.lisp:265
+#: src/manage-movie.lisp:263
 msgid "You can add them to this movie using the \"Director\" listbox."
 msgid_plural "You can add them to this movie using the \"Director\" listbox."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/manage-movie.lisp:313
+#: src/manage-movie.lisp:311
 msgid "Get image from an internet address"
 msgstr ""
 
-#: src/manage-movie.lisp:314
+#: src/manage-movie.lisp:312
 msgid "Insert the address of the image you want to download"
 msgstr ""
 
-#: src/manage-movie.lisp:318
+#: src/manage-movie.lisp:316
 msgid "Only \"https\" protocol is allowed"
 msgstr ""
 
-#: src/manage-movie.lisp:374
+#: src/manage-movie.lisp:372
 msgid "Primary title can not be empty"
 msgstr ""
 
-#: src/manage-movie.lisp:378
+#: src/manage-movie.lisp:376
 msgid "Runtime must be a positive number"
 msgstr ""
 
-#: src/manage-movie.lisp:396
+#: src/manage-movie.lisp:394
 msgid "No director choosen"
 msgstr ""
 
-#: src/manage-movie.lisp:441
+#: src/manage-movie.lisp:439
 msgid "Press to add an image from file"
 msgstr ""
 
-#: src/manage-movie.lisp:461
+#: src/manage-movie.lisp:459
 msgid "Primary title:"
 msgstr ""
 
-#: src/manage-movie.lisp:466
+#: src/manage-movie.lisp:464
 msgid "Original title:"
 msgstr ""
 
-#: src/manage-movie.lisp:471
+#: src/manage-movie.lisp:469
 msgid "Added directors:"
 msgstr ""
 
-#: src/manage-movie.lisp:477
+#: src/manage-movie.lisp:475
 msgid "Director:"
 msgstr ""
 
-#: src/manage-movie.lisp:480 src/manage-copies.lisp:216
+#: src/manage-movie.lisp:478 src/manage-copies.lisp:262
 msgid "Search:"
 msgstr ""
 
-#: src/manage-movie.lisp:487
+#: src/manage-movie.lisp:485
 msgid "Year:"
 msgstr ""
 
-#: src/manage-movie.lisp:492
+#: src/manage-movie.lisp:490
 msgid "Runtime (minutes):"
 msgstr ""
 
-#: src/manage-movie.lisp:497
+#: src/manage-movie.lisp:495
 msgid "Genres:"
 msgstr ""
 
-#: src/manage-movie.lisp:511
+#: src/manage-movie.lisp:509
 msgid "Countries:"
 msgstr ""
 
-#: src/manage-movie.lisp:525
+#: src/manage-movie.lisp:523
 msgid "Tags (comma separated values):"
 msgstr ""
 
-#: src/manage-movie.lisp:530 src/manage-copies.lisp:206
+#: src/manage-movie.lisp:528 src/manage-copies.lisp:252
 msgid "Notes:"
 msgstr ""
 
-#: src/manage-movie.lisp:535 src/manage-copies.lisp:222
+#: src/manage-movie.lisp:533 src/manage-copies.lisp:268
 msgid "Apply"
 msgstr ""
 
-#: src/manage-movie.lisp:539
+#: src/manage-movie.lisp:537
 msgid "Apply and close"
 msgstr ""
 
-#: src/manage-movie.lisp:548 src/manage-copies.lisp:226
+#: src/manage-movie.lisp:546 src/manage-copies.lisp:272
 msgid "Close"
 msgstr ""
 
-#: src/manage-movie.lisp:569
+#: src/manage-movie.lisp:567
 msgid "get data from wikipedia"
 msgstr ""
 
-#: src/manage-movie.lisp:570
+#: src/manage-movie.lisp:568
 msgid "get movie's image from wikipedia"
 msgstr ""
 
-#: src/manage-movie.lisp:650
+#: src/manage-movie.lisp:648
 msgid "Add a new movie"
 msgstr ""
 
-#: src/manage-copies.lisp:124
+#: src/manage-copies.lisp:135 src/manage-copies.lisp:170
+#, lisp-format
+msgid "The title id: ~a does not exists in database"
+msgstr ""
+
+#: src/manage-copies.lisp:148
 #, lisp-format
 msgid "Added new copy with id: ~a"
 msgstr ""
 
-#: src/manage-copies.lisp:141
+#: src/manage-copies.lisp:180
 msgid "Barcode can not be empty"
 msgstr ""
 
-#: src/manage-copies.lisp:143
+#: src/manage-copies.lisp:182
 msgid "Position must be four comma separated fields"
 msgstr ""
 
-#: src/manage-copies.lisp:149
+#: src/manage-copies.lisp:184
+msgid "Title ID must be a positive integer"
+msgstr ""
+
+#: src/manage-copies.lisp:190
 msgid "No format choosen"
 msgstr ""
 
-#: src/manage-copies.lisp:167
+#: src/manage-copies.lisp:208
 msgid "Movie information"
 msgstr ""
 
-#: src/manage-copies.lisp:171
+#: src/manage-copies.lisp:212
 msgid "Primary Title"
 msgstr ""
 
-#: src/manage-copies.lisp:175
+#: src/manage-copies.lisp:216
 msgid "Original Title"
 msgstr ""
 
-#: src/manage-copies.lisp:179
+#: src/manage-copies.lisp:220
 msgid "Direction"
 msgstr ""
 
-#: src/manage-copies.lisp:183
+#: src/manage-copies.lisp:224
 msgid "Production Year"
 msgstr ""
 
-#: src/manage-copies.lisp:194
+#: src/manage-copies.lisp:235
+msgid "Title ID:"
+msgstr ""
+
+#: src/manage-copies.lisp:240
 msgid "Product barcode:"
 msgstr ""
 
-#: src/manage-copies.lisp:200
+#: src/manage-copies.lisp:246
 msgid "Position (building,room,storage,shelf):"
 msgstr ""
 
-#: src/manage-copies.lisp:213
+#: src/manage-copies.lisp:259
 msgid "Format:"
 msgstr ""
 
-#: src/manage-copies.lisp:291
+#: src/manage-copies.lisp:340
 msgid "Add a new movie copy"
 msgstr ""
 
