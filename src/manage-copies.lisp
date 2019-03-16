@@ -76,6 +76,25 @@
     :initform nil
     :accessor formats-listbox
     :type     searchable-listbox)
+   (added-titles-label
+    :initform nil
+    :accessor added-titles-label
+    :type     label)
+   (additional-titles-listbox
+    :initform nil
+    :accessor additional-titles-listbox
+    :type     scrolled-listbox)
+   (additional-titles-label
+    :initform nil
+    :accessor additional-titles-label
+    :type     label)
+   (search-text-entry
+    :initform nil
+    :accessor search-text-entry)
+   (search-results
+    :initform nil
+    :accessor search-results
+    :type     scrolled-treeview)
    (apply-button
     :initform nil
     :accessor apply-button
@@ -105,24 +124,29 @@
 
 (defmacro with-all-accessors ((object) &body body)
   "Very anaphoric :)"
-  `(with-accessors ((primary-title-label  primary-title-label)
-                    (original-title-label original-title-label)
-                    (directors-label      directors-label)
-                    (year-label           year-label)
-                    (title-id-label       title-id-label)
-                    (title-id-text-entry  title-id-text-entry)
-                    (barcode-text-label   barcode-text-label)
-                    (barcode-text-entry   barcode-text-entry)
-                    (position-text-label  position-text-label)
-                    (position-text-entry  position-text-entry)
-                    (notes-text-label     notes-text-label)
-                    (notes-text           notes-text)
-                    (format-label         format-label)
-                    (formats-listbox      formats-listbox)
-                    (apply-button         apply-button)
-                    (close-button         close-button)
-                    (title-id             title-id)
-                    (copy-id              copy-id))             ,object
+  `(with-accessors ((primary-title-label       primary-title-label)
+                    (original-title-label      original-title-label)
+                    (directors-label           directors-label)
+                    (year-label                year-label)
+                    (title-id-label            title-id-label)
+                    (title-id-text-entry       title-id-text-entry)
+                    (barcode-text-label        barcode-text-label)
+                    (barcode-text-entry        barcode-text-entry)
+                    (position-text-label       position-text-label)
+                    (position-text-entry       position-text-entry)
+                    (notes-text-label          notes-text-label)
+                    (notes-text                notes-text)
+                    (format-label              format-label)
+                    (formats-listbox           formats-listbox)
+                    (added-titles-label        added-titles-label)
+                    (additional-titles-listbox additional-titles-listbox)
+                    (additional-titles-label   additional-titles-label)
+                    (search-text-entry         search-text-entry)
+                    (search-results            search-results)
+                    (apply-button              apply-button)
+                    (close-button              close-button)
+                    (title-id                  title-id)
+                    (copy-id                   copy-id)) ,object
      ,@body))
 
 (defun actual-title-id (frame)
@@ -136,6 +160,9 @@
                                       text-entry-id))
           nil))))
 
+(defun selected-ids (treeview)
+  (mapcar #'nodgui:id (treeview-get-selection treeview)))
+
 (defun insert-copy (frame new-barcode new-position new-notes new-format)
   (with-all-accessors (frame)
     (when-let* ((actual-title-id (actual-title-id frame))
@@ -143,7 +170,8 @@
                                               new-barcode
                                               new-position
                                               new-notes
-                                              new-format)))
+                                              new-format
+                                              (selected-ids search-results))))
       (setf copy-id new-copy-id)
       (let ((msg (format nil (_ "Added new copy with id: ~a") new-copy-id)))
         (if (preferences:preferences-use-insert-mode)
@@ -152,7 +180,8 @@
                                             +timeout-info-copy-added+
                                             (_ "OK")
                                             :font +font-h2+)
-            (info-dialog frame msg))))))
+            (info-dialog frame msg))
+        (sync-copy-frame frame)))))
 
 (defun update-copy (frame new-barcode new-position new-notes new-format)
   (with-all-accessors (frame)
@@ -164,12 +193,13 @@
                             new-barcode
                             new-position
                             new-notes
-                            new-format)
+                            new-format
+                            (selected-ids search-results))
+            (sync-copy-frame frame)
             (info-operation-completed frame))
           (error-dialog frame (format nil
                                       (_ "The title id: ~a does not exists in database")
                                       actual-title-id))))))
-
 
 (defun add-copy-clsr (frame)
   (lambda ()
@@ -201,12 +231,21 @@
       (listbox-clear  formats-listbox)
       (listbox-select formats-listbox idx))))
 
+(defun delete-additional-title-clrs (frame listbox copy-id)
+  (lambda ()
+    (when copy-id
+      (mapcar (lambda (title)
+                (db:unassoc-additional-title copy-id title))
+              (listbox-get-selection-value listbox))
+      (sync-copy-frame frame))))
+
 (defmethod initialize-instance :after ((object add-copy-frame) &key &allow-other-keys)
   (with-all-accessors (object)
     (let* ((bottom-frame         (make-instance 'frame :master object))
            (top-frame            (make-instance 'labelframe
                                                 :text (_ "Movie information")
                                                 :master object))
+           (right-frame          (make-instance 'frame :master object))
            (primary-title-desc   (make-instance 'label
                                                 :font "bold"
                                                 :text (_ "Primary Title")
@@ -250,52 +289,84 @@
       (setf notes-text-label     (make-instance 'label
                                                 :text
                                                 (_ "Notes:")
-                                                :master object))
+                                                :master right-frame))
       (setf notes-text           (make-instance 'text
-                                                :height 6
-                                                :master object))
+                                                :height 3
+                                                :master right-frame))
       (setf format-label         (make-instance 'label
                                                 :text
                                                 (_ "Format:")
-                                                :master object))
+                                                :master right-frame))
+      (setf added-titles-label   (make-instance 'label
+                                                :master right-frame
+                                                :text (_ "Also contains:")))
+      (setf additional-titles-listbox
+            (make-instance 'scrolled-listbox
+                           :export-selection nil
+                           :select-mode      :browse
+                           :master           right-frame))
       (setf formats-listbox      (make-instance 'searchable-listbox
-                                                :entry-label       (_ "Search:")
-                                                :export-selection  nil
+                                                :entry-label      (_ "Search:")
+                                                :export-selection nil
                                                 :select-mode      :browse
                                                 :data             (db:all-formats-description)
-                                                :master           object))
+                                                :master           right-frame))
+      (setf additional-titles-label (make-instance 'label
+                                                   :master object
+                                                   :text   (_ "Additional titles:")))
+      (setf search-text-entry    (search-frame:make-search-titles-entry object :initial-text ""))
+      (setf search-results       (search-frame:make-search-results-widget object))
+      (search-frame:setup-search-res-movie-headers search-text-entry search-results)
+      (bind search-text-entry #$<Return>$ (search-frame:search-movie-entry-cb search-text-entry
+                                                                              search-results))
       (setf apply-button         (make-instance 'button
                                                 :text    (_ "Apply")
                                                 :command (add-copy-clsr object)
                                                 :master  bottom-frame))
       (setf close-button         (make-instance 'button
-                                                    :text    (_ "Close")
-                                                    :command (lambda () (break-mainloop))
-                                                    :master  bottom-frame))
+                                                :text    (_ "Close")
+                                                :command (lambda () (break-mainloop))
+                                                :master  bottom-frame))
       (setf (text position-text-entry) (pref:preferences-place))
       (select-listbox-format formats-listbox (pref:preferences-copy-format))
-      (grid top-frame             0 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid primary-title-desc    0 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid primary-title-label   1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid original-title-desc   2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid original-title-label  3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid year-desc             4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid year-label            5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid directors-desc        6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid directors-label       7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid title-id-label        1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid title-id-text-entry   2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid barcode-text-label    3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid barcode-text-entry    4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid position-text-label   5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid position-text-entry   6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid format-label          7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid formats-listbox       8 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid notes-text-label      9 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid notes-text           10 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
-      (grid bottom-frame         11 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
-      (grid apply-button          0 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
-      (grid close-button          0 1 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid top-frame                 0 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid primary-title-desc        0 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid primary-title-label       1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid original-title-desc       2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid original-title-label      3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid year-desc                 4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid year-label                5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid directors-desc            6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid directors-label           7 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid title-id-label            1 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid title-id-text-entry       2 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid barcode-text-label        3 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid barcode-text-entry        4 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid position-text-label       5 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid position-text-entry       6 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid additional-titles-label  11 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid search-text-entry        12 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid search-results           13 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
+      (grid bottom-frame             14 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid apply-button              0 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid close-button              0 1 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid right-frame               0 1 :sticky :news :padx +min-padding+ :pady +min-padding+
+            :rowspan 14)
+      (grid format-label              0 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (grid formats-listbox           1 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (grid notes-text-label          2 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (grid notes-text                3 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (grid added-titles-label        4 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (grid additional-titles-listbox 5 0 :sticky :we :padx +min-padding+ :pady +min-padding+)
+      (let ((delete-additional-title-button (make-instance 'button
+                                                           :master  right-frame
+                                                           :image   *icon-delete-small*
+                                                           :command
+                                                           (delete-additional-title-clrs
+                                                            object
+                                                            additional-titles-listbox
+                                                            copy-id))))
+        (grid delete-additional-title-button 6 0 :sticky :wns))
       (gui-resize-grid-all object)
       (focus barcode-text-entry)
       (when (preferences:preferences-use-insert-mode)
@@ -308,17 +379,20 @@
 
 (defun sync-copy-frame (frame)
   (with-all-accessors (frame)
-    (let* ((actual-title-id (or title-id
-                                (getf (db:fetch-from-any-id db:+table-movie-copy+ copy-id)
-                                      :title)))
-           (title-info      (db:fetch-from-any-id db:+table-title+ actual-title-id))
-           (directors-info  (if (db:all-directors-by-title actual-title-id)
-                                (join-with-strings (mapcar (lambda (a) (getf a :desc))
-                                                           (db:all-directors-by-title actual-title-id))
-                                                   ",")
-                                ""))
-           (copy-info       (and copy-id
-                                 (db:fetch-from-any-id db:+table-movie-copy+ copy-id))))
+    (let* ((actual-title-id   (or title-id
+                                  (getf (db:fetch-from-any-id db:+table-movie-copy+ copy-id)
+                                        :title)))
+           (title-info        (db:fetch-from-any-id db:+table-title+ actual-title-id))
+           (directors-info    (if (db:all-directors-by-title actual-title-id)
+                                  (join-with-strings (mapcar (lambda (a) (getf a :desc))
+                                                             (db:all-directors-by-title actual-title-id))
+                                                     ",")
+                                  ""))
+           (copy-info         (and copy-id
+                                   (db:fetch-from-any-id db:+table-movie-copy+ copy-id)))
+           (additional-titles (and copy-id (db:additional-titles copy-id))))
+      (listbox-delete additional-titles-listbox)
+      (listbox-append additional-titles-listbox additional-titles)
       (setf (text title-id-text-entry)  actual-title-id)
       (setf (text primary-title-label)  (getf title-info :primary-title))
       (setf (text original-title-label) (getf title-info :original-title))

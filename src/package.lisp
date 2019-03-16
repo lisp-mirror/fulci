@@ -332,7 +332,8 @@
      :decode-blob
      :rows->tsv
      :encode-vote
-     :decode-vote))
+     :decode-vote
+     :table-exists-p))
 
 (defpackage :bs-tree
   (:use
@@ -547,11 +548,14 @@
    :title-details
    :copy-row->format-row
    :copy-row->format-description
+   :additional-titles
    :filter-directors
    :add-new-movie
    :update-movie
    :remove-link-title-director
    :add-new-copy
+   :assoc-additional-title
+   :unassoc-additional-title
    :search-copies-main-frame
    :update-copy
    :copy-id->titles
@@ -841,7 +845,12 @@
    :text-utils)
   (:export
    :search-frame
-   :search-copies-frame))
+   :search-copies-frame
+   :make-search-results-widget
+   :make-search-titles-entry
+   :search-movie-entry-cb
+   :setup-search-res-movie-headers
+   :search-movie-entry-cb))
 
 (defpackage :main-toolbar
   (:use

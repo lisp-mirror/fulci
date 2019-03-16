@@ -42,17 +42,21 @@
 
 (define-constant +separator+                  "." :test #'equalp)
 
-(define-constant +directive-no-journaling+          "PRAGMA journal_mode = MEMORY"
-  :test #'string=)
+(define-constant +directive-no-journaling+      "PRAGMA journal_mode = MEMORY" :test #'string=)
 
-(define-constant +directive-no-sync-os+                 "PRAGMA synchronous = OFF"
-  :test #'string=)
+(define-constant +directive-no-sync-os+         "PRAGMA synchronous = OFF"     :test #'string=)
 
-(define-constant +directive-foreign-keys+               "PRAGMA foreign_keys = ON"
-  :test #'string=)
+(define-constant +directive-foreign-keys+       "PRAGMA foreign_keys = ON"     :test #'string=)
 
-(define-constant +directive-foreign-keys-off+           "PRAGMA foreign_keys = OFF"
-  :test #'string=)
+(define-constant +directive-foreign-keys-off+   "PRAGMA foreign_keys = OFF"    :test #'string=)
+
+(define-constant +sqlite3-db-scheme-table+      :sqlite_master                 :test #'eq)
+
+(define-constant +sqlite3-db-scheme-table-type+ "table"                        :test #'string=)
+
+(define-constant +sqlite3-db-scheme-type+       :type                          :test #'eq)
+
+(define-constant +sqlite3-db-scheme-table-name+ :tbl_name                      :test #'eq)
 
 (defmacro with-disabled-foreign (&body body)
   `(unwind-protect
@@ -308,3 +312,9 @@
           (not (numberp v)))
       0.0
       (alexandria:clamp (/ v +maximum-vote+) 0.0 1.0)))
+
+(defun table-exists-p (table-name)
+  (fetch (query (select :*
+                  (from +sqlite3-db-scheme-table+)
+                  (where (:and (:= +sqlite3-db-scheme-table-name+ (quote-symbol table-name))
+                               (:= +sqlite3-db-scheme-type+ +sqlite3-db-scheme-table-type+)))))))

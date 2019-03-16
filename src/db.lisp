@@ -62,65 +62,64 @@
 (define-constant +col-sep+                                                  " , "
   :test #'string=)
 
-(define-constant +table-country+                                           :country     :test #'eq)
+(define-constant +table-country+                            :country              :test #'eq)
 
-(define-constant +table-genre+                                             :genre       :test #'eq)
+(define-constant +table-genre+                              :genre                :test #'eq)
 
-(define-constant +table-movie-storage-format+               :movie-storage-format       :test #'eq)
+(define-constant +table-movie-storage-format+               :movie-storage-format :test #'eq)
 
-(define-constant +table-title+                                             :title       :test #'eq)
+(define-constant +table-title+                              :title                :test #'eq)
 
-(define-constant +table-role+                                               :role       :test #'eq)
+(define-constant +table-role+                               :role                 :test #'eq)
 
-(define-constant +table-person+                                           :person       :test #'eq)
+(define-constant +table-person+                             :person               :test #'eq)
 
-(define-constant +table-movie-copy+                                   :movie-copy       :test #'eq)
+(define-constant +table-movie-copy+                         :movie-copy           :test #'eq)
 
-(define-constant +table-crew+                                               :crew       :test #'eq)
+(define-constant +table-crew+                               :crew                 :test #'eq)
 
-(define-constant +table-title-genre+                                  :title-genre      :test #'eq)
+(define-constant +table-title-genre+                        :title-genre          :test #'eq)
 
-(define-constant +table-title-country+                                :title-country    :test #'eq)
+(define-constant +table-title-country+                      :title-country        :test #'eq)
 
-(define-constant +view-titles-genres-directors+                       :titles-ge-dir    :test #'eq)
+(define-constant +table-additional-titles+                  :additional-titles    :test #'eq)
 
-(define-constant +view-copies-genres-directors+                       :copies-ge-dir    :test #'eq)
+(define-constant +view-titles-genres-directors+             :titles-ge-dir        :test #'eq)
 
-(define-constant +value-director+                                       "Director"
-  :test #'string=)
+(define-constant +view-copies-genres-directors+             :copies-ge-dir        :test #'eq)
 
-(define-constant +value-genre-none+                                            "-"
-  :test #'string=)
+(define-constant +value-director+                           "Director"            :test #'string=)
 
-(define-constant +value-countries-none+                                  "unknown"
-  :test #'string=)
+(define-constant +value-genre-none+                         "-"                   :test #'string=)
 
-(define-constant +search-expr-director-col+                           :director         :test #'eq)
+(define-constant +value-countries-none+                     "unknown"             :test #'string=)
 
-(define-constant +search-expr-primary-title-col+                      :pt               :test #'eq)
+(define-constant +search-expr-director-col+                 :director             :test #'eq)
 
-(define-constant +search-expr-original-title-col+                     :ot               :test #'eq)
+(define-constant +search-expr-primary-title-col+            :pt                   :test #'eq)
 
-(define-constant +search-expr-year-col+                               :year             :test #'eq)
+(define-constant +search-expr-original-title-col+           :ot                   :test #'eq)
 
-(define-constant +search-expr-notes-col+                              :notes            :test #'eq)
+(define-constant +search-expr-year-col+                     :year                 :test #'eq)
 
-(define-constant +search-expr-genres-col+                             :genres           :test #'eq)
+(define-constant +search-expr-notes-col+                    :notes                :test #'eq)
+
+(define-constant +search-expr-genres-col+                   :genres               :test #'eq)
 
 ;; currently not used in expression
-(define-constant +search-expr-format-col+                             :format           :test #'eq)
+(define-constant +search-expr-format-col+                   :format               :test #'eq)
 
-(define-constant +search-expr-tags-col+                               :tags             :test #'eq)
+(define-constant +search-expr-tags-col+                     :tags                 :test #'eq)
 
-(define-constant +search-expr-building-col+                           :building         :test #'eq)
+(define-constant +search-expr-building-col+                 :building             :test #'eq)
 
-(define-constant +search-expr-room-col+                               :room             :test #'eq)
+(define-constant +search-expr-room-col+                     :room                 :test #'eq)
 
-(define-constant +search-expr-storage-col+                            :storage          :test #'eq)
+(define-constant +search-expr-storage-col+                  :storage              :test #'eq)
 
-(define-constant +search-expr-shelf-col+                              :shelf            :test #'eq)
+(define-constant +search-expr-shelf-col+                    :shelf                :test #'eq)
 
-(define-constant +search-expr-country-col+              :country-description          :test #'eq)
+(define-constant +search-expr-country-col+                 :country-description   :test #'eq)
 
 (defun create-table-index (table-name &optional (columns '(:id)))
   (labels ((%replace (s chars)
@@ -240,6 +239,15 @@
                            (make-foreign +table-genre+  "id" +restrict+ +cascade+)
                            +make-close+)))
 
+(defun make-additional-titles ()
+  (when (not (table-exists-p +table-additional-titles+))
+    (query-low-level (strcat (prepare-table +table-additional-titles+)
+                             "copy               INTEGER "
+                             (make-foreign +table-movie-copy+ "id" +restrict+ +cascade+) +col-sep+
+                             "title              INTEGER "
+                             (make-foreign +table-title+  "id" +cascade+ +cascade+)
+                             +make-close+))))
+
 (defun populate-role ()
   (query (make-insert db:+table-role+
                       (:description)
@@ -271,6 +279,7 @@
 
 (defun delete-all-tables ()
   (gen-delete table
+              +table-additional-titles+
               +table-movie-copy+
               +table-title-country+
               +table-title-genre+
@@ -308,6 +317,7 @@
     (make-crew)
     (make-title-genre)
     (make-title-country)
+    (make-additional-titles)
     (build-views)
     (populate-role)
     (populate-genres)
@@ -717,7 +727,31 @@
              (when-let ((remove-crew-id (getf row :cid)))
                (delete-by-id :crew remove-crew-id)))))))
 
-(defun add-new-copy (title-id new-barcode new-position new-notes new-format)
+(defun assoc-additional-title (copy-id title-id)
+  (when (null (fetch (query (select (:additional-titles.title)
+                              (from :additional-titles)
+                              (where (:and (:= :copy  copy-id)
+                                           (:= :title title-id)))))))
+    (query (make-insert +table-additional-titles+
+                        (:copy   :title)
+                        (copy-id title-id)))))
+
+(defun unassoc-additional-title (copy-id title)
+  (let ((titles-id (fetch-all (query (select (:title.id)
+                                       (from :title)
+                                       (where (:or (:= :title.primary-title title)
+                                                   (:= :original-title      title))))))))
+    (loop for row in titles-id do
+         (let ((title-id (getf row :id)))
+           (query (delete-from +table-additional-titles+
+                    (where (:and (:= :copy  copy-id)
+                                 (:= :title title-id)))))))))
+
+(defun assoc-additional-titles (copy-id titles)
+  (loop for additional-title in titles do
+       (assoc-additional-title copy-id additional-title)))
+
+(defun add-new-copy (title-id new-barcode new-position new-notes new-format additional-titles)
   (with-db-transaction
     (multiple-value-bind (building room storage shelf)
         (decode-copy-position new-position)
@@ -738,9 +772,12 @@
                            storage
                            shelf
                            (format-description->id new-format))))
-      (get-max-id +table-movie-copy+))))
+      (let ((copy-id (get-max-id +table-movie-copy+)))
+        (assoc-additional-titles copy-id additional-titles)
+        copy-id))))
 
-(defun update-copy (copy-id new-title-id new-barcode new-position new-notes new-format)
+(defun update-copy (copy-id new-title-id new-barcode new-position new-notes new-format
+                    additional-titles)
   (with-db-transaction
     (multiple-value-bind (building room storage shelf)
         (decode-copy-position new-position)
@@ -753,7 +790,8 @@
                      :storage  storage
                      :shelf    shelf
                      :format   (format-description->id new-format))
-               (where (:= :id copy-id)))))))
+               (where (:= :id copy-id))))
+      (assoc-additional-titles copy-id additional-titles))))
 
 (defun copy-id->titles (id)
   (let ((query (select ((:as :title.original-title
@@ -940,3 +978,12 @@
 (defun copy-row->format-description (copy-row)
   (let* ((format (copy-row->format-row copy-row)))
     (getf format :description)))
+
+(defun additional-titles (copy-id)
+  (let* ((query (query (select (:title.original-title)
+                         (from :additional-titles)
+                         (inner-join :title :on (:= :title.id  :additional-titles.title))
+                         (where (:= ::additional-titles.copy copy-id)))))
+         (res   (fetch-all query)))
+    (loop for row in res collect
+         (getf row :original-title))))

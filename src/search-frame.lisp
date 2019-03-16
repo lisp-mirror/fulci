@@ -280,6 +280,25 @@
       (funcall (search-copies-command (search-text-entry search-copy-frame)
                                       (search-results    search-copy-frame))))))
 
+(defun make-search-results-widget (master)
+  (make-instance 'scrolled-treeview
+                 :columns (list +columns-movie-search-international-title+
+                                +columns-movie-search-original-title+
+                                +columns-movie-search-director+
+                                +columns-movie-search-year+
+                                +columns-movie-search-genre+
+                                +columns-movie-search-tags+
+                                +columns-movie-search-notes+)
+                 :columns-width +columns-width+
+                 :master        master))
+
+(defun make-search-titles-entry (master
+                                 &key (initial-text (_ "search title, director, year...")))
+  (make-instance 'history-entry
+                 :compare-history-candidate-predicate #'string-equal
+                 :text                                initial-text
+                 :master                              master))
+
 (defmethod initialize-instance :after ((object search-frame) &key &allow-other-keys)
   (with-accessors ((main-frame             main-frame)
                    (search-text-entry      search-text-entry)
@@ -291,20 +310,8 @@
                    (add-copy-button        add-copy-button)
                    (goto-copy-button       goto-copy-button)
                    (details-item-button    details-item-button)) object
-    (setf search-text-entry (make-instance 'history-entry
-                                           :compare-history-candidate-predicate #'string-equal
-                                           :text (_ "search title, director, year...")
-                                           :master object))
-    (setf search-results (make-instance 'scrolled-treeview
-                                        :columns (list +columns-movie-search-international-title+
-                                                       +columns-movie-search-original-title+
-                                                       +columns-movie-search-director+
-                                                       +columns-movie-search-year+
-                                                       +columns-movie-search-genre+
-                                                       +columns-movie-search-tags+
-                                                       +columns-movie-search-notes+)
-                                        :columns-width +columns-width+
-                                        :master object))
+    (setf search-text-entry (make-search-titles-entry object))
+    (setf search-results (make-search-results-widget object))
     (setup-search-res-movie-headers search-text-entry search-results)
     (focus search-text-entry)
     (bind search-text-entry #$<Enter>$ (search-entry-on-enter-cb       search-text-entry))

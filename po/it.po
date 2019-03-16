@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-04 20:04+0100\n"
-"PO-Revision-Date: 2019-03-04 20:06+0100\n"
+"POT-Creation-Date: 2019-03-16 11:25+0100\n"
+"PO-Revision-Date: 2019-03-16 11:26+0100\n"
 "Last-Translator: cage\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -63,27 +63,27 @@ msgstr "Dettagli del titolo"
 msgid "search title, director, year..."
 msgstr "ricerca tra i titoli, registi, anno di produzione..."
 
-#: src/search-frame.lisp:353 src/search-copies-frame.lisp:264
+#: src/search-frame.lisp:360 src/search-copies-frame.lisp:264
 msgid "delete selected"
 msgstr "elimina i selezionati"
 
-#: src/search-frame.lisp:354
+#: src/search-frame.lisp:361
 msgid "add title"
 msgstr "aggiungi titolo"
 
-#: src/search-frame.lisp:355 src/search-copies-frame.lisp:265
+#: src/search-frame.lisp:362 src/search-copies-frame.lisp:265
 msgid "edit title"
 msgstr "modifica titolo"
 
-#: src/search-frame.lisp:356
+#: src/search-frame.lisp:363
 msgid "add a copy"
 msgstr "aggiungi copia"
 
-#: src/search-frame.lisp:357
+#: src/search-frame.lisp:364
 msgid "lookup copy"
 msgstr "ricerca le copie"
 
-#: src/search-frame.lisp:358
+#: src/search-frame.lisp:365
 msgid "title details"
 msgstr "dettagli titolo"
 
@@ -173,7 +173,7 @@ msgstr "Inserisci la nuova descrizione"
 
 #: src/main-toolbar.lisp:65 src/main-toolbar.lisp:148 src/main-toolbar.lisp:155
 #: src/main-toolbar.lisp:209 src/menu-commands.lisp:388
-#: src/menu-commands.lisp:406 src/manage-copies.lisp:153
+#: src/menu-commands.lisp:406 src/manage-copies.lisp:181
 #: src/preferences.lisp:266
 msgid "OK"
 msgstr "OK"
@@ -581,7 +581,7 @@ msgstr "Registi aggiunti:"
 msgid "Director:"
 msgstr "Regista:"
 
-#: src/manage-movie.lisp:478 src/manage-copies.lisp:262
+#: src/manage-movie.lisp:478 src/manage-copies.lisp:309
 msgid "Search:"
 msgstr "Cerca:"
 
@@ -605,11 +605,11 @@ msgstr "Paesi:"
 msgid "Tags (comma separated values):"
 msgstr "Etichette (valori separati da virgola):"
 
-#: src/manage-movie.lisp:528 src/manage-copies.lisp:252
+#: src/manage-movie.lisp:528 src/manage-copies.lisp:291
 msgid "Notes:"
 msgstr "Note:"
 
-#: src/manage-movie.lisp:533 src/manage-copies.lisp:268
+#: src/manage-movie.lisp:533 src/manage-copies.lisp:323
 msgid "Apply"
 msgstr "Applica"
 
@@ -617,7 +617,7 @@ msgstr "Applica"
 msgid "Apply and close"
 msgstr "Applica e chiudi"
 
-#: src/manage-movie.lisp:546 src/manage-copies.lisp:272
+#: src/manage-movie.lisp:546 src/manage-copies.lisp:327
 msgid "Close"
 msgstr "Chiudi"
 
@@ -633,69 +633,77 @@ msgstr "preleva immagine da wikipedia"
 msgid "Add a new movie"
 msgstr "Aggiungi un nuovo titolo"
 
-#: src/manage-copies.lisp:135 src/manage-copies.lisp:170
+#: src/manage-copies.lisp:159 src/manage-copies.lisp:201
 #, lisp-format
 msgid "The title id: ~a does not exists in database"
 msgstr "Il titolo con ID ~a non esiste nel database"
 
-#: src/manage-copies.lisp:148
+#: src/manage-copies.lisp:176
 #, lisp-format
 msgid "Added new copy with id: ~a"
 msgstr "Aggiunta nuova copia con id: ~a"
 
-#: src/manage-copies.lisp:180
+#: src/manage-copies.lisp:210
 msgid "Barcode can not be empty"
 msgstr "Il codice a barre non puo' essere vuoto"
 
-#: src/manage-copies.lisp:182
+#: src/manage-copies.lisp:212
 msgid "Position must be four comma separated fields"
 msgstr "La posizione deve essere composta da quattro campi separati da virgole"
 
-#: src/manage-copies.lisp:184
+#: src/manage-copies.lisp:214
 msgid "Title ID must be a positive integer"
 msgstr "L'ID deve essere un intero positivo"
 
-#: src/manage-copies.lisp:190
+#: src/manage-copies.lisp:220
 msgid "No format choosen"
 msgstr "Nessun formato specificato"
 
-#: src/manage-copies.lisp:208
+#: src/manage-copies.lisp:246
 msgid "Movie information"
 msgstr "Informazioni sul film"
 
-#: src/manage-copies.lisp:212
+#: src/manage-copies.lisp:251
 msgid "Primary Title"
 msgstr "Titolo internazionale"
 
-#: src/manage-copies.lisp:216
+#: src/manage-copies.lisp:255
 msgid "Original Title"
 msgstr "Titolo originale"
 
-#: src/manage-copies.lisp:220
+#: src/manage-copies.lisp:259
 msgid "Direction"
 msgstr "Regia"
 
-#: src/manage-copies.lisp:224
+#: src/manage-copies.lisp:263
 msgid "Production Year"
 msgstr "Anno di produzione"
 
-#: src/manage-copies.lisp:235
+#: src/manage-copies.lisp:274
 msgid "Title ID:"
 msgstr "ID del titolo"
 
-#: src/manage-copies.lisp:240
+#: src/manage-copies.lisp:279
 msgid "Product barcode:"
 msgstr "Codice a barre del prodotto"
 
-#: src/manage-copies.lisp:246
+#: src/manage-copies.lisp:285
 msgid "Position (building,room,storage,shelf):"
 msgstr "Posizione (edificio, stanza, magazzino, scaffale)"
 
-#: src/manage-copies.lisp:259
+#: src/manage-copies.lisp:298
 msgid "Format:"
 msgstr "Formato:"
 
-#: src/manage-copies.lisp:340
+#: src/manage-copies.lisp:302
+msgid "Also contains:"
+msgstr "Contiene anche:"
+
+#: src/manage-copies.lisp:316
+msgid "Additional titles:"
+msgstr "Titoli aggiuntivi:"
+
+#: src/manage-copies.lisp:414
 msgid "Add a new movie copy"
 msgstr "Aggiungi una nuova copia"
 
@@ -787,7 +795,7 @@ msgstr "Rete"
 msgid "External programs"
 msgstr "Programmi esterni"
 
-#: src/db.lisp:370
+#: src/db.lisp:380
 msgid "unkn."
 msgstr "scon."
 
