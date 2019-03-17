@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-16 11:25+0100\n"
+"POT-Creation-Date: 2019-03-17 16:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,71 +88,109 @@ msgstr ""
 msgid "title details"
 msgstr ""
 
-#: src/main-frame.lisp:25
-msgid "Database"
-msgstr ""
-
-#: src/main-frame.lisp:27
-msgid "Import"
-msgstr ""
-
-#: src/main-frame.lisp:29
-msgid "Export"
-msgstr ""
-
-#: src/main-frame.lisp:30
-msgid "As TSV"
-msgstr ""
-
-#: src/main-frame.lisp:32 src/menu-commands.lisp:472
-msgid "Edit"
-msgstr ""
-
-#: src/main-frame.lisp:33
-msgid "Help"
-msgstr ""
-
-#: src/main-frame.lisp:35
-msgid "From TSV"
-msgstr ""
-
-#: src/main-frame.lisp:36
-msgid "Copy"
-msgstr ""
-
-#: src/main-frame.lisp:38
-msgid "Dump SQL"
-msgstr ""
-
-#: src/main-frame.lisp:40
-msgid "Titles"
-msgstr ""
-
-#: src/main-frame.lisp:42
-msgid "Copies"
-msgstr ""
-
-#: src/main-frame.lisp:44
-msgid "From SQL"
-msgstr ""
-
-#: src/main-frame.lisp:46
-msgid "From backup"
+#: src/main-frame.lisp:26 src/menu-commands.lisp:38 src/menu-commands.lisp:49
+#: src/menu-commands.lisp:67 src/menu-commands.lisp:218
+#: src/menu-commands.lisp:227 src/menu-commands.lisp:243
+#: src/menu-commands.lisp:269 src/search-copies-frame.lisp:62
+msgid "Choose file"
 msgstr ""
 
 #: src/main-frame.lisp:48
+msgid "Print labels"
+msgstr ""
+
+#: src/main-frame.lisp:49
+#, lisp-format
+msgid ""
+"In the text below a string like \"n:m\" (where \"n\" and \"m\" are natural "
+"numbers)~%will be replaced, for each label, with a number ranging from \"n\" "
+"to \"m\"."
+msgstr ""
+
+#: src/main-frame.lisp:60 src/main-toolbar.lisp:65 src/main-toolbar.lisp:148
+#: src/main-toolbar.lisp:155 src/main-toolbar.lisp:209
+#: src/menu-commands.lisp:388 src/menu-commands.lisp:406
+#: src/manage-copies.lisp:181 src/preferences.lisp:266
+msgid "OK"
+msgstr ""
+
+#: src/main-frame.lisp:66 src/menu-commands.lisp:297 src/preferences.lisp:270
+msgid "Cancel"
+msgstr ""
+
+#: src/main-frame.lisp:78
+msgid "Database"
+msgstr ""
+
+#: src/main-frame.lisp:80
+msgid "Import"
+msgstr ""
+
+#: src/main-frame.lisp:82
+msgid "Export"
+msgstr ""
+
+#: src/main-frame.lisp:83
+msgid "As TSV"
+msgstr ""
+
+#: src/main-frame.lisp:85 src/menu-commands.lisp:472
+msgid "Edit"
+msgstr ""
+
+#: src/main-frame.lisp:86
+msgid "Prints"
+msgstr ""
+
+#: src/main-frame.lisp:87
+msgid "Help"
+msgstr ""
+
+#: src/main-frame.lisp:89
+msgid "From TSV"
+msgstr ""
+
+#: src/main-frame.lisp:90
+msgid "Copy"
+msgstr ""
+
+#: src/main-frame.lisp:92
+msgid "Dump SQL"
+msgstr ""
+
+#: src/main-frame.lisp:94
+msgid "Titles"
+msgstr ""
+
+#: src/main-frame.lisp:96
+msgid "Copies"
+msgstr ""
+
+#: src/main-frame.lisp:98
+msgid "From SQL"
+msgstr ""
+
+#: src/main-frame.lisp:100
+msgid "From backup"
+msgstr ""
+
+#: src/main-frame.lisp:102
 msgid "Find problems in copies"
 msgstr ""
 
-#: src/main-frame.lisp:51
+#: src/main-frame.lisp:105
 msgid "Quit"
 msgstr ""
 
-#: src/main-frame.lisp:52 src/preferences.lisp:189
+#: src/main-frame.lisp:106
+msgid "Labels"
+msgstr ""
+
+#: src/main-frame.lisp:109 src/preferences.lisp:189
 msgid "Preferences"
 msgstr ""
 
-#: src/main-frame.lisp:55 src/menu-commands.lisp:22
+#: src/main-frame.lisp:112 src/menu-commands.lisp:22
 msgid "About"
 msgstr ""
 
@@ -170,13 +208,6 @@ msgstr ""
 
 #: src/main-toolbar.lisp:63 src/main-toolbar.lisp:146
 msgid "Please insert the new description"
-msgstr ""
-
-#: src/main-toolbar.lisp:65 src/main-toolbar.lisp:148 src/main-toolbar.lisp:155
-#: src/main-toolbar.lisp:209 src/menu-commands.lisp:388
-#: src/menu-commands.lisp:406 src/manage-copies.lisp:181
-#: src/preferences.lisp:266
-msgid "OK"
 msgstr ""
 
 #: src/main-toolbar.lisp:71 src/main-toolbar.lisp:167 src/manage-movie.lisp:502
@@ -245,11 +276,8 @@ msgstr ""
 msgid "manage genres"
 msgstr ""
 
-#: src/menu-commands.lisp:38 src/menu-commands.lisp:49
-#: src/menu-commands.lisp:67 src/menu-commands.lisp:218
-#: src/menu-commands.lisp:227 src/menu-commands.lisp:243
-#: src/menu-commands.lisp:269 src/search-copies-frame.lisp:62
-msgid "Choose file"
+#: src/main-toolbar.lisp:242
+msgid "manage countries"
 msgstr ""
 
 #: src/menu-commands.lisp:56
@@ -374,10 +402,6 @@ msgstr ""
 
 #: src/menu-commands.lisp:294
 msgid "Start import"
-msgstr ""
-
-#: src/menu-commands.lisp:297 src/preferences.lisp:270
-msgid "Cancel"
 msgstr ""
 
 #: src/menu-commands.lisp:352

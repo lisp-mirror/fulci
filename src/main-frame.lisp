@@ -19,6 +19,64 @@
 (defun temporary-disabled ()
   (nodgui-utils:info-dialog *tk* "Functionality temporarly disabled"))
 
+(defun print-labels-clrs (parent)
+  (lambda ()
+    (labels ((replace-placeholder (text)
+               (cl-ppcre:regex-replace "[0-9]+:[0-9]+"
+                                       text
+                                       ps-utils:+id-placeholder+))
+             (print-cb (raw-text)
+               (let ((file (get-save-file :file-types +ps-file-dialog-filter+
+                                          :title      (_ "Choose file")
+                                          :parent     parent)))
+                 (when file
+                   (with-open-file (stream file
+                                           :direction         :output
+                                           :if-exists         :supersede
+                                           :if-does-not-exist :create)
+                     (when-let* ((raw-range (cl-ppcre:scan-to-strings "[0-9]+:[0-9]+"
+                                                                      raw-text))
+                                 (from      (first-elt (cl-ppcre:split ":" raw-range)))
+                                 (to        (elt       (cl-ppcre:split ":" raw-range)
+                                                       1))
+                                 (page-w    (preferences:preferences-page-width))
+                                 (page-h    (preferences:preferences-page-height))
+                                 (w         (preferences:preferences-barcode-width))
+                                 (h         (preferences:preferences-barcode-height))
+                                 (ps (ps-utils:render-ids-table (replace-placeholder raw-text)
+                                                                (safe-parse-number from)
+                                                                (safe-parse-number to)
+                                                                page-w
+                                                                page-h
+                                                                w h)))
+                     (write-sequence ps stream)))))))
+      (with-modal-toplevel (toplevel :title (_ "Print labels"))
+        (let* ((help-text     (_ "In the text below a string like \"n:m\" (where \"n\" and \"m\" are natural numbers)~%will be replaced, for each label, with a number ranging from \"n\" to \"m\"."))
+               (help-label    (make-instance 'label
+                                             :master toplevel
+                                             :font   +font-h3+
+                                             :text   (format nil help-text)))
+               (text-input    (make-instance 'text
+                                             :master toplevel
+                                             :height 5))
+               (bottom-frame  (make-instance 'frame
+                                             :master toplevel))
+               (ok-button     (make-instance 'button
+                                             :text    (_ "OK")
+                                             :master  bottom-frame
+                                             :command (lambda ()
+                                                        (print-cb (text text-input))
+                                                        (break-mainloop))))
+               (cancel-button (make-instance 'button
+                                             :text    (_ "Cancel")
+                                             :command (lambda () (break-mainloop))
+                                             :master  bottom-frame)))
+          (grid ok-button     0 0 :sticky :n)
+          (grid cancel-button 0 1 :sticky :n)
+          (grid help-label    0 0 :sticky :ns)
+          (grid text-input    1 0 :sticky :ns)
+          (grid bottom-frame  2 0 :sticky :n))))))
+
 (defun initialize-menu (parent)
   (with-accessors ((main-window main-window)) parent
     (let* ((bar        (make-menubar))
@@ -30,6 +88,7 @@
            (export-tsv (make-menu export (_ "As TSV")))
            (sep3       (add-separator    db))
            (edit       (make-menu bar    (_ "Edit")))
+           (prints     (make-menu bar    (_ "Prints")))
            (help       (make-menu bar    (_ "Help"))))
       (declare (ignore sep1 sep2 sep3))
       (make-menubutton db-import (_ "From TSV")    #'menu:import-tsv-window :underline 0)
@@ -49,6 +108,9 @@
                        (menu:import-find-problem-copies-fn main-window)
                        :underline 0)
       (make-menubutton db        (_ "Quit")        #'menu:quit              :underline 0)
+      (make-menubutton prints    (_ "Labels")
+                       (print-labels-clrs parent)
+                       :underline 0)
       (make-menubutton edit      (_ "Preferences")
                        (lambda () (preferences:make-preferences-window))
                        :underline 0)

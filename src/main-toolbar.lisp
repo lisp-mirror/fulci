@@ -227,18 +227,19 @@
                                                      (_ "Manage physical supports"))
                                            :master  object))
           (manage-genres    (make-instance 'button
-                                           :image *icon-genre*
+                                           :image   *icon-genre*
                                            :command (manage-ancillary-tables db:+table-genre+
                                                                              (_ "Manage genres"))
                                            :master object))
           (manage-countries (make-instance 'button
-                                           :image *icon-country*
+                                           :image   *icon-country*
                                            :command (manage-ancillary-tables db:+table-country+
                                                                              (_ "Manage countries"))
                                            :master object)))
       (attach-tooltips (manage-persons   (_ "manage people"))
                        (manage-support   (_ "manage storage format"))
-                       (manage-genres    (_ "manage genres")))
+                       (manage-genres    (_ "manage genres"))
+                       (manage-countries (_ "manage countries")))
       (configure object :relief :raised)
       (grid manage-persons   0 0 :pady (* 2 +min-padding+))
       (grid manage-support   0 1 :pady (* 2 +min-padding+))

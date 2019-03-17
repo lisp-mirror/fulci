@@ -42,6 +42,8 @@
 
 (define-constant +page-margin-top+          20                  :test #'=)
 
+(define-constant +id-placeholder+           "%%"                :test #'string=)
+
 (defun encode-barcode (id)
   (format nil "$START-B~8,'0d" id))
 
@@ -144,4 +146,43 @@
     (end-page doc)
     (close-doc doc)
     (shutdown)
+    *callback-string*))
+
+(defun render-ids-table (label from to page-w page-h w h)
+  (let* ((page-size         (make-instance 'page-size
+                                           :width  page-w
+                                           :height page-h))
+         (doc               (make-instance 'psdoc
+                                           :page-size page-size))
+         (*callback-string* ""))
+    (when (< from to)
+      (open-doc doc nil)
+      (set-parameter doc
+                     +parameter-key-searchpath+
+                     +sys-data-dir+)
+      (begin-page doc)
+      (flet ((make-label (i)
+               (cl-ppcre:regex-replace +id-placeholder+ label (to-s i))))
+        (do ((id from (1+ id))
+             (y  0)
+             (x  0))
+            ((> id to))
+          (when (> (+ x w) page-w)
+            (setf x 0)
+            (incf y h))
+          (when (>= (+ y h) page-h)
+            (end-page doc)
+            (begin-page doc)
+            (setf y 0)
+            (setf x 0))
+          (with-save-restore (doc)
+            (translate doc x y)
+            (ps:draw-text-confined-in-box doc
+                                          (default-font doc)
+                                          (make-label id)
+                                          0 0 w h))
+          (incf x w))
+        (end-page doc)
+        (close-doc doc)
+        (shutdown)))
     *callback-string*))

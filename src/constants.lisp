@@ -75,3 +75,6 @@
 (define-constant +max-history-items-count+         100 :test #'=)
 
 (define-constant +maximum-vote+                      5 :test #'=)
+
+(define-constant +ps-file-dialog-filter+           '(("PostScript Files" "*.ps"))
+  :test #'equalp)

@@ -58,7 +58,7 @@
                                 labels-rows)))
       (when all-labels
         (let ((destination (get-save-file :parent     *tk*
-                                          :file-types '(("PostScript Files" "*.ps"))
+                                          :file-types +ps-file-dialog-filter+
                                           :title      (_ "Choose file"))))
           (when destination
             (with-busy* (*tk*)

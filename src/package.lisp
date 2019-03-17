@@ -50,7 +50,8 @@
    :+image-max-w+
    :+image-max-h+
    :+max-history-items-count+
-   :+maximum-vote+))
+   :+maximum-vote+
+   :+ps-file-dialog-filter+))
 
 (defpackage :conditions
   (:use :cl)
@@ -806,7 +807,9 @@
    :db)
   (:shadowing-import-from :ps :rotate)
   (:export
-   :render-barcode-table))
+   :+id-placeholder+
+   :render-barcode-table
+   :render-ids-table))
 
 (defpackage :manage-copies
   (:use
