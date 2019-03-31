@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-17 16:24+0100\n"
-"PO-Revision-Date: 2019-03-17 16:25+0100\n"
+"POT-Creation-Date: 2019-03-31 18:01+0200\n"
+"PO-Revision-Date: 2019-03-31 18:01+0200\n"
 "Last-Translator: cage\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -59,11 +59,11 @@ msgstr "Note"
 msgid "Title details"
 msgstr "Dettagli del titolo"
 
-#: src/search-frame.lisp:296 src/search-copies-frame.lisp:213
+#: src/search-frame.lisp:296 src/search-copies-frame.lisp:230
 msgid "search title, director, year..."
 msgstr "ricerca tra i titoli, registi, anno di produzione..."
 
-#: src/search-frame.lisp:360 src/search-copies-frame.lisp:264
+#: src/search-frame.lisp:360 src/search-copies-frame.lisp:281
 msgid "delete selected"
 msgstr "elimina i selezionati"
 
@@ -71,7 +71,7 @@ msgstr "elimina i selezionati"
 msgid "add title"
 msgstr "aggiungi titolo"
 
-#: src/search-frame.lisp:362 src/search-copies-frame.lisp:265
+#: src/search-frame.lisp:362 src/search-copies-frame.lisp:282
 msgid "edit title"
 msgstr "modifica titolo"
 
@@ -87,109 +87,111 @@ msgstr "ricerca le copie"
 msgid "title details"
 msgstr "dettagli titolo"
 
-#: src/main-frame.lisp:26 src/menu-commands.lisp:38 src/menu-commands.lisp:49
+#: src/main-frame.lisp:30 src/menu-commands.lisp:38 src/menu-commands.lisp:49
 #: src/menu-commands.lisp:67 src/menu-commands.lisp:218
 #: src/menu-commands.lisp:227 src/menu-commands.lisp:243
 #: src/menu-commands.lisp:269 src/search-copies-frame.lisp:62
 msgid "Choose file"
 msgstr "Scegli un file"
 
-#: src/main-frame.lisp:48
+#: src/main-frame.lisp:53
 msgid "Print labels"
 msgstr "Stampa etichette"
 
-#: src/main-frame.lisp:49
+#: src/main-frame.lisp:54
 #, lisp-format
 msgid ""
 "In the text below a string like \"n:m\" (where \"n\" and \"m\" are natural "
 "numbers)~%will be replaced, for each label, with a number ranging from \"n\" "
 "to \"m\"."
-msgstr "Nel testo inserito una stringa del tipo \"n:m\" (dove \"n\" e \"m\" sono numeri naturali)~%sara' sostituita con un numero che andra' da \"n\" a \"m\"."
+msgstr ""
+"Nel testo inserito una stringa del tipo \"n:m\" (dove \"n\" e \"m\" sono "
+"numeri naturali)~%sara' sostituita con un numero che andra' da \"n\" a \"m\"."
 
-#: src/main-frame.lisp:60 src/main-toolbar.lisp:65 src/main-toolbar.lisp:148
+#: src/main-frame.lisp:65 src/main-toolbar.lisp:65 src/main-toolbar.lisp:148
 #: src/main-toolbar.lisp:155 src/main-toolbar.lisp:209
 #: src/menu-commands.lisp:388 src/menu-commands.lisp:406
 #: src/manage-copies.lisp:181 src/preferences.lisp:266
 msgid "OK"
 msgstr "OK"
 
-#: src/main-frame.lisp:66 src/menu-commands.lisp:297 src/preferences.lisp:270
+#: src/main-frame.lisp:71 src/menu-commands.lisp:297 src/preferences.lisp:270
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/main-frame.lisp:78
+#: src/main-frame.lisp:83
 msgid "Database"
 msgstr "Database"
 
-#: src/main-frame.lisp:80
+#: src/main-frame.lisp:85
 msgid "Import"
 msgstr "Importa"
 
-#: src/main-frame.lisp:82
+#: src/main-frame.lisp:87
 msgid "Export"
 msgstr "Esporta"
 
-#: src/main-frame.lisp:83
+#: src/main-frame.lisp:88
 msgid "As TSV"
 msgstr "Come TSV"
 
-#: src/main-frame.lisp:85 src/menu-commands.lisp:472
+#: src/main-frame.lisp:90 src/menu-commands.lisp:472
 msgid "Edit"
 msgstr "Modifica"
 
-#: src/main-frame.lisp:86
+#: src/main-frame.lisp:91
 msgid "Prints"
 msgstr "Stampe"
 
-#: src/main-frame.lisp:87
+#: src/main-frame.lisp:92
 msgid "Help"
 msgstr "Aiuto"
 
-#: src/main-frame.lisp:89
+#: src/main-frame.lisp:94
 msgid "From TSV"
 msgstr "Da TSV"
 
-#: src/main-frame.lisp:90
+#: src/main-frame.lisp:95
 msgid "Copy"
 msgstr "Copia"
 
-#: src/main-frame.lisp:92
+#: src/main-frame.lisp:97
 msgid "Dump SQL"
 msgstr "Salva in SQL"
 
-#: src/main-frame.lisp:94
+#: src/main-frame.lisp:99
 msgid "Titles"
 msgstr "Titoli"
 
-#: src/main-frame.lisp:96
+#: src/main-frame.lisp:101
 msgid "Copies"
 msgstr "Copie"
 
-#: src/main-frame.lisp:98
+#: src/main-frame.lisp:103
 msgid "From SQL"
 msgstr "Da SQL"
 
-#: src/main-frame.lisp:100
+#: src/main-frame.lisp:105
 msgid "From backup"
 msgstr "Da backup"
 
-#: src/main-frame.lisp:102
+#: src/main-frame.lisp:107
 msgid "Find problems in copies"
 msgstr "Trova problemi nelle copie"
 
-#: src/main-frame.lisp:105
+#: src/main-frame.lisp:110
 msgid "Quit"
 msgstr "Esci"
 
-#: src/main-frame.lisp:106
+#: src/main-frame.lisp:111
 msgid "Labels"
 msgstr "Etichette"
 
-#: src/main-frame.lisp:109 src/preferences.lisp:189
+#: src/main-frame.lisp:114 src/preferences.lisp:189
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: src/main-frame.lisp:112 src/menu-commands.lisp:22
+#: src/main-frame.lisp:117 src/menu-commands.lisp:22
 msgid "About"
 msgstr "Sul programma"
 
@@ -735,23 +737,27 @@ msgstr "Aggiungi una nuova copia"
 msgid "Position"
 msgstr "Posizione"
 
-#: src/search-copies-frame.lisp:164 src/search-copies-frame.lisp:186
+#: src/search-copies-frame.lisp:164 src/search-copies-frame.lisp:190
 msgid "Format"
 msgstr "Formato"
 
-#: src/search-copies-frame.lisp:179
+#: src/search-copies-frame.lisp:183
 msgid "Copy details"
 msgstr "Dettagli della copia"
 
-#: src/search-copies-frame.lisp:266
+#: src/search-copies-frame.lisp:198
+msgid "Additional Titles"
+msgstr "Titoli Aggiuntivi"
+
+#: src/search-copies-frame.lisp:283
 msgid "edit copy"
 msgstr "modifica copia"
 
-#: src/search-copies-frame.lisp:267
+#: src/search-copies-frame.lisp:284
 msgid "generate copies barcode"
 msgstr "genera codici a barre"
 
-#: src/search-copies-frame.lisp:268
+#: src/search-copies-frame.lisp:285
 msgid "movie copy details"
 msgstr "dettagli della copia"
 
@@ -819,7 +825,7 @@ msgstr "Rete"
 msgid "External programs"
 msgstr "Programmi esterni"
 
-#: src/db.lisp:380
+#: src/db.lisp:383
 msgid "unkn."
 msgstr "scon."
 
