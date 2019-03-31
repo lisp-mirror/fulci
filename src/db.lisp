@@ -88,6 +88,8 @@
 
 (define-constant +view-copies-genres-directors+             :copies-ge-dir        :test #'eq)
 
+(define-constant +view-additional-titles+                   :vw-additional-titles :test #'eq)
+
 (define-constant +value-director+                           "Director"            :test #'string=)
 
 (define-constant +value-genre-none+                         "-"                   :test #'string=)
@@ -293,7 +295,8 @@
 
 (defun build-views ()
   (create-view +view-titles-genres-directors+ (view-title-main-frame))
-  (create-view +view-copies-genres-directors+ (view-copy-main-frame)))
+  (create-view +view-copies-genres-directors+ (view-copy-main-frame))
+  (create-view +view-additional-titles+       (view-additional-titles)))
 
 (defun delete-all-views ()
   (delete-view  +view-copies-genres-directors+)
@@ -480,6 +483,20 @@
   (query-low-level (format nil "create view ~a as ~a"
                            (quote-symbol name)
                            (query->sql select-query))))
+
+(defun view-additional-titles ()
+  (select (:original-copy-id
+           :original-title-id
+           (:as (:group_concat :primary-title)  :add-pt)
+           (:as (:group_concat :original-title) :add-ot))
+    (from (select ((:as :movie-copy.id :original-copy-id)
+                   (:as :title.id      :original-title-id)
+                   :title.primary-title
+                   :title.original-title)
+            (from :additional-titles)
+            (inner-join :movie-copy  :on (:= :movie-copy.id :additional-titles.copy))
+            (inner-join :title       :on (:= :title.id :additional-titles.title))))
+    (group-by :original-copy-id)))
 
 (defun view-title-main-frame ()
   (select (:*
@@ -844,6 +861,8 @@
                 (from +view-copies-genres-directors+)
                 (left-join :title-country :on (:= :title-id :title-country.title))
                 (left-join :country       :on (:= :country.id :title-country.country))
+                (left-join (:as :vw-additional-titles :addt)
+                           :on (:= :addt.original-copy-id :copies-ge-dir.copy-id))
                 (where (:and (:or (:like :barcode  (prepare-for-sql-like key))
                                   (:like :copy-id  (prepare-for-sql-like key))
                                   (:like :pt       (prepare-for-sql-like key))
@@ -854,7 +873,9 @@
                                   (:like :storage  (prepare-for-sql-like key))
                                   (:like :shelf    (prepare-for-sql-like key))
                                   (:like :notes    (prepare-for-sql-like key))
-                                  (:like :year     (format nil "~a%" key)))))
+                                  (:like :year     (format nil "~a%" key))
+                                  (:like :add-pt   (prepare-for-sql-like key))
+                                  (:like :add-ot   (prepare-for-sql-like key)))))
                 (order-by `(,order-dir ,order-columns))
                 (group-by :copy-id))))
     (fetch-all-rows res)))
@@ -935,9 +956,11 @@
   (let ((query `(select (:*
                         (:as (:group_concat :description)
                              ,+search-expr-country-col+))
-                 (from ,+view-copies-genres-directors+)
-                 (left-join :title-country :on (:= :title-id :title-country.title))
-                 (left-join :country       :on (:= :country.id :title-country.country)))))
+                  (from ,+view-copies-genres-directors+)
+                  (left-join (:as :vw-additional-titles :addt)
+                             :on (:= :addt.original-copy-id :copies-ge-dir.copy-id))
+                  (left-join :title-country :on (:= :title-id :title-country.title))
+                  (left-join :country       :on (:= :country.id :title-country.country)))))
     (if where-clause
         (append query
                 (list where-clause)

@@ -237,8 +237,10 @@
     (let ((actual-key (key->col a)))
       ;;workaround...
       (if (string= actual-key (quote-symbol +search-expr-primary-title-col+))
-          `("or" ("like" ,actual-key                                      ,c)
-                 ("like" ,(quote-symbol +search-expr-original-title-col+) ,c))
+          `("or" ("or" ("like" ,actual-key                                      ,c)
+                       ("like" ,(quote-symbol +search-expr-original-title-col+) ,c))
+                 ("or" ("like" ,(quote-symbol :add-ot) ,c)
+                       ("like" ,(quote-symbol :add-pt) ,c)))
           `("like" ,actual-key ,c))))
 
   (defun make-compare-clause (op key value)
