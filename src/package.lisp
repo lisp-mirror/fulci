@@ -478,6 +478,7 @@
    :+table-movie-copy+
    :+table-crew+
    :+table-title-genre+
+   :+view-additional-titles+
    :+search-expr-director-col+
    :+search-expr-primary-title-col+
    :+search-expr-original-title-col+

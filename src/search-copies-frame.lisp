@@ -173,23 +173,38 @@
                                                                db:+search-expr-notes-col+)))
 
 (defun make-details-copy-window (copy-id)
-  (let* ((copy-info (db:fetch-from-any-id db:+table-movie-copy+ copy-id))
-         (format    (db:copy-row->format-description copy-info)))
+  (let* ((copy-info         (db:fetch-from-any-id db:+table-movie-copy+ copy-id))
+         (format            (db:copy-row->format-description copy-info))
+         (additional-titles (join-with-strings (db:additional-titles copy-id)
+                                               (format nil "~%"))))
     (nodgui-utils:with-title-details-toplevel (title (getf copy-info :title) ; title id
                                                      (_ "Copy details")
                                                      notes-entry)
-      (let* ((formats-desc   (make-instance 'label
-                                            :font   +font-h3+
-                                            :text   format
-                                            :master nil))
-             (formats-label (make-instance 'label
-                                           :text   (_ "Format")
-                                           :font   +font-h2+
-                                           :master nil)))
+      (let* ((formats-desc            (make-instance 'label
+                                                     :font   +font-h3+
+                                                     :text   format
+                                                     :master nil))
+             (formats-label           (make-instance 'label
+                                                     :text   (_ "Format")
+                                                     :font   +font-h2+
+                                                     :master nil))
+             (additional-titles-desc  (make-instance 'label
+                                                     :font   +font-h3+
+                                                     :text   format
+                                                     :master nil))
+             (additional-titles-label (make-instance 'label
+                                                     :text   (_ "Additional Titles")
+                                                     :font   +font-h2+
+                                                     :master nil)))
         (setf (text notes-entry) (getf copy-info :notes))
+        (setf (text additional-titles-desc) additional-titles)
         (grid formats-label (+ (max-row) 1) (max-col)
               :sticky :we :padx +min-padding+ :pady +min-padding+)
         (grid formats-desc (+ (max-row) 2) (max-col)
+              :sticky :we :padx +min-padding+ :pady +min-padding+)
+        (grid additional-titles-label (+ (max-row) 3) (max-col)
+              :sticky :we :padx +min-padding+ :pady +min-padding+)
+        (grid additional-titles-desc (+ (max-row) 4) (max-col)
               :sticky :we :padx +min-padding+ :pady +min-padding+)))))
 
 (defun details-copies-clsr (search-res-widget)
