@@ -173,10 +173,12 @@
                                                                db:+search-expr-notes-col+)))
 
 (defun make-details-copy-window (copy-id)
-  (let* ((copy-info         (db:fetch-from-any-id db:+table-movie-copy+ copy-id))
-         (format            (db:copy-row->format-description copy-info))
-         (additional-titles (join-with-strings (db:additional-titles copy-id)
-                                               (format nil "~%"))))
+  (let* ((copy-info             (db:fetch-from-any-id db:+table-movie-copy+ copy-id))
+         (format                (db:copy-row->format-description copy-info))
+         (raw-additional-titles (db:additional-titles copy-id))
+         (additional-titles     (if raw-additional-titles
+                                    (join-with-strings raw-additional-titles (format nil "~%"))
+                                    "")))
     (nodgui-utils:with-title-details-toplevel (title (getf copy-info :title) ; title id
                                                      (_ "Copy details")
                                                      notes-entry)
