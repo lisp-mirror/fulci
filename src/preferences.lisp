@@ -27,11 +27,11 @@
     :initarg  :copy-format
     :accessor copy-format)
    (page-width
-    :initform (ps:width ps:+a4-page-size+)
+    :initform (cl-pslib:width cl-pslib:+a4-page-size+)
     :initarg  :page-width
     :accessor page-width)
    (page-height
-    :initform (ps:height ps:+a4-page-size+)
+    :initform (cl-pslib:height cl-pslib:+a4-page-size+)
     :initarg  :page-height
     :accessor page-height)
    (barcode-width

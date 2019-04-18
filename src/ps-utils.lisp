@@ -76,30 +76,30 @@
                                                              (padding 5.0))
   (let ((font    (default-font doc))
         (barcode (make-instance 'brcd:code128)))
-    (ps:setcolor doc ps:+color-type-fillstroke+ (cl-colors:rgb 0.0 0.0 0.0))
-    (ps:setfont doc font font-size)
+    (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ (cl-colors:rgb 0.0 0.0 0.0))
+    (cl-pslib:setfont doc font font-size)
     (brcd:parse barcode (encode-barcode barcode-text))
     (with-save-restore (doc)
-      (ps:scale doc
-                (/ w (brcd:width barcode))
-                (/ h (+ padding font-size (brcd:height barcode))))
+      (cl-pslib:scale doc
+                      (/ w (brcd:width barcode))
+                      (/ h (+ padding font-size (brcd:height barcode))))
       (with-save-restore (doc)
-        (ps:translate doc padding padding)
+        (cl-pslib:translate doc padding padding)
         (brcd:draw barcode doc))
       (with-save-restore (doc)
-        (ps:draw-text-confined-in-box doc
-                                      font
-                                      label
-                                      padding                           ; left
-                                      (+ padding (brcd:height barcode)) ; top
-                                      (brcd:width barcode)              ; width
-                                      font-size                         ; height
-                                      :vertical-align :bottom)))
+        (cl-pslib:draw-text-confined-in-box doc
+                                            font
+                                            label
+                                            padding                           ; left
+                                            (+ padding (brcd:height barcode)) ; top
+                                            (- (brcd:width barcode) padding)  ; width
+                                            font-size                         ; height
+                                            :vertical-align :bottom)))
     h))
 
 (define-constant +sample-labels-padding+ 1.0 :test #'=)
 
-(defun render-barcode-table (barcodes labels page-w page-h  w h)
+(defun render-barcode-table (barcodes labels page-w page-h w h)
   (let* ((page-size         (make-instance 'page-size
                                            :width  page-w
                                            :height page-h))
@@ -128,15 +128,15 @@
       (with-save-restore (doc)
         (translate doc x y)
         (with-save-restore (doc)
-          (ps:setlinewidth doc (max 0.1 (/ w 500)))
-          (ps:setcolor doc ps:+color-type-fillstroke+ cl-colors:+red+)
+          (cl-pslib:setlinewidth doc (max 0.1 (/ w 500)))
+          (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ cl-colors:+red+)
           ;; hline
-          (ps:moveto doc +sample-labels-padding+ +sample-labels-padding+)
-          (ps:lineto doc w +sample-labels-padding+)
+          (cl-pslib:moveto doc +sample-labels-padding+ +sample-labels-padding+)
+          (cl-pslib:lineto doc w +sample-labels-padding+)
           ;; vline
-          (ps:moveto doc +sample-labels-padding+ 0)
-          (ps:lineto doc +sample-labels-padding+ h)
-          (ps:stroke doc))
+          (cl-pslib:moveto doc +sample-labels-padding+ 0)
+          (cl-pslib:lineto doc +sample-labels-padding+ h)
+          (cl-pslib:stroke doc))
         (render-simple-label-barcode doc
                                      (first barcode)
                                      (first label)
@@ -177,10 +177,10 @@
             (setf x 0))
           (with-save-restore (doc)
             (translate doc x y)
-            (ps:draw-text-confined-in-box doc
-                                          (default-font doc)
-                                          (make-label id)
-                                          0 0 w h))
+            (cl-pslib:draw-text-confined-in-box doc
+                                                (default-font doc)
+                                                (make-label id)
+                                                0 0 w h))
           (incf x w))
         (end-page doc)
         (close-doc doc)

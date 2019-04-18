@@ -806,7 +806,7 @@
    :text-utils
    :db-utils
    :db)
-  (:shadowing-import-from :ps :rotate)
+  (:shadowing-import-from :cl-pslib :rotate)
   (:export
    :+id-placeholder+
    :render-barcode-table
