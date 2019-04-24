@@ -251,11 +251,12 @@
 (defun search-entry-on-keypress-cb (entry)
   (let ((first-time-p t))
     (lambda (e)
-      (declare (ignore e))
       (when first-time-p
         (focus entry)
         (setf  first-time-p nil)
-        (setf (text entry) (safe-subseq (text entry) 0 1))))))
+        (if (nodgui.event-symbols:keysym-printable-p (nodgui:event-char-code e))
+            (setf (text entry) (safe-subseq (text entry) 0 1))
+            (setf (text entry) ""))))))
 
 (defun make-details-movie-window (title-id)
   (nodgui-utils:with-title-details-toplevel (title title-id (_ "Title details") notes-entry)))
