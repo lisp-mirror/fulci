@@ -294,13 +294,14 @@
               +table-crew+))
 
 (defun build-views ()
-  (create-view +view-titles-genres-directors+ (view-title-main-frame))
   (create-view +view-copies-genres-directors+ (view-copy-main-frame))
+  (create-view +view-titles-genres-directors+ (view-title-main-frame))
   (create-view +view-additional-titles+       (view-additional-titles)))
 
 (defun delete-all-views ()
   (delete-view  +view-copies-genres-directors+)
-  (delete-view  +view-titles-genres-directors+))
+  (delete-view  +view-titles-genres-directors+)
+  (delete-view  +view-additional-titles+))
 
 (defun delete-database ()
   (with-disabled-foreign
