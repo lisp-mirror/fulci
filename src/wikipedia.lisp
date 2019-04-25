@@ -192,6 +192,10 @@
                                  (filter (lambda (a) (not (string-equal (plump:tag-name a)
                                                                         "br"))))))
            (directors  (map 'list (lambda (a) (plump:text a)) nobr)))
+      (setf directors (remove-if #'string-empty-p
+                                 (flatten (mapcar #'(lambda (a)
+                                                      (cl-ppcre:split "[\\n\\r]+" a))
+                                                  directors))))
       directors))
 
 (defun find-runtime (node)
@@ -200,13 +204,13 @@
 (defun find-release-year (node)
   (let ((raw (filter-infobox node +infobox-release-re+)))
     (if raw
-        (when-let* ((words      (split "\\s" raw))
+        (let* ((words      (split "\\s" raw))
                     (maybe-year (remove-if-not (lambda (a)
                                                  (and (safe-parse-integer a)
                                                       (>= (safe-parse-integer a)
                                                           1895)))
                                                words))
-                    (year (safe-parse-integer (first-elt maybe-year))))
+               (year (safe-parse-integer (first-elt maybe-year))))
           (year->timestamp year))
         nil)))
 
@@ -220,21 +224,21 @@
     (multiple-value-bind (html status-code headers)
         (drakma:http-request uri :verify :required)
       (with-success-request (status-code headers)
-        (when-let* ((doc           (lquery:load-page html))
-                    (res           (make-movie-entry))
-                    (title         (valid-lquery-res-p (lquery:$ doc
-                                                                 +infobox-selector+
-                                                                 +infobox-title-selector+
-                                                                 (text))))
-                    (raw-directors (find-director (lquery:$ doc
+        (let* ((doc           (lquery:load-page html))
+               (res           (make-movie-entry))
+               (title         (valid-lquery-res-p (lquery:$ doc
                                                             +infobox-selector+
-                                                            "tr")))
-                    (runtime       (find-runtime (lquery:$ doc
+                                                            +infobox-title-selector+
+                                                            (text))))
+               (raw-directors (find-director (lquery:$ doc
+                                                       +infobox-selector+
+                                                       "tr")))
+               (runtime       (find-runtime (lquery:$ doc
+                                                      +infobox-selector+
+                                                      "tr")))
+               (release-year  (find-release-year (lquery:$ doc
                                                            +infobox-selector+
-                                                           "tr")))
-                    (release-year  (find-release-year (lquery:$ doc
-                                                                +infobox-selector+
-                                                                "tr"))))
+                                                           "tr"))))
           (setf (movie-entry-title    res) title)
           (setf (movie-entry-director res) raw-directors)
           (setf (movie-entry-runtime  res) (safe-parse-integer runtime))
