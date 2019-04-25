@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-31 18:01+0200\n"
+"POT-Creation-Date: 2019-04-25 15:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,35 +56,35 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: src/search-frame.lisp:261
+#: src/search-frame.lisp:262
 msgid "Title details"
 msgstr ""
 
-#: src/search-frame.lisp:296 src/search-copies-frame.lisp:230
+#: src/search-frame.lisp:297 src/search-copies-frame.lisp:230
 msgid "search title, director, year..."
 msgstr ""
 
-#: src/search-frame.lisp:360 src/search-copies-frame.lisp:281
+#: src/search-frame.lisp:361 src/search-copies-frame.lisp:281
 msgid "delete selected"
 msgstr ""
 
-#: src/search-frame.lisp:361
+#: src/search-frame.lisp:362
 msgid "add title"
 msgstr ""
 
-#: src/search-frame.lisp:362 src/search-copies-frame.lisp:282
+#: src/search-frame.lisp:363 src/search-copies-frame.lisp:282
 msgid "edit title"
 msgstr ""
 
-#: src/search-frame.lisp:363
+#: src/search-frame.lisp:364
 msgid "add a copy"
 msgstr ""
 
-#: src/search-frame.lisp:364
+#: src/search-frame.lisp:365
 msgid "lookup copy"
 msgstr ""
 
-#: src/search-frame.lisp:365
+#: src/search-frame.lisp:366
 msgid "title details"
 msgstr ""
 
@@ -241,11 +241,11 @@ msgid "Filter items"
 msgstr ""
 
 #: src/main-toolbar.lisp:208
-msgid "Please insert a prefix name filter (minimum length 3 characters)"
+msgid "Please insert a name filter (minimum length 3 characters)"
 msgstr ""
 
 #: src/main-toolbar.lisp:212
-msgid "Please provide a prefix of three characters minimum"
+msgid "Please provide a name filter of three characters minimum"
 msgstr ""
 
 #: src/main-toolbar.lisp:214
@@ -804,6 +804,6 @@ msgstr ""
 msgid "External programs"
 msgstr ""
 
-#: src/db.lisp:383
+#: src/db.lisp:384
 msgid "unkn."
 msgstr ""

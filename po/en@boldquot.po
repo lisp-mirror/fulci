@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fulci 0.1\n"
 "Report-Msgid-Bugs-To: https://notabug.org/cage/fulci\n"
-"POT-Creation-Date: 2019-03-31 18:01+0200\n"
-"PO-Revision-Date: 2019-03-31 18:01+0200\n"
+"POT-Creation-Date: 2019-04-25 15:08+0200\n"
+"PO-Revision-Date: 2019-04-25 15:08+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@boldquot\n"
@@ -80,35 +80,35 @@ msgstr "Tags"
 msgid "Notes"
 msgstr "Notes"
 
-#: src/search-frame.lisp:261
+#: src/search-frame.lisp:262
 msgid "Title details"
 msgstr "Title details"
 
-#: src/search-frame.lisp:296 src/search-copies-frame.lisp:230
+#: src/search-frame.lisp:297 src/search-copies-frame.lisp:230
 msgid "search title, director, year..."
 msgstr "search title, director, year..."
 
-#: src/search-frame.lisp:360 src/search-copies-frame.lisp:281
+#: src/search-frame.lisp:361 src/search-copies-frame.lisp:281
 msgid "delete selected"
 msgstr "delete selected"
 
-#: src/search-frame.lisp:361
+#: src/search-frame.lisp:362
 msgid "add title"
 msgstr "add title"
 
-#: src/search-frame.lisp:362 src/search-copies-frame.lisp:282
+#: src/search-frame.lisp:363 src/search-copies-frame.lisp:282
 msgid "edit title"
 msgstr "edit title"
 
-#: src/search-frame.lisp:363
+#: src/search-frame.lisp:364
 msgid "add a copy"
 msgstr "add a copy"
 
-#: src/search-frame.lisp:364
+#: src/search-frame.lisp:365
 msgid "lookup copy"
 msgstr "lookup copy"
 
-#: src/search-frame.lisp:365
+#: src/search-frame.lisp:366
 msgid "title details"
 msgstr "title details"
 
@@ -268,12 +268,12 @@ msgid "Filter items"
 msgstr "Filter items"
 
 #: src/main-toolbar.lisp:208
-msgid "Please insert a prefix name filter (minimum length 3 characters)"
-msgstr "Please insert a prefix name filter (minimum length 3 characters)"
+msgid "Please insert a name filter (minimum length 3 characters)"
+msgstr "Please insert a name filter (minimum length 3 characters)"
 
 #: src/main-toolbar.lisp:212
-msgid "Please provide a prefix of three characters minimum"
-msgstr "Please provide a prefix of three characters minimum"
+msgid "Please provide a name filter of three characters minimum"
+msgstr "Please provide a name filter of three characters minimum"
 
 #: src/main-toolbar.lisp:214
 msgid "Manage persons"
@@ -844,6 +844,6 @@ msgstr "Networking"
 msgid "External programs"
 msgstr "External programs"
 
-#: src/db.lisp:383
+#: src/db.lisp:384
 msgid "unkn."
 msgstr "unkn."
