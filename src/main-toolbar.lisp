@@ -205,16 +205,16 @@
            (lambda ()
              (let ((filter (text-input-dialog *tk*
                                               (_ "Filter items")
-                                              (_ "Please insert a prefix name filter (minimum length 3 characters)")
+                                              (_ "Please insert a name filter (minimum length 3 characters)")
                                               :button-message (_ "OK"))))
                (if (or (string-empty-p filter)
                        (< (length filter) 3))
-                   (error-dialog *tk* (_ "Please provide a prefix of three characters minimum"))
+                   (error-dialog *tk* (_ "Please provide a name filter of three characters minimum"))
                    (let ((fn (funcall #'manage-persons-table
                                       (_ "Manage persons")
                                       (lambda (table)
                                         (declare (ignore table))
-                                        (db:persons->alist (strcat filter "%"))))))
+                                        (db:persons->alist (strcat "%" filter "%"))))))
                      (funcall fn)))))))
     (let ((manage-persons   (make-instance 'button
                                            :image   *icon-persons*
