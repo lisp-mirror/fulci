@@ -300,11 +300,10 @@
       (setf added-titles-label   (make-instance 'label
                                                 :master right-frame
                                                 :text (_ "Also contains:")))
-      (setf additional-titles-listbox
-            (make-instance 'scrolled-listbox
-                           :export-selection nil
-                           :select-mode      :browse
-                           :master           right-frame))
+      (setf additional-titles-listbox (make-instance 'scrolled-listbox
+                                                     :export-selection nil
+                                                     :select-mode      :browse
+                                                     :master           right-frame))
       (setf formats-listbox      (make-instance 'searchable-listbox
                                                 :entry-label      (_ "Search:")
                                                 :export-selection nil
@@ -317,8 +316,13 @@
       (setf search-text-entry    (search-frame:make-search-titles-entry object :initial-text ""))
       (setf search-results       (search-frame:make-search-results-widget object))
       (search-frame:setup-search-res-movie-headers search-text-entry search-results)
-      (bind search-text-entry #$<Return>$ (search-frame:search-movie-entry-cb search-text-entry
-                                                                              search-results))
+      (bind search-text-entry #$<Return>$
+            (lambda (e)
+              (declare (ignore e))
+              (with-busy (object)
+                (funcall (search-frame:search-movie-entry-cb search-text-entry
+                                                             search-results)
+                         nil))))
       (setf apply-button         (make-instance 'button
                                                 :text    (_ "Apply")
                                                 :command (add-copy-clsr object)
