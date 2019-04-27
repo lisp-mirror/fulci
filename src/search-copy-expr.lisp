@@ -26,7 +26,7 @@
 
 (define-constant +or-re+                 "\\bor\\b" :test #'string=)
 
-(define-constant +value-re+         "[a-zA-Z0-9%]+" :test #'string=)
+(define-constant +value-re+      "[a-zA-Z0-9%\\-]+" :test #'string=)
 
 (define-constant +key-director-re+       "director" :test #'string=)
 
