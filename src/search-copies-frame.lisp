@@ -26,7 +26,7 @@
                                               ;; id it  ot  dir ye  ge  ft  pos note
   :test #'equalp)
 
-(defclass search-copies-frame (search-frame)
+(defclass search-copies-frame (search-title-frame)
   ((barcodes-button
     :initform nil
     :accessor barcode-button)))

@@ -76,7 +76,7 @@
                 (:file "manage-movie")
                 (:file "ps-utils")
                 (:file "manage-copies")
-                (:file "search-frame")
+                (:file "search-titles-frame")
                 (:file "search-copies-frame")
                 (:file "main-toolbar")
                 (:file "main-frame")

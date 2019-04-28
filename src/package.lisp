@@ -848,7 +848,7 @@
    :icons
    :text-utils)
   (:export
-   :search-frame
+   :search-title-frame
    :search-copies-frame
    :make-search-results-widget
    :make-search-titles-entry

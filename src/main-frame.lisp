@@ -135,8 +135,7 @@
                    (search-copies-tab search-copies-tab)) object
     (let* ((tabs-container (make-instance 'notebook
                                           :master object)))
-
-      (setf search-title-tab  (make-instance 'search-frame:search-frame
+      (setf search-title-tab  (make-instance 'search-frame:search-title-frame
                                              :main-frame object
                                              :master tabs-container))
       (setf search-copies-tab (make-instance 'search-frame:search-copies-frame

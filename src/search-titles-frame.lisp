@@ -44,7 +44,7 @@
 
 (defparameter *search-order* :asc)
 
-(defclass search-frame (frame)
+(defclass search-title-frame (frame)
   ((main-frame
     :initform nil
     :initarg  :main-frame
@@ -300,7 +300,7 @@
                  :text                                initial-text
                  :master                              master))
 
-(defmethod initialize-instance :after ((object search-frame) &key &allow-other-keys)
+(defmethod initialize-instance :after ((object search-title-frame) &key &allow-other-keys)
   (with-accessors ((main-frame             main-frame)
                    (search-text-entry      search-text-entry)
                    (search-results         search-results)
