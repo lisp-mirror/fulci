@@ -16,6 +16,8 @@
 
 (in-package :manage-movie)
 
+(cl-syntax:use-syntax 'nodgui.event-parser:nodgui-event-syntax)
+
 (define-constant +autocomplete-director-min-key-length+   3 :test #'=)
 
 (define-constant +vote-bar-width+                       120 :test #'=)
@@ -62,6 +64,10 @@
     :initform nil
     :accessor director-autocomplete
     :type     autocomplete-listbox)
+   (delete-director-button
+    :initform nil
+    :accessor delete-director-button
+    :type     button)
    (year-text-label
     :initform nil
     :accessor year-text-label
@@ -166,6 +172,7 @@
                     (added-director-listbox    added-director-listbox)
                     (director-text-label       director-text-label)
                     (director-autocomplete     director-autocomplete)
+                    (delete-director-button    delete-director-button)
                     (year-text-label           year-text-label)
                     (year-text-entry           year-text-entry)
                     (runtime-text-label        runtime-text-label)
@@ -546,12 +553,12 @@
                                                    :text    (_ "Close")
                                                    :command (lambda () (break-mainloop))
                                                    :master  object))
-    (let* ((delete-director-button  (make-instance 'button
+    (setf delete-director-button  (make-instance 'button
                                                    :master  object
                                                    :image   *icon-delete-small*
                                                    :command (delete-director-clsr object)))
-           (www-fetch-frame         (make-instance 'frame
-                                                   :master object)))
+    (let ((www-fetch-frame (make-instance 'frame
+                                          :master object)))
       (setf fetch-wiki-data-button    (make-instance 'button
                                                      :image   *icon-wiki-fetch-data*
                                                      :command (add-data-from-wiki-clsr object)
@@ -600,8 +607,32 @@
       (grid apply-close-button       12 2 :sticky :s    :padx +min-padding+ :pady +min-padding+)
       (grid close-button             12 3 :sticky :s    :padx +min-padding+ :pady +min-padding+)
       (gui-resize-grid-all object)
+      (bind-tab-navigation object)
       (when (update-mode-p object)
         (sync-title-frame object)))))
+
+(defun bind-tab-navigation (frame)
+  (labels ((%%bind (event from to)
+             (bind from event
+                   (lambda (e)
+                     (declare (ignore e))
+                     (focus to))
+                   :exclusive t
+                   :append    nil))
+           (%bind (from to)
+             (%%bind #$<Tab>$       from to)
+             (%%bind #$<Control-Tab>$ to   from)))
+    (with-all-accessors (frame)
+      (%bind primary-title-text-entry                original-title-text-entry)
+      (%bind original-title-text-entry               (nodgui.mw:entry director-autocomplete))
+      (%bind (nodgui.mw:entry director-autocomplete) delete-director-button)
+      (%bind delete-director-button                  (nodgui.mw:entry genres-searchbox))
+      (%bind (nodgui.mw:entry genres-searchbox)      (nodgui.mw:entry countries-searchbox))
+      (%bind (nodgui.mw:entry countries-searchbox)   year-text-entry)
+      (%bind year-text-entry                         runtime-text-entry)
+      (%bind runtime-text-entry                      tags-text-entry)
+      (%bind tags-text-entry                         notes-text-entry)
+      (%bind notes-text-entry                        primary-title-text-entry))))
 
 (defun load-image-in-button (title-id button)
   (let ((title-info     (db:fetch-from-any-id db:+table-title+ title-id)))
