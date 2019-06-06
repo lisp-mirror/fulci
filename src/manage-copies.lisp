@@ -290,7 +290,8 @@
                                                 :text
                                                 (_ "Notes:")
                                                 :master right-frame))
-      (setf notes-text           (make-instance 'text
+      (setf notes-text           (make-instance 'scrolled-text
+                                                :use-horizontal-scrolling-p nil
                                                 :height 3
                                                 :master right-frame))
       (setf format-label         (make-instance 'label
@@ -314,7 +315,9 @@
                                                    :master object
                                                    :text   (_ "Additional titles:")))
       (setf search-text-entry    (search-frame:make-search-titles-entry object :initial-text ""))
-      (setf search-results       (search-frame:make-search-results-widget object))
+      (setf search-results       (search-frame:make-search-results-widget object
+                                                                          (lambda (a)
+                                                                            (truncate (/ a 2)))))
       (search-frame:setup-search-res-movie-headers search-text-entry search-results)
       (bind search-text-entry #$<Return>$
             (lambda (e)

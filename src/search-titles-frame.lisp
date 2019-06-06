@@ -281,7 +281,7 @@
       (funcall (search-copies-command (search-text-entry search-copy-frame)
                                       (search-results    search-copy-frame))))))
 
-(defun make-search-results-widget (master)
+(defun make-search-results-widget (master &optional (column-width-fn #'identity))
   (make-instance 'scrolled-treeview
                  :columns (list +columns-movie-search-international-title+
                                 +columns-movie-search-original-title+
@@ -290,7 +290,7 @@
                                 +columns-movie-search-genre+
                                 +columns-movie-search-tags+
                                 +columns-movie-search-notes+)
-                 :columns-width +columns-width+
+                 :columns-width (mapcar column-width-fn +columns-width+)
                  :master        master))
 
 (defun make-search-titles-entry (master
