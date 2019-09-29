@@ -57,7 +57,7 @@
 (defun image->tga-file (image-file tga-file)
   (when (and (file-exists-p image-file)
              (file-exists-p tga-file))
-    (misc:launch-command (gimp-batch-cmd (gimp-image->tga-script image-file tga-file)))))
+    (misc:launch-command (gimp-batch-cmd (gimp-image->tga-script image-file tga-file)) t nil)))
 
 (defun image->tga-memory (image-data)
   (let ((image-file (create-file (img-tmp-path +gimp-img-tempfilename+)))

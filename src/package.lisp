@@ -163,6 +163,7 @@
    :current-year
    :extract-year-from-timestamp
    :launch-command
+   :command-terminated-no-error-p
    :serialize
    :serialize-to-stream
    :deserialize

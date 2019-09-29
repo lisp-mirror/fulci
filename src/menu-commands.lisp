@@ -43,18 +43,20 @@
 
 (defun dump-db-fn (parent)
   (lambda ()
-    (let ((destination (get-save-file :initial-file (sql-dump-default-filename)
-                                      :file-types   +sql-dump-file-type+
-                                      :parent       parent
-                                      :title        (_ "Choose file"))))
-      (when (not (string-empty-p destination))
+    (let* ((destination        (get-save-file :initial-file (sql-dump-default-filename)
+                                              :file-types   +sql-dump-file-type+
+                                              :parent       parent
+                                              :title        (_ "Choose file")))
+           (command-error-code 0)
+           (shell-command      (format nil "~a ~a .dump > ~a" +sqlite-bin+
+                                       (db-utils:db-path)
+                                       destination)))
+    (when (not (string-empty-p destination))
         (with-busy* (*tk*)
-          (launch-command (format nil "~a ~a .dump > ~a"
-                                  +sqlite-bin+
-                                  (db-utils:db-path)
-                                  destination)))
-        (nodgui:do-msg (_ "The database has been serialized to filesystem")
-          :title (_ "Dump completed"))))))
+          (setf command-error-code (launch-command shell-command t nil)))
+        (when (command-terminated-no-error-p command-error-code)
+          (nodgui:do-msg (_ "The database has been serialized to filesystem")
+            :title (_ "Dump completed")))))))
 
 (define-constant +tsv-allowed-extension+ '(("Tab separated value" "*.tsv")
                                            ("Tab separated value" "*.csv")
@@ -63,9 +65,9 @@
 
 (defun tsv-choose-file-fn (parent text-entry)
   #'(lambda ()
-      (let ((file (get-open-file :file-types   +tsv-allowed-extension+
-                                 :title        (_ "Choose file")
-                                 :parent       parent)))
+      (let ((file (get-open-file :file-types +tsv-allowed-extension+
+                                 :title      (_ "Choose file")
+                                 :parent     parent)))
         (setf (text text-entry) file))))
 
 (defun actual-import (parent-widget

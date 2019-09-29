@@ -718,11 +718,21 @@ Name from Emacs Lisp."
 (defun extract-year-from-timestamp (ts)
   (local-time:timestamp-year ts))
 
-(defun launch-command (cmd &rest args)
+(defun command-terminated-no-error-p (command-error-code)
+  (= command-error-code 0))
+
+(defun launch-command (cmd show-error-dialog-p parent-widget-for-dialog &rest args)
   (let ((child-process (uiop:launch-program (format nil "~a ~{~a ~}" cmd args))))
     (unless child-process
       (error "Cannot create process."))
-    (uiop:wait-process child-process)))
+    (let ((error-code (uiop:wait-process child-process)))
+      (if (or (null show-error-dialog-p)
+              (command-terminated-no-error-p error-code))
+          error-code
+          (let ((control-string-error (_ "Error, the command: ~s terminated with error code: ~a")))
+            (nodgui-utils:error-dialog parent-widget-for-dialog
+                                       (format nil control-string-error cmd error-code))
+            error-code)))))
 
 (defgeneric serialize (object))
 

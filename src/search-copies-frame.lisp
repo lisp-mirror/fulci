@@ -71,7 +71,8 @@
                 (info-operation-completed *tk*)
                 (when (string-not-empty-p (pref:preferences-gv-bin))
                   (launch-command (format nil "cat \"~a\" | ~a -"
-                                          destination (pref:preferences-gv-bin))))))))))))
+                                          destination (pref:preferences-gv-bin))
+                                  t nil))))))))))
 
 (defun search-copies-column-values (row)
   (let* ((year   (if (db-nil-p (getf row :year))
