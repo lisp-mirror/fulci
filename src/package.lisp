@@ -252,7 +252,6 @@
    :left-padding
    :justify-monospaced-text
    :flush-left-mono-text
-   :escape-tilde
    :ellipsize))
 
 (defpackage :net-utils

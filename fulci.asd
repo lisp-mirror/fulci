@@ -29,6 +29,7 @@
                 :cl-ppcre
                 :sqlite
                 :sxql
+                :cl-lex
                 :yacc
                 :parse-number
                 :cl-syntax

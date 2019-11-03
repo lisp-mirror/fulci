@@ -95,10 +95,10 @@
                      (_ "unknown")
                      (encoded-datetime-year (getf row :year)))))
     (flet ((escape (row key)
-             (escape-tilde (db-utils:db-nil->lisp (getf row key))))
+             (db-utils:db-nil->lisp (getf row key)))
            (escape-notes (row)
-             (ellipsize (escape-tilde (db-nil->lisp (getf row
-                                                          db:+search-expr-notes-col+)))
+             (ellipsize (db-nil->lisp (getf row
+                                            db:+search-expr-notes-col+))
                         :len +max-char-column-length+)))
       (list (escape row db:+search-expr-primary-title-col+)
             (escape row db:+search-expr-original-title-col+)

@@ -213,7 +213,7 @@
           (flush-left-mono-text rest-of-words box-width (misc:lcat (list line) lines))))))
 
 (defun escape-tilde (s)
-  "~ -> ~~, for format"
+  "~ -> ~~, for format. Note: currently unused"
   (cl-ppcre:regex-replace-all "~" s "~~"))
 
 (defun ellipsize (value &key (len 15) (truncate-string "..."))

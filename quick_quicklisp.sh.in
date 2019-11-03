@@ -100,6 +100,7 @@ install_dependency () {
      --eval "(ql:quickload \"osicat\")"           \
      --eval "(ql:quickload \"local-time\")"       \
      --eval "(ql:quickload \"cl-csv\")"           \
+     --eval "(ql:quickload \"cl-lex\")"           \
      --eval "(ql:quickload \"yacc\")"             \
      --eval "(ql:quickload \"parse-number\")"     \
      --eval "(ql:quickload \"sqlite\")"           \
