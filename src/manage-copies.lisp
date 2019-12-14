@@ -175,7 +175,7 @@
       (setf copy-id new-copy-id)
       (let ((msg (format nil (_ "Added new copy with id: ~a") new-copy-id)))
         (if (preferences:preferences-use-insert-mode)
-            (nodgui.mw:message-with-timeout (container-win frame)
+            (nodgui.mw:message-with-timeout *tk*
                                             msg
                                             +timeout-info-copy-added+
                                             (_ "OK")
