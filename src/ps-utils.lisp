@@ -76,7 +76,7 @@
                                                              (padding 5.0))
   (let ((font    (default-font doc))
         (barcode (make-instance 'brcd:code128)))
-    (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ (cl-colors:rgb 0.0 0.0 0.0))
+    (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ (cl-colors2:rgb 0.0 0.0 0.0))
     (cl-pslib:setfont doc font font-size)
     (brcd:parse barcode (encode-barcode barcode-text))
     (with-save-restore (doc)
@@ -129,7 +129,7 @@
         (translate doc x y)
         (with-save-restore (doc)
           (cl-pslib:setlinewidth doc (max 0.1 (/ w 500)))
-          (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ cl-colors:+red+)
+          (cl-pslib:setcolor doc cl-pslib:+color-type-fillstroke+ cl-colors2:+red+)
           ;; hline
           (cl-pslib:moveto doc +sample-labels-padding+ +sample-labels-padding+)
           (cl-pslib:lineto doc w +sample-labels-padding+)
