@@ -575,8 +575,8 @@
                        (fetch-wiki-image-button (_ "get movie's image from wikipedia")))
       (grid image-button              0 0 :sticky :nswe :padx +min-padding+ :pady +min-padding+
             :rowspan 6)
-      (grid vote-bar                  7 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
-      (grid vote-scale                8 0 :sticky :ns   :padx +min-padding+ :pady +min-padding+)
+      (grid vote-bar                  7 0 :sticky :s    :padx +min-padding+ :pady +min-padding+)
+      (grid vote-scale                8 0 :sticky :n    :padx +min-padding+ :pady +min-padding+)
       (grid www-fetch-frame          12 0 :sticky :news :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-data-button    0 1 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
       (grid fetch-wiki-image-button   0 2 :sticky :sw   :padx +min-padding+ :pady +min-padding+)
