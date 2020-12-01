@@ -79,12 +79,12 @@
 (defclass function-param ()
   ((name
     :initarg  :name
-    :initform nil
+    :initform ""
     :accessor name
     :type     string)
    (pos
     :initarg  :pos
-    :initform nil
+    :initform -1
     :accessor pos
     :type     integer)))
 
@@ -180,7 +180,7 @@
 (defclass fun-box ()
   ((function-id
     :initarg  :function-id
-    :initform nil
+    :initform ""
     :accessor function-id
     :type     string)
    (params

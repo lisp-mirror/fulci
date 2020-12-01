@@ -26,98 +26,76 @@
     :accessor primary-title-label)
    (original-title-label
     :initform nil
-    :accessor original-title-label
-    :type     label)
+    :accessor original-title-label)
    (directors-label
     :initform nil
-    :accessor directors-label
-    :type     label)
+    :accessor directors-label)
    (year-label
     :initform nil
-    :accessor year-label
-    :type     label)
+    :accessor year-label)
    (title-id-label
     :initform nil
-    :accessor title-id-label
-    :type     label)
+    :accessor title-id-label)
    (title-id-text-entry
     :initform nil
-    :accessor title-id-text-entry
-    :type     entry)
+    :accessor title-id-text-entry)
    (barcode-text-label
     :initform nil
-    :accessor barcode-text-label
-    :type     label)
+    :accessor barcode-text-label)
    (barcode-text-entry
     :initform nil
-    :accessor barcode-text-entry
-    :type     entry)
+    :accessor barcode-text-entry)
    (position-text-label
     :initform nil
-    :accessor position-text-label
-    :type     label)
+    :accessor position-text-label)
    (position-text-entry
     :initform nil
-    :accessor position-text-entry
-    :type     entry)
+    :accessor position-text-entry)
    (notes-text-label
     :initform nil
-    :accessor notes-text-label
-    :type     label)
+    :accessor notes-text-label)
    (notes-text
     :initform nil
-    :accessor notes-text
-    :type     entry)
+    :accessor notes-text)
    (format-label
     :initform nil
-    :accessor format-label
-    :type     label)
+    :accessor format-label)
    (formats-listbox
     :initform nil
-    :accessor formats-listbox
-    :type     searchable-listbox)
+    :accessor formats-listbox)
    (added-titles-label
     :initform nil
-    :accessor added-titles-label
-    :type     label)
+    :accessor added-titles-label)
    (additional-titles-listbox
     :initform nil
-    :accessor additional-titles-listbox
-    :type     scrolled-listbox)
+    :accessor additional-titles-listbox)
    (additional-titles-label
     :initform nil
-    :accessor additional-titles-label
-    :type     label)
+    :accessor additional-titles-label)
    (search-text-entry
     :initform nil
     :accessor search-text-entry)
    (search-results
     :initform nil
-    :accessor search-results
-    :type     scrolled-treeview)
+    :accessor search-results)
    (apply-button
     :initform nil
-    :accessor apply-button
-    :type     button)
+    :accessor apply-button)
    (close-button
     :initform nil
-    :accessor close-button
-    :type     button)
+    :accessor close-button)
    (container-win
     :initform nil
     :initarg  :container-win
-    :accessor container-win
-    :type     toplevel)
+    :accessor container-win)
    (title-id
     :initform nil
     :initarg :title-id
-    :accessor title-id
-    :type     integer)
+    :accessor title-id)
    (copy-id
     :initform nil
     :initarg  :copy-id
-    :accessor copy-id
-    :type     integer)))
+    :accessor copy-id)))
 
 (defun update-mode-p (add-movie-frame)
   (copy-id add-movie-frame))

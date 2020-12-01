@@ -26,7 +26,6 @@
   ((image-button
     :initform nil
     :accessor image-button
-    :type     button
     :documentation "displayed image")
    (vote-bar
     :initform nil
@@ -42,119 +41,91 @@
     :accessor primary-title-text-entry)
    (original-title-text-label
     :initform nil
-    :accessor original-title-text-label
-    :type     label)
+    :accessor original-title-text-label)
    (original-title-text-entry
     :initform nil
-    :accessor original-title-text-entry
-    :type     entry)
+    :accessor original-title-text-entry)
    (added-director-text-label
     :initform nil
-    :accessor added-director-text-label
-    :type     label)
+    :accessor added-director-text-label)
    (added-director-listbox
     :initform nil
-    :accessor added-director-listbox
-    :type     scrolled-listbox)
+    :accessor added-director-listbox)
    (director-text-label
     :initform nil
-    :accessor director-text-label
-    :type     label)
+    :accessor director-text-label)
    (director-autocomplete
     :initform nil
-    :accessor director-autocomplete
-    :type     autocomplete-listbox)
+    :accessor director-autocomplete)
    (delete-director-button
     :initform nil
-    :accessor delete-director-button
-    :type     button)
+    :accessor delete-director-button)
    (year-text-label
     :initform nil
-    :accessor year-text-label
-    :type     label)
+    :accessor year-text-label)
    (year-text-entry
     :initform nil
-    :accessor year-text-entry
-    :type     entry)
+    :accessor year-text-entry)
    (runtime-text-label
     :initform nil
-    :accessor runtime-text-label
-    :type     label)
+    :accessor runtime-text-label)
    (runtime-text-entry
     :initform nil
-    :accessor runtime-text-entry
-    :type     entry)
+    :accessor runtime-text-entry)
    (genres-label
     :initform nil
-    :accessor genres-label
-    :type     label)
+    :accessor genres-label)
    (genres-searchbox
     :initform nil
-    :accessor genres-searchbox
-    :type     searchable-listbox)
+    :accessor genres-searchbox)
    (countries-label
     :initform nil
-    :accessor countries-label
-    :type     label)
+    :accessor countries-label)
    (countries-searchbox
     :initform nil
-    :accessor countries-searchbox
-    :type     searchable-listbox)
+    :accessor countries-searchbox)
    (tags-text-label
     :initform nil
-    :accessor tags-text-label
-    :type     label)
+    :accessor tags-text-label)
    (tags-text-entry
     :initform nil
-    :accessor tags-text-entry
-    :type     entry)
+    :accessor tags-text-entry)
    (notes-text-label
     :initform nil
-    :accessor notes-text-label
-    :type     label)
+    :accessor notes-text-label)
    (notes-text-entry
     :initform nil
-    :accessor notes-text-entry
-    :type     entry)
+    :accessor notes-text-entry)
    (apply-button
     :initform nil
-    :accessor apply-button
-    :type     button)
+    :accessor apply-button)
    (apply-close-button
     :initform nil
-    :accessor apply-close-button
-    :type     button)
+    :accessor apply-close-button)
    (close-button
     :initform nil
-    :accessor close-button
-    :type     button)
+    :accessor close-button)
    (fetch-wiki-data-button
     :initform nil
-    :accessor fetch-wiki-data-button
-    :type     button)
+    :accessor fetch-wiki-data-button)
    (fetch-wiki-image-button
     :initform nil
-    :accessor fetch-wiki-image-button
-    :type     button)
+    :accessor fetch-wiki-image-button)
    (fetch-wwww-image-button
     :initform nil
-    :accessor fetch-www-image-button
-    :type     button)
+    :accessor fetch-www-image-button)
    (image
     :initform nil
     :accessor image
-    :type     vector
     :documentation "Raw image data")
    (container-win
     :initform nil
     :initarg  :container-win
-    :accessor container-win
-    :type     toplevel)
+    :accessor container-win)
    (title-id
     :initform nil
     :initarg  :title-id
-    :accessor title-id
-    :type     integer)))
+    :accessor title-id)))
 
 (defmacro with-all-accessors ((object) &body body)
   "Very anaphoric :)"

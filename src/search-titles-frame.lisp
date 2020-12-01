@@ -54,36 +54,28 @@
     :accessor search-text-entry)
    (search-results
     :initform nil
-    :accessor search-results
-    :type     scrolled-treeview)
+    :accessor search-results)
    (search-button
     :initform nil
-    :accessor search-button
-    :type     button)
+    :accessor search-button)
    (delete-selected-button
     :initform nil
-    :accessor delete-selected-button
-    :type     button)
+    :accessor delete-selected-button)
    (add-item-button
     :initform nil
-    :accessor add-item-button
-    :type     button)
+    :accessor add-item-button)
    (add-copy-button
     :initform nil
-    :accessor add-copy-button
-    :type     button)
+    :accessor add-copy-button)
    (goto-copy-button
     :initform nil
-    :accessor goto-copy-button
-    :type     button)
+    :accessor goto-copy-button)
    (edit-item-button
     :initform nil
-    :accessor edit-item-button
-    :type     button)
+    :accessor edit-item-button)
    (details-item-button
     :initform nil
-    :accessor details-item-button
-    :type     button)))
+    :accessor details-item-button)))
 
 (defun flip-search-order ()
   (if (eq *search-order* :desc)
