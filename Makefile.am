@@ -64,7 +64,7 @@ data/icons/world.png                             \
 data/font.afm                                    \
 data/countries.csv
 
-$(PACKAGE): $(CONF_PATH_FILE)
+$(PACKAGE): $(CONF_PATH_FILE) src/
 	$(LISP_COMPILER) \
 	--eval "(asdf:load-system '$(PACKAGE))" \
 	--eval "(in-package main)" \
