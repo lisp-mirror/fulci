@@ -1,3 +1,530 @@
-2019-01-27  cage
+2021-11-13 cage
 
-	* initial release
+	* Makefile.am,
+	* Makefile.in,
+	* aclocal.m4,
+	* compile,
+	* configure,
+	* install-sh,
+	* missing,
+	* src/db.lisp,
+	* src/main-toolbar.lisp:
+
+	- prevented crash when using an empty string as search criteria.
+	- updated building script;
+	- addes 'src/' as dependecy of rule to compile the executable in
+	Makefile.
+
+2020-12-01 cage
+
+	* src/json-rpc2.lisp,
+	* src/manage-copies.lisp,
+	* src/manage-movie.lisp,
+	* src/search-titles-frame.lisp:
+
+	- fixed type declaration in classes slots.
+
+2020-09-05 cage
+
+	* src/manage-movie.lisp:
+
+	- fixed appearance of votes when adding a title.
+
+2020-01-02 cage
+
+	* src/ps-utils.lisp:
+
+	- changed package name: from 'cl-colors' to 'cl-colors2'.
+
+2019-12-14 cage
+
+	* src/manage-copies.lisp:
+
+	- fixed parent of timeout dialog window.
+
+2019-11-03 cage
+
+	* fulci.asd,
+	* quick_quicklisp.sh.in,
+	* src/package.lisp,
+	* src/search-copies-frame.lisp,
+	* src/search-titles-frame.lisp,
+	* src/text-utils.lisp:
+
+	- added missing dependency: cl-lex;
+	- removed function 'escape-tilde'.
+	- removed unused function's code.
+
+2019-09-29 cage
+
+	* fulci.asd,
+	* po/POTFILES.in,
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/image-utils.lisp,
+	* src/menu-commands.lisp,
+	* src/misc-utils.lisp,
+	* src/package.lisp,
+	* src/search-copies-frame.lisp:
+
+	- checks for return code when a process is spawn.
+	- updated   file's  list   that   contains  strings   that  could   be
+	internationalized;
+	- updated italian translation.
+	- increased version.
+
+2019-06-06 cage
+
+	* src/manage-copies.lisp,
+	* src/search-titles-frame.lisp:
+
+	- made width of the window to manage copies smaller.
+
+2019-04-28 cage
+
+	* fulci.asd,
+	* src/main-frame.lisp,
+	* src/manage-movie.lisp,
+	* src/package.lisp,
+	* src/search-copies-frame.lisp,
+	* src/{search-frame.lisp => search-titles-frame.lisp}:
+
+	- renamed "search-frame.lisp" to "search-titles-frame.lisp";
+	- renamed class "search-frame" to "search-titles-frame".
+	- better keyboard navigation in window used to add or update a title.
+
+2019-04-27 cage
+
+	* src/search-copy-expr.lisp,
+	* src/search-title-expr.lisp:
+
+	- added '-' as a valid value for searching.
+
+2019-04-26 cage
+
+	* src/manage-copies.lisp:
+
+	- added a visual  hint that a title search is  performed in the window
+	that allow to add a new title.
+
+2019-04-25 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db.lisp,
+	* src/main-toolbar.lisp,
+	* src/wikipedia.lisp:
+
+	- added missing function call to remove a view.
+	- improved parsing of movies wiki data
+	did not  require all fields  to be present  and try harder  to guess
+	directors names.
+	- fixed indentation.
+	- require  a filter  for name  when searching  for a  director, not  a
+	prefix.
+	- updated italian translation.
+
+2019-04-24 cage
+
+	* src/search-frame.lisp:
+
+	- removed spurious character in text entry
+	when searching  for titles or  copies a  character was added  to the
+	entry  even  if the  key  pressed  by  the  user was  non  printable
+	(e.g. SHIFT key).
+
+2019-04-18 cage
+
+	* src/package.lisp,
+	* src/preferences.lisp,
+	* src/ps-utils.lisp:
+
+	- changed  'ps' package  to 'cl-pslib'  as cl-pslib  dropped the  'ps'
+	nickname;
+	- fixed fitting of text in barcodes.
+
+2019-03-31 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db.lisp,
+	* src/package.lisp,
+	* src/search-copies-frame.lisp,
+	* src/search-copy-expr.lisp:
+
+	- when seaching movie  copies, search for additional  titles that
+	could
+	be contained into.
+	- shows additional titles in movie copy's details.
+	- prevent a crash when a copy has not additional titles and user asked
+	for details of the copy.
+	- updated italian translation.
+
+2019-03-17 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/constants.lisp,
+	* src/main-frame.lisp,
+	* src/main-toolbar.lisp,
+	* src/package.lisp,
+	* src/ps-utils.lisp,
+	* src/search-copies-frame.lisp:
+
+	- added a simple label generator;
+	- added a missing tooltip;
+	- minor refactoring.
+
+2019-03-16 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db-utils.lisp,
+	* src/db.lisp,
+	* src/manage-copies.lisp,
+	* src/package.lisp,
+	* src/search-frame.lisp:
+
+	- added  feature:  a  copy  can contains  additional  titles  (e.g.  a
+	boxset).
+
+2019-03-10 cage
+
+	* src/db.lisp:
+
+	- added searching in copy's notes.
+
+2019-03-04 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db.lisp,
+	* src/manage-copies.lisp:
+
+	- showing the title ID when adding  a copy, useful to fix a wrong
+	movie
+	this copy was associated to;
+	- updated italian translation.
+
+2019-03-03 cage
+
+	* src/main-toolbar.lisp,
+	* src/manage-copies.lisp,
+	* src/manage-movie.lisp,
+	* src/nodgui-utils.lisp,
+	* src/search-copies-frame.lisp,
+	* src/search-frame.lisp:
+
+	- fixed use of 'cl-syntax:use-syntax';
+	- reduced the timeout for the info  window that appears whan a copy is
+	added and we are in "insert mode".
+
+2019-03-02 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/manage-copies.lisp,
+	* src/manage-movie.lisp,
+	* src/net-utils.lisp,
+	* src/package.lisp,
+	* src/preferences.lisp,
+	* src/wikipedia.lisp:
+
+	- added "insert mode" to help adding copies a bit quicker.
+	- fixed fetching directors from wikipedia.
+
+2019-02-24 cage
+
+	* LICENSES.org,
+	* Makefile.am,
+	* Makefile.in,
+	* src/db-utils.lisp,
+	* src/search-frame.lisp:
+
+	- fixed history order.
+	fixed accent proliferation due of useless escaping.
+	- added feature: download movie from url.
+	- removed misplaced URL.
+	- removed the right misplaced URL.
+
+2019-02-23 cage
+
+	* LICENSES.org,
+	* Makefile.am,
+	* Makefile.in:
+
+	- added procedures to manage countries;
+	- added a button, when  a movie is added, to try  to apply changes and
+	close window regardless of the results;
+	- updated italian translation.
+
+2019-02-22 cage
+
+	* src/db.lisp,
+	* src/manage-movie.lisp,
+	* src/search-copies-frame.lisp,
+	* src/search-frame.lisp:
+
+	- fixed sorting order when "latest n copies" query is triggered.
+	- when adding/updating a movie if  the searchboxes (country and genre)
+	contains only a  single filtered value use this as  it wwas selected
+	explicitly.
+	- made position column (in copy search) narrower.
+
+2019-02-21 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/menu-commands.lisp:
+
+	- using a modal dialog when checking copies returns no problems.
+	- fixed typo in italian translation file.
+	- fixed scrolling for copies with issues.
+	- getting different id for each title, not always the last.
+
+2019-02-20 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db.lisp,
+	* src/main-frame.lisp,
+	* src/menu-commands.lisp,
+	* src/package.lisp:
+
+	- added a simple check for copies with missing information.
+
+2019-02-17 cage
+
+	* data/countries.csv,
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/db-utils.lisp,
+	* src/db.lisp,
+	* src/main-toolbar.lisp,
+	* src/manage-movie.lisp,
+	* src/nodgui-utils.lisp,
+	* src/package.lisp,
+	* src/wikipedia.lisp:
+
+	- add a check for trouble input in 'db-utils:encode-vote' to prevent
+	crash.
+	- prevented a crash when trying to update a directory with unknown
+	birthday.
+	- automatic  adding of  unknown (in local database) director(s) when
+	fetched
+	from wikipedia.
+	- fixed some columns contrains.
+	- fixed and restored deleting director from movies.
+	- prevented the  same person to  be listed  as director more  than one
+	time for the same movie.
+	- always order genres, country and format tables when the whole table
+	is requested.
+	- removed quotes from countries list file.
+	Merge  branch that  permits  to  add unknown  directors  to the  local
+	- updated italian translation.
+
+2019-02-16 cage
+
+	* src/constants.lisp,
+	* src/db-utils.lisp,
+	* src/db.lisp,
+	* src/manage-movie.lisp,
+	* src/misc-utils.lisp,
+	* src/nodgui-utils.lisp,
+	* src/package.lisp:
+
+	- [breaking changes] added appreciation vote for movie.
+
+2019-02-13 cage
+
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* po/fulci.pot,
+	* po/it.po,
+	* src/image-utils.lisp,
+	* src/manage-movie.lisp,
+	* src/package.lisp,
+	* src/preferences.lisp:
+
+	- added two commands line switch that should improve gimp startup
+	time.
+	- added sorting Wikipedia results:
+	the sorting predixate push first the page titles that contain
+	a string as settend in the program preferences
+	- fixed GIMP label in preference window;
+	- updated italian translation.
+
+2019-02-12 cage
+
+	* README.org,
+	* README.txt,
+	* configure,
+	* configure.ac:
+
+	- checking openssl (both lib and C header) and pslib header in
+	configure;
+	- fixed typos in README.
+
+2019-02-10 cage
+
+	* .gitignore,
+	* Makefile.in,
+	* README.org,
+	* README.txt,
+	* aclocal.m4,
+	* compile,
+	* config.guess,
+	* config.sub,
+	* configure,
+	* configure.ac,
+	* install-sh,
+	* missing,
+	* po/en@boldquot.po,
+	* po/en@quot.po,
+	* quick_quicklisp.sh.in:
+
+	- added test for pslib in configure;
+	- added missing dependecies in quick_quick_lisp.sh;
+	- changed gv test results from warning to error;
+	- mentioned pslib and gv in README.
+	- added building script.
+
+2019-02-08 cage
+
+	* README.org,
+	* README.txt,
+	* fulci.asd,
+	* quick_quicklisp.sh.in,
+	* src/db-utils.lisp,
+	* src/db.lisp,
+	* src/import-tsv.lisp,
+	* src/main-frame.lisp,
+	* src/package.lisp,
+	* src/search-copies-frame.lisp,
+	* src/search-frame.lisp:
+
+	- disabled temporarily dependency to cl-dbi;
+	- fixed default sorting order of row in searching (was descending);
+	- removed a couples of useless functions.
+	- removed reference for c-dbi in README and script.
+	- showing progress when collecting crew's names.
+
+2019-02-05 cage
+
+	* src/json-rpc2.lisp,
+	* src/tests/test-jsonrpc.lisp:
+
+	- [RPC] better handling of batch;
+	- renamed duplicated test name.
+	Merge branch 'json-rpc-2'
+
+2019-02-04 cage
+
+	* README.org,
+	* README.txt,
+	* fulci.asd,
+	* src/config.lisp.in.in,
+	* src/db-utils.lisp,
+	* src/filesystem-utils.lisp,
+	* src/image-utils.lisp,
+	* src/misc-utils.lisp,
+	* src/package.lisp,
+	* src/preferences.lisp:
+
+	- using (thanks to UIOP) XDG Base Directory for user dat (data, config
+	and cache);
+	- create default preference files if does not exists.
+	- updated README.
+
+2019-02-03 cage
+
+	* LICENSES.org,
+	* fulci.asd,
+	* src/json-rpc2.lisp,
+	* src/package.lisp,
+	* src/tests/package.lisp,
+	* src/tests/test-jsonrpc.lisp,
+	* src/tests/test-search-expr.lisp:
+
+	- added an implementation of jsonrpc 2.0;
+	- fixed unexported variables in "search-titles-expr" tests;
+	- updated LICENSES.org.
+
+2019-01-31 cage
+
+	* README.org,
+	* src/main-frame.lisp,
+	* src/search-copy-expr.lisp,
+	* src/search-title-expr.lisp:
+
+	- fixed BNF grammar for titles and copies.
+	- pedantic cosmetic fix.
+	-disable 'import from TSV'.
+
+2019-01-29 cage
+
+	* README.org,
+	* README.txt,
+	* fulci.asd,
+	* src/db.lisp,
+	* src/main-toolbar.lisp,
+	* src/menu-commands.lisp,
+	* src/package.lisp,
+	* src/search-copy-expr.lisp,
+	* src/search-frame.lisp:
+
+	- added search copies expression language.
+	- all query results can be ordered.
+	- updated READ.
+
+2019-01-28 cage
+
+	* Makefile.am,
+	* fulci.asd,
+	* src/db.lisp,
+	* src/package.lisp,
+	* src/tests/package.lisp,
+	* src/tests/test-search-expr.lisp,
+	* src/{search-expr.lisp => search-title-expr.lisp}:
+
+	- remove reference to file (NOTES) that does not exists.
+	- renamed 'search-expr' to 'search-title-expr' (packages and
+	filename).
+
+2019-01-27 cage
+
+	* .gitignore,
+	* COPYING,
+	* ChangeLog,
+	* LICENSES.org,
+	* Makefile.am,
+	* README.org,
+	* README.txt,
+	* compare_version.awk,
+	* config.rpath,
+	* configure.ac,
+	* data/countries.csv,
+	* data/font.afm:
+
+	- initial release.
+	- ignore 'stamp-po'.

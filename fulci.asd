@@ -17,7 +17,7 @@
 (defsystem :fulci
   :encoding    :utf-8
   :name        "fulci"
-  :version     "0.9.2"
+  :version     "0.9.3"
   :author      "cage"
   :maintainer  "cage"
   :bug-tracker "https://notabug.org/cage/fulci/issues"
