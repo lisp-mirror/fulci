@@ -116,7 +116,7 @@
                    (add-item ()
                      (nodgui-utils:with-entry-text-validate
                          (toplevel (birthday-entry validation:+pos-integer-re+
-                                                (_ "Year must be a positive number")))
+                                                   (_ "Year must be a positive number")))
                        (when (not (string-empty-p (search-text listbox)))
                          (if (find-data (search-text listbox))
                              (error-dialog toplevel (_ "This item already exists"))

@@ -929,29 +929,31 @@
                               :order-columns order-columns)))
 
 (defun search-movies (key order-columns order-direction)
-  (db-utils:with-ready-database (:connect nil)
-    (cond
-      ((char= +char-start-search-expr+ (first-elt key))
-       (search-movie-expr key order-columns order-direction))
-      (t
-       (search-movie-simple key order-columns order-direction)))))
+  (when (string-not-empty-p key)
+    (db-utils:with-ready-database (:connect nil)
+      (cond
+        ((char= +char-start-search-expr+ (first-elt key))
+         (search-movie-expr key order-columns order-direction))
+        (t
+         (search-movie-simple key order-columns order-direction))))))
 
 (defun search-copies (key order-columns order-direction)
-  (db-utils:with-ready-database (:connect nil)
-    (let* ((res (cond
-                  ((cl-ppcre:scan +search-latest-id-re+ key)
-                   (last-n-copies-id (misc:safe-parse-number (subseq key 1)
-                                                             :fix-fn
-                                                             (lambda (e)
-                                                               (declare (ignore e))
-                                                               0))))
-                  ((char= +char-start-search-expr+ (first-elt key))
-                   (search-copies-expr key order-columns order-direction))
-                  (t
-                   (search-copies-main-frame key
-                                             :order-dir     order-direction
-                                             :order-columns order-columns)))))
-      res)))
+  (when (string-not-empty-p key)
+    (db-utils:with-ready-database (:connect nil)
+      (let* ((res (cond
+                    ((cl-ppcre:scan +search-latest-id-re+ key)
+                     (last-n-copies-id (misc:safe-parse-number (subseq key 1)
+                                                               :fix-fn
+                                                               (lambda (e)
+                                                                 (declare (ignore e))
+                                                                 0))))
+                    ((char= +char-start-search-expr+ (first-elt key))
+                     (search-copies-expr key order-columns order-direction))
+                    (t
+                     (search-copies-main-frame key
+                                               :order-dir     order-direction
+                                               :order-columns order-columns)))))
+        res))))
 
 (defmacro copies-general-query (&optional (where-clause nil) (add-group-by t))
   (let ((query `(select (:*
