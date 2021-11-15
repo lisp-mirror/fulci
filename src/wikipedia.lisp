@@ -156,7 +156,7 @@
 
 (define-constant +infobox-selector+       "table[class^=infobox]" :test #'string=)
 
-(define-constant +infobox-title-selector+    "th[class^=summary]" :test #'string=)
+(define-constant +infobox-title-selector+    "th[class*=summary]" :test #'string=)
 
 (define-constant +infobox-director-re+             "(?i)directed" :test #'string=)
 
