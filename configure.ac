@@ -14,7 +14,7 @@ dnl GNU General Public License for more details.
 dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([fulci],[0.9.3],[https://notabug.org/cage/fulci/],[fulci])
+AC_INIT([fulci],[0.9.4],[https://notabug.org/cage/fulci/],[fulci])
 
 AM_INIT_AUTOMAKE([-Wall foreign])
 
