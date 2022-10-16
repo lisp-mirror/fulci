@@ -26,6 +26,7 @@
   :pathname    "src"
   :serial      t
   :depends-on  (:alexandria
+                :access
                 :cl-ppcre
                 :sqlite
                 :sxql

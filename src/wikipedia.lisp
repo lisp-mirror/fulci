@@ -113,21 +113,18 @@
 
 (defmacro with-wiki-query ((serialized-response query-template query) &body body)
   (with-gensyms (unserialized)
-    `(json:with-decoder-simple-clos-semantics
-       (let ((json:*json-symbols-package* :wikipedia))
-         (when-let* ((,unserialized       (fetch-page
-                                           (urlize-query (tpl-subst ,query-template
-                                                                    (url-encode ,query)))))
-                     (,serialized-response (json:decode-json-from-string ,unserialized)))
-           ,@body)))))
+    `(when-let* ((,unserialized       (fetch-page
+                                       (urlize-query (tpl-subst ,query-template
+                                                                (url-encode ,query)))))
+                 (,serialized-response (json:decode-json-from-string ,unserialized)))
+       ,@body)))
 
 (defun search-wiki-pages (query)
   (with-wiki-query (serialized-response +api-search-title-tmp+ query)
-    (when-let* ((res-query   (slot-value serialized-response 'query))
-                (res-search  (slot-value res-query  'search)))
+    (when-let* ((res-search  (acc:accesses serialized-response :query :search)))
       (map 'list #'(lambda (a)
-                     (cons (slot-value a 'pageid)
-                           (slot-value a 'title)))
+                     (cons (acc:accesses a :pageid)
+                           (acc:accesses a :title)))
            res-search))))
 
 (defun search-wiki-image (page-id)

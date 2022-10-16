@@ -668,6 +668,7 @@
         :misc
         :text-utils
         :net-utils)
+  (:local-nicknames (:acc :access))
   (:export
    :*wikipedia-host*
    :search-wiki-pages
