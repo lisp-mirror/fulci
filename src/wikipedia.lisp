@@ -130,11 +130,11 @@
 (defun search-wiki-image (page-id)
   (with-wiki-query (serialized-response +api-search-principal-image+ (to-s page-id))
     (when-let* ((page-id-symbol (alexandria:format-symbol :wikipedia "~a" (to-s page-id)))
-                (query-res      (slot-value serialized-response 'query))
-                (pages          (slot-value query-res           'pages))
-                (page           (slot-value pages               page-id-symbol))
-                (img-info       (slot-value page                'original))
-                (img-url        (slot-value img-info            'source)))
+                (query-res      (acc:accesses serialized-response :query))
+                (pages          (acc:accesses query-res           :pages))
+                (page           (acc:accesses pages               page-id-symbol))
+                (img-info       (acc:accesses page                :original))
+                (img-url        (acc:accesses img-info            :source)))
       (image-from-url img-url))))
 
 (defstruct movie-entry
