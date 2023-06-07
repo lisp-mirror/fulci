@@ -310,7 +310,7 @@
                                                 :master  bottom-frame))
       (setf close-button         (make-instance 'button
                                                 :text    (_ "Close")
-                                                :command (lambda () (break-mainloop))
+                                                :command (lambda () (exit-from-modal-toplevel))
                                                 :master  bottom-frame))
       (setf (text position-text-entry) (pref:preferences-place))
       (select-listbox-format formats-listbox (pref:preferences-copy-format))

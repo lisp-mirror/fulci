@@ -27,7 +27,7 @@
 
 (defun quit ()
   (db-utils:close-db)
-  (setf nodgui:*exit-mainloop* t))
+  (exit-nodgui))
 
 (defun sql-dump-default-filename ()
   (format nil "~a-~a.sql"  +program-name+ (decode-date-string (local-time-obj-now))))
@@ -298,7 +298,7 @@
                                                       :master  bottom-frame
                                                       :text    (_ "Cancel")
                                                       :command (lambda ()
-                                                                 (break-mainloop)))))
+                                                                 (nodgui:exit-from-modal-toplevel tl)))))
       (grid l-genres              0 0 :sticky :nswe :padx +min-padding+ :pady +min-padding+)
       (grid e-genres              0 1 :sticky :nswe :padx +min-padding+ :pady +min-padding+)
       (grid b-genres              0 2 :sticky :nswe :padx +min-padding+ :pady +min-padding+)

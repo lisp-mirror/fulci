@@ -260,7 +260,7 @@
                                                             gv-bin-entry
                                                             gimp-bin-entry)
                                    (dump)
-                                   (nodgui:break-mainloop)))
+                                   (nodgui:exit-from-modal-toplevel)))
            (ok-button            (make-instance 'nodgui:button
                                                 :master  bottom-frame
                                                 :text    (_ "OK")
@@ -269,7 +269,7 @@
                                              :master  bottom-frame
                                              :text    (_ "Cancel")
                                              :command (lambda ()
-                                                        (nodgui:break-mainloop)))))
+                                                        (nodgui:exit-from-modal-toplevel)))))
       (nodgui:grid copy-format-label    0  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid copy-format-entry    1  0 :sticky :we :padx +min-padding+ :pady +min-padding+)
       (nodgui:grid position-label       2  0 :sticky :we :padx +min-padding+ :pady +min-padding+)

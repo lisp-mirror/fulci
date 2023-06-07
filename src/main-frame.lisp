@@ -66,10 +66,11 @@
                                              :master  bottom-frame
                                              :command (lambda ()
                                                         (print-cb (text text-input))
-                                                        (break-mainloop))))
+                                                        (exit-from-modal-toplevel toplevel))))
                (cancel-button (make-instance 'button
                                              :text    (_ "Cancel")
-                                             :command (lambda () (break-mainloop))
+                                             :command (lambda ()
+                                                        (exit-from-modal-toplevel toplevel))
                                              :master  bottom-frame)))
           (grid ok-button     0 0 :sticky :n)
           (grid cancel-button 0 1 :sticky :n)

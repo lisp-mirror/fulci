@@ -518,14 +518,15 @@
                                                      (funcall
                                                       (add-movie-clsr object
                                                                       :print-dialog-success-p nil))
-                                                     (break-mainloop))
+                                                     (exit-from-modal-toplevel container-win))
                                                    :master  object))
     (setf close-button              (make-instance 'button
                                                    :text    (_ "Close")
-                                                   :command (lambda () (break-mainloop))
+                                                   :command (lambda ()
+                                                              (exit-from-modal-toplevel container-win))
                                                    :master  object))
-    (setf delete-director-button  (make-instance 'button
-                                                   :master  object
+(setf delete-director-button  (make-instance 'button
+                                                 :master  object
                                                    :image   *icon-delete-small*
                                                    :command (delete-director-clsr object)))
     (let ((www-fetch-frame (make-instance 'frame
