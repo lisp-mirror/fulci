@@ -35,7 +35,7 @@
       (init-history)
       (preferences:init)
       (init-i18n)
-    (with-nodgui (:title +program-name+ :theme :yaru)
+    (with-nodgui (:title +program-name+)
       (icons:load-icons)
       (nodgui:icon-photo *tk* icons:*icon-fulci*)
       (let ((main-toolbar (make-instance 'main-toolbar:main-toolbar))

@@ -184,8 +184,8 @@
 
 (defmacro with-ready-database ((&key (connect t)) &body body)
   `(let ((sxql:*sql-symbol-conversion* #'db-utils:quote-symbol))
-     (when ,connect
-       (init-connection))
+     ,(when connect
+       `(init-connection))
      (query-low-level +directive-no-journaling+)
      (query-low-level +directive-no-sync-os+)
      (query-low-level +directive-foreign-keys+)

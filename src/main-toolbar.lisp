@@ -29,10 +29,11 @@
                                   (delete-value-fn #'db:delete-description)
                                   (update-value-fn #'db:update-description))
   (lambda ()
-    (with-ready-database (:connect nil)
-      (let ((all-data (funcall to-alist-fn table-name))
-            (listbox  nil))
-        (with-modal-toplevel (toplevel :title title)
+    (with-modal-toplevel (toplevel :title title)
+      (with-ready-database (:connect nil)
+        (let ((all-data (funcall to-alist-fn table-name))
+              (listbox  nil)
+              (toplevel-widget (modal-toplevel-root-widget toplevel)))
           (labels ((refresh-data ()
                      (setf all-data (funcall to-alist-fn table-name))
                      (listbox-delete listbox)
@@ -44,13 +45,13 @@
                    (add-item ()
                      (when (not (string-empty-p (search-text listbox)))
                        (if (find-data (search-text listbox))
-                           (error-dialog toplevel (_ "This item already exists"))
+                           (error-dialog toplevel-widget (_ "This item already exists"))
                            (progn
                              (funcall add-value-fn table-name (search-text listbox))
                              (refresh-data)))))
                    (delete-item ()
                      (if (not (anc-table-selected-element listbox))
-                         (error-dialog toplevel (_ "No item was selected"))
+                         (error-dialog toplevel-widget (_ "No item was selected"))
                          (progn
                            (funcall delete-value-fn
                                     table-name
@@ -58,7 +59,7 @@
                            (refresh-data))))
                    (update-item ()
                      (when-let* ((old (anc-table-selected-element listbox))
-                                 (new (text-input-dialog toplevel
+                                 (new (text-input-dialog toplevel-widget
                                                          (_ "Edit item")
                                                          (_ "Please insert the new description")
                                                          :text           old
@@ -69,12 +70,12 @@
                          (refresh-data)))))
             (setf listbox (make-instance 'searchable-listbox
                                          :entry-label           (_ "Filter:")
-                                         :master                toplevel
+                                         :master                toplevel-widget
                                          :remove-non-matching-p t
                                          :matching-fn           (lambda (a b)
                                                                   (scan (strcat "(?i)" a) b))))
             (let* ((bottom-bar    (make-instance 'frame
-                                                 :master toplevel))
+                                                 :master toplevel-widget))
                    (add-button    (make-instance 'button
                                                  :master  bottom-bar
                                                  :image   *icon-add-small*
@@ -93,15 +94,16 @@
               (grid delete-button 0 1 :sticky :ns)
               (grid edit-button   0 2 :sticky :ns)
               (grid bottom-bar    1 0 :sticky :n)
-              (gui-resize-grid-all toplevel))))))))
+              (gui-resize-grid-all toplevel-widget))))))))
 
 (defun manage-persons-table (title to-alist-fn)
   (lambda ()
-    (with-ready-database (:connect nil)
-      (let ((all-data       (with-busy* (*tk*) (funcall to-alist-fn db:+table-person+)))
-            (listbox        nil)
-            (birthday-entry nil))
-        (with-modal-toplevel (toplevel :title title)
+    (with-modal-toplevel (toplevel :title title)
+      (with-ready-database (:connect nil)
+        (let ((all-data       (with-busy* (*tk*) (funcall to-alist-fn db:+table-person+)))
+              (listbox        nil)
+              (birthday-entry nil)
+              (toplevel-widget (modal-toplevel-root-widget toplevel)))
           (labels ((refresh-data ()
                      (setf all-data (funcall to-alist-fn db:+table-person+))
                      (listbox-delete listbox)
@@ -115,67 +117,68 @@
                      (string-not-empty-p (getf person-row :birthday)))
                    (add-item ()
                      (nodgui-utils:with-entry-text-validate
-                         (toplevel (birthday-entry validation:+pos-integer-re+
-                                                   (_ "Year must be a positive number")))
+                         (toplevel-widget (birthday-entry validation:+pos-integer-re+
+                                                          (_ "Year must be a positive number")))
                        (when (not (string-empty-p (search-text listbox)))
                          (if (find-data (search-text listbox))
-                             (error-dialog toplevel (_ "This item already exists"))
+                             (error-dialog toplevel-widget (_ "This item already exists"))
                              (loop named names for count from 1 below +max-ct-name-homonyms+ do
-                                  (let ((actual-name (db:normalize-name count
-                                                                        (search-text listbox)
-                                                                        (text birthday-entry))))
-                                    (when (not (db:find-person actual-name))
-                                      (db:add-person db:+table-person+
-                                                     actual-name
-                                                     (text birthday-entry))
-                                      (refresh-data)
-                                      (return-from names t))))))))
+                               (let ((actual-name (db:normalize-name count
+                                                                     (search-text listbox)
+                                                                     (text birthday-entry))))
+                                 (when (not (db:find-person actual-name))
+                                   (db:add-person db:+table-person+
+                                                  actual-name
+                                                  (text birthday-entry))
+                                   (refresh-data)
+                                   (return-from names t))))))))
                    (delete-item ()
                      (if (not (anc-table-selected-element listbox))
-                         (error-dialog toplevel (_ "No item was selected"))
+                         (error-dialog toplevel-widget (_ "No item was selected"))
                          (progn
                            (db:delete-person db:+table-person+ (anc-table-selected-element listbox))
                            (refresh-data))))
                    (update-item ()
-                     (when-let* ((old-name   (anc-table-selected-element listbox))
-                                 (old-person (db:find-person old-name))
-                                 (birthday   (getf old-person :birthday))
-                                 (new-name
-                                  (text-input-dialog toplevel
-                                                     (_ "Edit item")
-                                                     (_ "Please insert the new description")
-                                                     :text           old-name
-                                                     :button-message (_ "OK")))
-                                 (new-year
-                                  (text-input-dialog toplevel
-                                                     (_ "Edit item")
-                                                     (_ "Please insert the new year of birth")
-                                                     :text (and (birthday-not-empty-p old-person)
-                                                                (encoded-datetime-year birthday))
-                                                     :button-message (_ "OK"))))
-                       (cond
-                         ((not (scan validation:+pos-integer-re+ new-year))
-                          (error-dialog toplevel (_ "Year must be a positive number")))
-                         ((not (scan validation:+free-text-re+ new-name))
-                          (error-dialog toplevel (_ "Description empty")))
-                         ((db:find-person new-name)
-                          (error-dialog toplevel (_ "This person already exists in the database")))
-                         (t
-                          (db:update-person db:+table-person+ old-name new-name new-year)
-                          (refresh-data))))))
+                     (with-ready-database (:connect nil)
+                       (when-let* ((old-name   (anc-table-selected-element listbox))
+                                   (old-person (db:find-person old-name))
+                                   (birthday   (getf old-person :birthday))
+                                   (new-name
+                                    (text-input-dialog toplevel-widget
+                                                       (_ "Edit item")
+                                                       (_ "Please insert the new description")
+                                                       :text           old-name
+                                                       :button-message (_ "OK")))
+                                   (new-year
+                                    (text-input-dialog toplevel-widget
+                                                       (_ "Edit item")
+                                                       (_ "Please insert the new year of birth")
+                                                       :text (and (birthday-not-empty-p old-person)
+                                                                  (encoded-datetime-year birthday))
+                                                       :button-message (_ "OK"))))
+                         (cond
+                           ((not (scan validation:+pos-integer-re+ new-year))
+                            (error-dialog toplevel-widget (_ "Year must be a positive number")))
+                           ((not (scan validation:+free-text-re+ new-name))
+                            (error-dialog toplevel-widget (_ "Description empty")))
+                           ((db:find-person new-name)
+                            (error-dialog toplevel-widget (_ "This person already exists in the database")))
+                           (t
+                            (db:update-person db:+table-person+ old-name new-name new-year)
+                            (refresh-data)))))))
             (setf listbox (make-instance 'searchable-listbox
                                          :entry-label           (_ "Filter:")
-                                         :master                toplevel
+                                         :master                toplevel-widget
                                          :remove-non-matching-p t
                                          :matching-fn           (lambda (a b)
                                                                   (scan (strcat "(?i)" a) b))))
             (setf birthday-entry (make-instance 'entry
-                                                :master toplevel))
+                                                :master toplevel-widget))
             (let* ((birthday-label (make-instance 'label
                                                   :text   (_ "Birth year")
-                                                  :master toplevel))
+                                                  :master toplevel-widget))
                    (bottom-bar     (make-instance 'frame
-                                                  :master toplevel))
+                                                  :master toplevel-widget))
                    (add-button     (make-instance 'button
                                                   :master  bottom-bar
                                                   :image   *icon-add-small*
@@ -196,7 +199,7 @@
               (grid delete-button  0 1 :sticky :ns)
               (grid edit-button    0 2 :sticky :ns)
               (grid bottom-bar     3 0 :sticky :n)
-              (gui-resize-grid-all toplevel))))))))
+              (gui-resize-grid-all toplevel-widget))))))))
 
 (defclass main-toolbar (frame) ())
 
@@ -214,7 +217,8 @@
                                       (_ "Manage persons")
                                       (lambda (table)
                                         (declare (ignore table))
-                                        (db:persons->alist (strcat "%" filter "%"))))))
+                                        (with-ready-database (:connect nil)
+                                          (db:persons->alist (strcat "%" filter "%")))))))
                      (funcall fn)))))))
     (let ((manage-persons   (make-instance 'button
                                            :image   *icon-persons*

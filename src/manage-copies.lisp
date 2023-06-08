@@ -308,10 +308,13 @@
                                                 :text    (_ "Apply")
                                                 :command (add-copy-clsr object)
                                                 :master  bottom-frame))
-      (setf close-button         (make-instance 'button
-                                                :text    (_ "Close")
-                                                :command (lambda () (exit-from-modal-toplevel))
-                                                :master  bottom-frame))
+      (setf close-button
+            (make-instance 'button
+                           :text    (_ "Close")
+                           :command
+                           (lambda ()
+                             (exit-from-modal-toplevel (container-win object)))
+                           :master  bottom-frame))
       (setf (text position-text-entry) (pref:preferences-place))
       (select-listbox-format formats-listbox (pref:preferences-copy-format))
       (grid top-frame                 0 0 :sticky :we   :padx +min-padding+ :pady +min-padding+)
@@ -359,7 +362,7 @@
               (lambda (e)
                 (declare (ignore e))
                 (funcall (add-copy-clsr object))
-                (break-mainloop))))
+                (exit-from-modal-toplevel (container-win object)))))
       (sync-copy-frame object))))
 
 (defun sync-copy-frame (frame)
