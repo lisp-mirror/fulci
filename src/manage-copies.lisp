@@ -399,7 +399,7 @@
 
 (defun make-add-copy-window (&optional (title-id nil) (copy-id nil))
   (assert (or title-id copy-id))
-  (with-modal-toplevel (toplevel :title (_ "Add a new movie copy"))
+  (with-db-modal-toplevel (toplevel :title (_ "Add a new movie copy"))
     (let ((frame (make-instance 'add-copy-frame
                                 :container-win toplevel
                                 :title-id      title-id

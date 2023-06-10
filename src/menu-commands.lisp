@@ -19,7 +19,7 @@
 (define-constant +sql-dump-file-type+ '(("SQL" "*.sql")) :test #'equalp)
 
 (defun help-about ()
-  (with-modal-toplevel (toplevel :master nil :title (_ "About"))
+  (with-db-modal-toplevel (toplevel :master nil :title (_ "About"))
     (let* ((editor  (make-text toplevel)))
       (setf (text editor)
 	    (format nil +help-about-message-template+ +program-name+))
@@ -210,7 +210,7 @@
                            link-genre-p))))))
 
 (defun import-tsv-window ()
-  (with-modal-toplevel (tl :title (_ "Import Tab Separated Values file"))
+  (with-db-modal-toplevel (tl :title (_ "Import Tab Separated Values file"))
     (let* ((l-genres                   (make-instance 'label
                                                       :master tl
                                                       :text (_ "Genres file:")))
@@ -453,7 +453,7 @@
     (let ((all-copies (all-copies-with-problems)))
       (if (null all-copies)
           (info-dialog main-window (_ "No copies with problems found"))
-          (with-modal-toplevel (toplevel :title (_ "Check copies"))
+          (with-db-modal-toplevel (toplevel :title (_ "Check copies"))
             (with-busy* (main-window)
               (let* ((main-frame   (make-instance 'scrolled-frame
                                                   :master toplevel))

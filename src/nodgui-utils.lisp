@@ -210,3 +210,13 @@
              (grid ,notes-entry         13 1 :sticky :we :padx +min-padding+
                    :pady +min-padding+)
              ,@body))))))
+
+(defmacro with-db-modal-toplevel ((toplevel-struct &rest toplevel-initargs) &body body)
+  (let ((thread-special-bindings `(acons 'sxql.operator:*sql-symbol-conversion*
+                                         (function db-utils:quote-symbol)
+                                         bt:*default-special-bindings*)))
+    `(nodgui:with-modal-toplevel (,toplevel-struct
+                                  ,@(append toplevel-initargs
+                                            (list :main-loop-thread-special-bindings
+                                                  thread-special-bindings)))
+       ,@body)))

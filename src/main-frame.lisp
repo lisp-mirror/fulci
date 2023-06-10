@@ -50,7 +50,7 @@
                                                                 page-h
                                                                 w h)))
                      (write-sequence ps stream)))))))
-      (with-modal-toplevel (toplevel :title (_ "Print labels"))
+      (with-db-modal-toplevel (toplevel :title (_ "Print labels"))
         (let* ((help-text     (_ "In the text below a string like \"n:m\" (where \"n\" and \"m\" are natural numbers)~%will be replaced, for each label, with a number ranging from \"n\" to \"m\"."))
                (help-label    (make-instance 'label
                                              :master toplevel

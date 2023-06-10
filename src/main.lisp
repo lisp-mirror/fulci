@@ -32,18 +32,22 @@
   (let ((*debug-tk* #+debug-tk t
                     #-debug-tk nil))
     (db-utils:with-ready-database (:connect t)
+      (setf sxql:*sql-symbol-conversion* #'db-utils:quote-symbol)
       (init-history)
       (preferences:init)
       (init-i18n)
-    (with-nodgui (:title +program-name+)
-      (icons:load-icons)
-      (nodgui:icon-photo *tk* icons:*icon-fulci*)
-      (let ((main-toolbar (make-instance 'main-toolbar:main-toolbar))
-            (main-frame   (make-instance 'main-frame:main-frame
-                                         :main-window *tk*)))
-        (main-frame:initialize-menu main-frame)
-        (grid main-toolbar 0 0 :sticky :ew)
-        (grid main-frame   1 0 :sticky :nswe)
-        (grid-columnconfigure *tk* 0 :weight 1)
-        (grid-rowconfigure    *tk* 0 :weight 0)
-        (grid-rowconfigure    *tk* 1 :weight 1))))))
+      (with-nodgui (:title                            +program-name+
+                    :main-loop-thread-special-bindings
+                    (acons 'sxql.operator:*sql-symbol-conversion* #'db-utils:quote-symbol
+                           bt:*default-special-bindings*))
+        (icons:load-icons)
+        (nodgui:icon-photo *tk* icons:*icon-fulci*)
+        (let ((main-toolbar (make-instance 'main-toolbar:main-toolbar))
+              (main-frame   (make-instance 'main-frame:main-frame
+                                           :main-window *tk*)))
+          (main-frame:initialize-menu main-frame)
+          (grid main-toolbar 0 0 :sticky :ew)
+          (grid main-frame   1 0 :sticky :nswe)
+          (grid-columnconfigure *tk* 0 :weight 1)
+          (grid-rowconfigure    *tk* 0 :weight 0)
+          (grid-rowconfigure    *tk* 1 :weight 1))))))

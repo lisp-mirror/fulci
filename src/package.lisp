@@ -705,7 +705,8 @@
    :attach-tooltip
    :attach-tooltips
    :with-busy*
-   :with-title-details-toplevel))
+   :with-title-details-toplevel
+   :with-db-modal-toplevel))
 
 (defpackage :icons
   (:use :cl

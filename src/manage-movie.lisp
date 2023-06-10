@@ -648,7 +648,7 @@
           (setf image tga-data))))))
 
 (defun make-add-movie-window (&optional (title-id nil))
-  (with-modal-toplevel (toplevel :title (_ "Add a new movie"))
+  (with-db-modal-toplevel (toplevel :title (_ "Add a new movie"))
     (let ((frame (make-instance 'add-movie-frame
                                 :container-win toplevel
                                 :title-id      title-id
