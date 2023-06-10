@@ -1,5 +1,44 @@
+2023-06-10 cage
+
+	* fulci.asd,
+	* src/main-frame.lisp,
+	* src/main-toolbar.lisp,
+	* src/main.lisp,
+	* src/manage-copies.lisp,
+	* src/manage-movie.lisp,
+	* src/menu-commands.lisp,
+	* src/nodgui-utils.lisp,
+	* src/package.lisp:
+
+	- allowed modal toplevels to access the database.
+	- increased version number.
+
+2023-06-08 cage
+
+	* src/db-utils.lisp,
+	* src/main-toolbar.lisp,
+	* src/main.lisp,
+	* src/manage-copies.lisp,
+	* src/preferences.lisp:
+
+	- updated the code to match the new nodgui API.
+
+2023-06-07 cage
+
+	* src/main-frame.lisp,
+	* src/main.lisp,
+	* src/manage-copies.lisp,
+	* src/manage-movie.lisp,
+	* src/menu-commands.lisp,
+	* src/preferences.lisp:
+
+	- updated the code to match the new nodgui API.
+
 2022-10-16 cage
 
+	* ChangeLog,
+	* configure,
+	* configure.ac,
 	* fulci.asd,
 	* quick_quicklisp.sh.in,
 	* src/package.lisp,
@@ -7,6 +46,9 @@
 
 	- restored procedures to fetch movies information from wikipedia.
 	- restored procedures to fetch movies image from wikipedia.
+	- increased version number;
+	- updated Changelog;
+	- updated autotools scripts.
 
 2021-11-15 cage
 
