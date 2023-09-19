@@ -2,6 +2,8 @@
 #+AUTHOR:
 #+TITLE: Fulci
 
+* moved to: [[https://codeberg.org/cage/fulci/]]
+
 * Introduction
 
   Fulci aims to  be  a  simple software  to  organize  your dvd/blu-ray/vcd
